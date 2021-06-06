@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Linux 命令行弹出可移动磁盘 - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="Linux 用的越多，便越想使用命令行解决所有的事情（虽然很大程度上是不可能的）。笔者经常使用移动存储介质如 U盘、移动硬盘之类的，关于如何弹出一直存在" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-08-16-linux-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%B9%E5%87%BA%E5%8F%AF%E7%A7%BB%E5%8A%A8%E7%A3%81%E7%9B%98/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Linux 命令行弹出可移动磁盘" />
+<meta property="og:description" content="Linux 用的越多，便越想使用命令行解决所有的事情（虽然很大程度上是不可能的）。笔者经常使用移动存储介质如 U盘、移动硬盘之类的，关于如何弹出一直存在" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-08-16-linux-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%B9%E5%87%BA%E5%8F%AF%E7%A7%BB%E5%8A%A8%E7%A3%81%E7%9B%98/" />
+<meta property="article:published_time" content="2020-08-16T16:05:12+00:00" />
+<meta property="article:modified_time" content="2020-08-16T16:05:12+00:00" />
+<meta itemprop="name" content="Linux 命令行弹出可移动磁盘">
+<meta itemprop="description" content="Linux 用的越多，便越想使用命令行解决所有的事情（虽然很大程度上是不可能的）。笔者经常使用移动存储介质如 U盘、移动硬盘之类的，关于如何弹出一直存在">
+<meta itemprop="datePublished" content="2020-08-16T16:05:12+00:00" />
+<meta itemprop="dateModified" content="2020-08-16T16:05:12+00:00" />
+<meta itemprop="wordCount" content="475">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux 命令行弹出可移动磁盘"/>
+<meta name="twitter:description" content="Linux 用的越多，便越想使用命令行解决所有的事情（虽然很大程度上是不可能的）。笔者经常使用移动存储介质如 U盘、移动硬盘之类的，关于如何弹出一直存在"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Linux 命令行弹出可移动磁盘</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-16 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#gio">gio</a></li>
+        <li><a href="#udisksctl">udisksctl</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>Linux 用的越多，便越想使用命令行解决所有的事情（虽然很大程度上是不可能的）。笔者经常使用移动存储介质如 U盘、移动硬盘之类的，关于如何弹出一直存在一些疑惑。</p>
+<p>当初初学 Linux 形成的概念是 mount 挂载和 umount 卸载，按道理只要 umount 了就可以拔了吧。对于 U 盘而言，感觉没啥毛病；但对于移动硬盘，即使卸载掉所有的挂载点，它还在飞速旋转。但是如果使用 Gnome-disk 这种 GUI 工具，会明显有停止设备的选项（相当于 Windows 的弹出磁盘）。</p>
+<p><img src="/images/2020-08-16/gnome-disk.webp" alt="Gnome-disk"></p>
+<p>点击之后，移动硬盘不一会就停止运转了，直接拔出感觉心里踏实多了。于是就顺手找了找有没有这种命令，还真有几种：</p>
+<h2 id="gio">gio</h2>
+<p>这里我们要停止并弹出的设备为 <strong>/dev/sdb</strong>，<strong>gio</strong> 也是我找到的最简洁的命令了，当然 gio 的功能远远不止此。<strong>mount</strong> 子命令控制磁盘的挂载和卸载，<strong>-t</strong> 代表停止设备：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">gio mount -t /dev/sdb
+</code></pre></td></tr></table>
+</div>
+</div><p>和 <strong>umount</strong> 有什么差别呢，执行一个很简单的操作就明白了，相信用过 <strong>umount</strong> 的朋友都懂：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ls /dev/sdb*
+</code></pre></td></tr></table>
+</div>
+</div><p>ls: cannot access &lsquo;/dev/sdb*': No such file or directory</p>
+<p>{% endblockquote %}</p>
+<h2 id="udisksctl">udisksctl</h2>
+<p>使用该命令需要先卸载挂载点，然后停止设备。使用 <strong>unmount</strong> 子命令卸载挂载点，使用 <strong>power-off</strong> 子命令可以设备：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">udisksctl unmount -b /dev/sdb1
+udisksctl unmount -b /dev/sdb2
+udisksctl unmount -b /dev/sdb3
+udisksctl power-off -b /dev/sdb
+</code></pre></td></tr></table>
+</div>
+</div><p>大家应该明白我想表达的意思了，这个命令没有 <strong>gio</strong> 来得方便。</p>
+<!-- echo 'offline' > /sys/block/sdb/device/state -->
+<!-- echo '1' > /sys/block/sdb/device/delete -->
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-08-16
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-08-19-vulnhub-unknowndevice64-1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vulnhub-Unknowndevice64_1</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-08-10-vulnhub-mr-robot/">
+            <span class="next-text nav-default">Vulnhub - Mr Robot</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

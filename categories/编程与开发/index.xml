@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>编程与开发 on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/categories/%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%BC%80%E5%8F%91/</link>
+    <description>Recent content in 编程与开发 on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 22 Aug 2020 16:09:48 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/categories/%E7%BC%96%E7%A8%8B%E4%B8%8E%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>日常 Git 踩坑</title>
+      <link>https://bulletforkiller.github.io/post/2020-08-22-%E6%97%A5%E5%B8%B8-git-%E8%B8%A9%E5%9D%91/</link>
+      <pubDate>Sat, 22 Aug 2020 16:09:48 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-08-22-%E6%97%A5%E5%B8%B8-git-%E8%B8%A9%E5%9D%91/</guid>
+      <description>鄙人作为一个业余 Coder，Git 自然是用的不咋滴。于是在此做一些备忘，方便以后查询，本文将长期更新。 更新 gitignore 不起作用 gitignore 对于已经追踪的文件是不</description>
+    </item>
+    
+    <item>
+      <title>python 创建空生成器</title>
+      <link>https://bulletforkiller.github.io/post/2020-03-10-python/</link>
+      <pubDate>Tue, 10 Mar 2020 10:25:18 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-03-10-python/</guid>
+      <description>前两天写代码突然有一个很奇怪的想法————产生一个空的生成器。其实也不奇怪，就是为了代码风格的统一而已。假设有一个返回可迭代对象作为结果的函</description>
+    </item>
+    
+  </channel>
+</rss>

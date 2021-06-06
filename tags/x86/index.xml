@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>x86 on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/tags/x86/</link>
+    <description>Recent content in x86 on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 08 Apr 2020 18:50:06 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/tags/x86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>X64 调用约定</title>
+      <link>https://bulletforkiller.github.io/post/2020-04-08-x64/</link>
+      <pubDate>Wed, 08 Apr 2020 18:50:06 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-04-08-x64/</guid>
+      <description>孩子记性老不好，多半是废了。最近懒病爆发，实在没有办法，只能让自己多写点东西了（太堕落了，再这么下去真废了）。。。进入正题。 调用约定这个东西</description>
+    </item>
+    
+  </channel>
+</rss>

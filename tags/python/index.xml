@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/tags/python/</link>
+    <description>Recent content in python on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 10 Mar 2020 10:25:18 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>python 创建空生成器</title>
+      <link>https://bulletforkiller.github.io/post/2020-03-10-python/</link>
+      <pubDate>Tue, 10 Mar 2020 10:25:18 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-03-10-python/</guid>
+      <description>前两天写代码突然有一个很奇怪的想法————产生一个空的生成器。其实也不奇怪，就是为了代码风格的统一而已。假设有一个返回可迭代对象作为结果的函</description>
+    </item>
+    
+  </channel>
+</rss>

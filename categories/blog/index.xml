@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blog on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/categories/blog/</link>
+    <description>Recent content in blog on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 06 Jun 2020 18:00:47 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hexo Nodejs 相关</title>
+      <link>https://bulletforkiller.github.io/post/2020-06-06-hexo-nodejs/</link>
+      <pubDate>Sat, 06 Jun 2020 18:00:47 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-06-06-hexo-nodejs/</guid>
+      <description>最近对博客进行了一些调整和优化，使用的 Hexo 是基于 Nodejs 的框架，在此记录其中的一些心得和才过的坑。 依赖库的升级 虽说依赖库完全不更新也不会导致可用性的</description>
+    </item>
+    
+    <item>
+      <title>Hexo 博客搭建 (一)</title>
+      <link>https://bulletforkiller.github.io/post/2020-02-11-hexo-%E9%83%A8%E7%BD%B2-%E4%B8%80/</link>
+      <pubDate>Tue, 11 Feb 2020 12:57:29 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-02-11-hexo-%E9%83%A8%E7%BD%B2-%E4%B8%80/</guid>
+      <description>瞎扯 很久以来，小J并不知道为何要搭建博客。只是看别人都有，感觉很炫酷的样子，于是自己也不能没有。于是乎，借着自己会一点 Python，便兴冲冲</description>
+    </item>
+    
+  </channel>
+</rss>

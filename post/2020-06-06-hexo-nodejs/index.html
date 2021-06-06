@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Hexo Nodejs 相关 - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="最近对博客进行了一些调整和优化，使用的 Hexo 是基于 Nodejs 的框架，在此记录其中的一些心得和才过的坑。 依赖库的升级 虽说依赖库完全不更新也不会导致可用性的" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-06-06-hexo-nodejs/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Hexo Nodejs 相关" />
+<meta property="og:description" content="最近对博客进行了一些调整和优化，使用的 Hexo 是基于 Nodejs 的框架，在此记录其中的一些心得和才过的坑。 依赖库的升级 虽说依赖库完全不更新也不会导致可用性的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-06-06-hexo-nodejs/" />
+<meta property="article:published_time" content="2020-06-06T18:00:47+00:00" />
+<meta property="article:modified_time" content="2020-06-06T18:00:47+00:00" />
+<meta itemprop="name" content="Hexo Nodejs 相关">
+<meta itemprop="description" content="最近对博客进行了一些调整和优化，使用的 Hexo 是基于 Nodejs 的框架，在此记录其中的一些心得和才过的坑。 依赖库的升级 虽说依赖库完全不更新也不会导致可用性的">
+<meta itemprop="datePublished" content="2020-06-06T18:00:47+00:00" />
+<meta itemprop="dateModified" content="2020-06-06T18:00:47+00:00" />
+<meta itemprop="wordCount" content="1012">
+
+
+
+<meta itemprop="keywords" content="Hexo," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hexo Nodejs 相关"/>
+<meta name="twitter:description" content="最近对博客进行了一些调整和优化，使用的 Hexo 是基于 Nodejs 的框架，在此记录其中的一些心得和才过的坑。 依赖库的升级 虽说依赖库完全不更新也不会导致可用性的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Hexo Nodejs 相关</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-06-06 </span>
+        <div class="post-category">
+            <a href="/categories/blog/"> blog </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#依赖库的升级">依赖库的升级</a></li>
+        <li><a href="#nodejs-多版本管理">Nodejs 多版本管理</a>
+          <ul>
+            <li><a href="#n">n</a></li>
+            <li><a href="#nvm">nvm</a></li>
+            <li><a href="#两者对比">两者对比</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>最近对博客进行了一些调整和优化，使用的 <strong>Hexo</strong> 是基于 <strong>Nodejs</strong> 的框架，在此记录其中的一些心得和才过的坑。</p>
+<h2 id="依赖库的升级">依赖库的升级</h2>
+<p>虽说依赖库完全不更新也不会导致可用性的问题，但更新往往能带来一些新的功能和速度上的提升。<strong>npm-check</strong> 可统一管理项目依赖，使用比较方便。安装命令如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo npm i -g npm-check
+</code></pre></td></tr></table>
+</div>
+</div><p>更新依赖库分为全局依赖库和项目的依赖库，两者使用上的区别在于更新全局依赖需要加 <strong>-g</strong> 的参数，使用比较简单:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">npm-check -u
+</code></pre></td></tr></table>
+</div>
+</div><p>接着会出现一个简单的交互界面，根据提示进行即可。</p>
+<h2 id="nodejs-多版本管理">Nodejs 多版本管理</h2>
+<p>不久前 <strong>Manjaro</strong> 自带的 <strong>Nodejs</strong> 版本升级到了 14，导致 <strong>hexo</strong> 在使用过程中总会出现一些警告。警告当然没有什么大不了，可是一旦部署就会报错，百度得知 <strong>hexo</strong> 暂时对最新的 <strong>Nodejs</strong> 支持有问题。没办法，只能使用低版本的 <strong>Nodejs</strong> 如 12、13 等。为了不破坏系统软件依赖，我选择配置多个 <strong>Nodejs</strong> 版本。</p>
+<p>而说起 <strong>Nodejs</strong> 的多版本管理方案，就不得不提 <strong>n</strong> 和 <strong>nvm</strong> 这两种方案了。虽说都是多版本管理方案，可是实现方式完全不同，也有着各自的优缺点。</p>
+<h3 id="n">n</h3>
+<p><strong>n</strong> 是是一个 <strong>npm</strong> 包，依赖于 <strong>Node</strong> 环境。首先安装 <strong>n</strong> :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo npm i -g n
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>n</strong> 预设了两种版本供我们使用，分别是 <strong>latest</strong> 和 <strong>stable</strong>，查看版本号:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">n --latest <span class="o">&amp;&amp;</span> n --stable
+14.4.0
+12.18.0
+</code></pre></td></tr></table>
+</div>
+</div><p>可见 <strong>stable</strong> 的版本符合 <strong>hexo</strong> 的要求，使用一下命令安装:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">n stable
+</code></pre></td></tr></table>
+</div>
+</div><p>当然 <strong>n</strong> 还能安装任意版本的 <strong>Nodejs</strong>，直接跟版本号即可。选择版本更加简单，直接运行 <strong>n</strong> 不加任何参数，会有一个交互的界面用于选择。</p>
+<h3 id="nvm">nvm</h3>
+<p>原本觉得只使用 <strong>n</strong> 就够了，可是我的 <strong>hexo</strong> 是同时部署在 <strong>win</strong> 和 <strong>linux</strong> 下的，<strong>n</strong> 在 <strong>win</strong> 下无法使用，无奈只能另寻他法。</p>
+<p>与 <strong>n</strong> 不太一样，<strong>nvm</strong> 不需要预先安装 <strong>Nodejs</strong>，也就是说需要卸载已经存在的版本。<strong>Windows</strong> 版本的下载地址如下: <a href="https://github.com/coreybutler/nvm-windows/releases"><em>nvm</em></a>，有不需要安装的压缩包版本和安装包版本可供选择，我这里选择下载安装包；<strong>Manjaro</strong> 下直接无脑 <strong>yay</strong>，反正有 <strong>Aur</strong>，但安装后需要修改 <strong>.zshrc</strong> 或者 <strong>.bashrc</strong>，添加初始化 <strong>nvm</strong> 的条目，具体取决于使用的 <strong>shell</strong> 类型。</p>
+<p><strong>nvm</strong> 和 <strong>nvm-windows</strong> 的命令有一定的区别，但几条主要的命令是相同的。</p>
+<p>安装指定的版本:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nvm install &lt;version&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>使用指定的版本:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nvm use &lt;version&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>查看已经安装的版本:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nvm ls
+</code></pre></td></tr></table>
+</div>
+</div><p>删除某个版本:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nvm rm &lt;version&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="两者对比">两者对比</h3>
+<p>两者作为 <strong>Nodejs</strong> 版本管理工具，有一下异同：</p>
+<ol>
+<li>
+<p><strong>n</strong> 依赖 <strong>Nodejs</strong>，是一个 <strong>npm</strong> 包；<strong>nvm</strong> 不依赖 <strong>Nodejs</strong>。</p>
+</li>
+<li>
+<p><strong>n</strong> 不支持 <strong>Windows</strong> 环境，而 <strong>nvm</strong> 有 <strong>nvm-windows</strong> 可以支持 <strong>Windows</strong>。</p>
+</li>
+<li>
+<p><strong>nvm</strong> 每个环境的模块单独存储，而 <strong>n</strong> 所有环境共享模块。这意味着 <strong>nvm</strong> 需要占据更多的磁盘空间，各个环境隔离更加充分，库不会相互影响。</p>
+</li>
+<li>
+<p><strong>n</strong> 与 <strong>Nodejs</strong> 相互依赖，卸载时比较麻烦，至少在 <strong>Linux</strong> 下是这样的。</p>
+</li>
+</ol>
+<p>最终我还是选择使用 <strong>nvm</strong>。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-06-06
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/hexo/">Hexo</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-07-25-vuln/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vulnhub 之 CyberSplot:1</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-06-06-radare2/">
+            <span class="next-text nav-default">Radare2 常用命令备忘</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub 之 CyberSplot:1 - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="靶机介绍 THIS IS A MACHINE FOR COMPLETE BEGINNER , THERE ARE THREE FALGS AVAILABLE IN THIS VM. FROM THIS VMs YOU WILL LEARN ABOUT ENCODER-DECODER &amp;amp; EXPLOIT-DB. 环境介绍 该靶机是 OVA 格式的，使用虚拟机导入即可，此处我是用 Virtualbox，版" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-07-25-vuln/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub 之 CyberSplot:1" />
+<meta property="og:description" content="靶机介绍 THIS IS A MACHINE FOR COMPLETE BEGINNER , THERE ARE THREE FALGS AVAILABLE IN THIS VM. FROM THIS VMs YOU WILL LEARN ABOUT ENCODER-DECODER &amp; EXPLOIT-DB. 环境介绍 该靶机是 OVA 格式的，使用虚拟机导入即可，此处我是用 Virtualbox，版" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-07-25-vuln/" />
+<meta property="article:published_time" content="2020-07-25T17:03:48+00:00" />
+<meta property="article:modified_time" content="2020-07-25T17:03:48+00:00" />
+<meta itemprop="name" content="Vulnhub 之 CyberSplot:1">
+<meta itemprop="description" content="靶机介绍 THIS IS A MACHINE FOR COMPLETE BEGINNER , THERE ARE THREE FALGS AVAILABLE IN THIS VM. FROM THIS VMs YOU WILL LEARN ABOUT ENCODER-DECODER &amp; EXPLOIT-DB. 环境介绍 该靶机是 OVA 格式的，使用虚拟机导入即可，此处我是用 Virtualbox，版">
+<meta itemprop="datePublished" content="2020-07-25T17:03:48+00:00" />
+<meta itemprop="dateModified" content="2020-07-25T17:03:48+00:00" />
+<meta itemprop="wordCount" content="1691">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub 之 CyberSplot:1"/>
+<meta name="twitter:description" content="靶机介绍 THIS IS A MACHINE FOR COMPLETE BEGINNER , THERE ARE THREE FALGS AVAILABLE IN THIS VM. FROM THIS VMs YOU WILL LEARN ABOUT ENCODER-DECODER &amp; EXPLOIT-DB. 环境介绍 该靶机是 OVA 格式的，使用虚拟机导入即可，此处我是用 Virtualbox，版"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub 之 CyberSplot:1</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-07-25 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#靶机介绍">靶机介绍</a></li>
+        <li><a href="#环境介绍">环境介绍</a></li>
+        <li><a href="#信息收集">信息收集</a></li>
+        <li><a href="#权限提升">权限提升</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="靶机介绍">靶机介绍</h2>
+<p>THIS IS A MACHINE FOR COMPLETE BEGINNER , THERE ARE THREE FALGS AVAILABLE IN THIS VM. FROM THIS VMs YOU WILL LEARN ABOUT ENCODER-DECODER &amp; EXPLOIT-DB.</p>
+<h2 id="环境介绍">环境介绍</h2>
+<p>该靶机是 OVA 格式的，使用虚拟机导入即可，此处我是用 Virtualbox，版本为 6.1.10，靶机可知是 linux 系统。</p>
+<h2 id="信息收集">信息收集</h2>
+<p>在打开虚拟机之前，我将虚拟机的网卡设置为 <strong>HostOnly</strong> 网络，靶机可以通过 DHCP 自动获得 IP 地址。</p>
+<p>那么第一件事情便是得到靶机的 IP 了，能使用的工具有很多，这里我使用 <strong>fping</strong>，该指令通过 <strong>ICMP Echo Request</strong> 来进行发现，使用以下指令可以扫描指定网段的存活主机：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">fping -asg 192.168.56.0/24
+</code></pre></td></tr></table>
+</div>
+</div><p>结果会显示存活的主机的 IP，以及最后的统计信息。这里我得到的靶机地址为 <strong>192.168.56.106</strong>。</p>
+<p>接下来就直接暴力扫描端口加服务了，祭上 <strong>nmap</strong> 即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sV -sC -p- 192.168.56.106
+</code></pre></td></tr></table>
+</div>
+</div><p>这里 <em>-p-</em> 即全 TCP 端口扫描，<em>-sV</em> 为服务识别，<em>-sC</em> 为使用默认的脚本扫描。扫描的结果如下图：</p>
+<p><img src="/images/2020-07-25/nmap.webp" alt="Nmap扫描结果"></p>
+<p>可见靶机只开放了两个端口，上面跑的服务正是 SSH 和 Apache。浏览网页：</p>
+<p><img src="/images/2020-07-25/web.webp" alt="网页"></p>
+<p>页面并没有什么有用的信息，查看源代码，注释中存在一个用户名 <strong>itsskv</strong>。我在此步陷入了僵局，由于缺乏 <strong>web</strong> 相关的知识而一度不知道要干什么。无奈查阅相关的资料，顺便问了问做 web 的小伙伴。</p>
+<p>扫 web 目录，好像很有道理，以后还要好好学习。这里我使用 <strong>dirb</strong> 这个工具：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">dirb http://192.168.56.106
+</code></pre></td></tr></table>
+</div>
+</div><p>扫描的结果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">-----------------
+DIRB v2.22
+By The Dark Raver
+-----------------
+
+START_TIME: Sat Jul 25 15:30:55 2020
+URL_BASE: http://192.168.56.106/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://192.168.56.106/ ----
++ http://192.168.56.106/cgi-bin/ (CODE:403|SIZE:290)
++ http://192.168.56.106/hacker (CODE:200|SIZE:3757743)
++ http://192.168.56.106/index (CODE:200|SIZE:2333)
++ http://192.168.56.106/index.html (CODE:200|SIZE:2333)
++ http://192.168.56.106/robots (CODE:200|SIZE:79)
++ http://192.168.56.106/robots.txt (CODE:200|SIZE:79)
++ http://192.168.56.106/server-status (CODE:403|SIZE:295)
+
+-----------------
+END_TIME: Sat Jul 25 15:30:56 2020
+DOWNLOADED: 4612 - FOUND: 7
+
+</code></pre></td></tr></table>
+</div>
+</div><p>其中 robots 和 robots.txt 内容相同，为一串数字字母的组合：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">R29vZCBXb3JrICEKRmxhZzE6IGN5YmVyc3Bsb2l0e3lvdXR1YmUuY29tL2MvY3liZXJzcGxvaXR9
+</code></pre></td></tr></table>
+</div>
+</div><p>明显是 <strong>Base64</strong> 编码的结果，使用 <strong>rax2 -D</strong> 得到原文：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">rax2 -D R29vZCBXb3JrICEKRmxhZzE6IGN5YmVyc3Bsb2l0e3lvdXR1YmUuY29tL2MvY3liZXJzcGxvaXR9
+Good Work !
+Flag1: cybersploit<span class="o">{</span>youtube.com/c/cybersploit<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>结合之前得到的用户名，将 flag1 作为密码可以 SSH 登陆到系统，在用户的根目录下可以得到 flag2.txt，是一个由二进制数字构成的文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">01100111 01101111 01101111 01100100 00100000 01110111 01101111 01110010 01101011 00100000 00100001 00001010 01100110 01101100 01100001 01100111 00110010 00111010 00100000 01100011 01111001 01100010 01100101 01110010 01110011 01110000 01101100 01101111 01101001 01110100 01111011 01101000 01110100 01110100 01110000 01110011 00111010 01110100 00101110 01101101 01100101 00101111 01100011 01111001 01100010 01100101 01110010 01110011 01110000 01101100 01101111 01101001 01110100 00110001 01111101
+</code></pre></td></tr></table>
+</div>
+</div><p>使用 <a href="http://www.toolsxx.com/code/zizzy.php">XX在线工具</a> 转换成 ASCII：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">good work ! flag2: cybersploit{https:t.me/cybersploit1}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="权限提升">权限提升</h2>
+<p>至此已经拿到了两个 flag，题目中介绍一共有 3 个 flag。查看 <strong>/etc/passwd</strong> 文件可以发现系统中还有一个用户 <strong>cybersploit</strong> (UID为1000)，尝试使用 flag2 登陆失败。继续收集信息，查看系统版本和内核版本，可知靶机运行着 <strong>Ubuntu 12.04.5 LTS</strong>，内核版本为 <strong>3.13.0-32-generic</strong>。系统版本十分旧，直接考虑内核提权。使用 searchsploit 命令搜索 <strong>exploit-db</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">searchsploit linux kernel 3.13
+
+---------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                                              <span class="p">|</span>  Path
+---------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Linux Kernel <span class="o">(</span>Solaris <span class="m">10</span> / &lt; 5.10 138888-01<span class="o">)</span> - Local Privilege Escalation                                                   <span class="p">|</span> solaris/local/15962.c
+Linux Kernel 3.11 &lt; 4.8 <span class="m">0</span> - <span class="s1">&#39;SO_SNDBUFFORCE&#39;</span> / <span class="s1">&#39;SO_RCVBUFFORCE&#39;</span> Local Privilege Escalation                                  <span class="p">|</span> linux/local/41995.c
+Linux Kernel 3.13 - SGID Privilege Escalation                                                                               <span class="p">|</span> linux/local/33824.c
+Linux Kernel 3.13.0 &lt; 3.19 <span class="o">(</span>Ubuntu 12.04/14.04/14.10/15.04<span class="o">)</span> - <span class="s1">&#39;overlayfs&#39;</span> Local Privilege Escalation                        <span class="p">|</span> linux/local/37292.c
+Linux Kernel 3.13.0 &lt; 3.19 <span class="o">(</span>Ubuntu 12.04/14.04/14.10/15.04<span class="o">)</span> - <span class="s1">&#39;overlayfs&#39;</span> Local Privilege Escalation <span class="o">(</span>Access /etc/shadow<span class="o">)</span>   <span class="p">|</span> linux/local/37293.txt
+Linux Kernel 3.13.1 - <span class="s1">&#39;Recvmmsg&#39;</span> Local Privilege Escalation <span class="o">(</span>Metasploit<span class="o">)</span>                                                    <span class="p">|</span> linux/local/40503.rb
+Linux Kernel 3.13/3.14 <span class="o">(</span>Ubuntu<span class="o">)</span> - <span class="s1">&#39;splice()&#39;</span> System Call Local Denial of Service                                            <span class="p">|</span> linux/dos/36743.c
+Linux Kernel 3.14-rc1 &lt; 3.15-rc4 <span class="o">(</span>x64<span class="o">)</span> - Raw Mode PTY Echo Race Condition Privilege Escalation                              <span class="p">|</span> linux_x86-64/local/33516.c
+Linux Kernel 3.4 &lt; 3.13.2 <span class="o">(</span>Ubuntu 13.04/13.10 x64<span class="o">)</span> - <span class="s1">&#39;CONFIG_X86_X32=y&#39;</span> Local Privilege Escalation <span class="o">(</span>3<span class="o">)</span>                      <span class="p">|</span> linux_x86-64/local/31347.c
+Linux Kernel 3.4 &lt; 3.13.2 <span class="o">(</span>Ubuntu 13.10<span class="o">)</span> - <span class="s1">&#39;CONFIG_X86_X32&#39;</span> Arbitrary Write <span class="o">(</span>2<span class="o">)</span>                                             <span class="p">|</span> linux/local/31346.c
+Linux Kernel 3.4 &lt; 3.13.2 - recvmmsg x32 compat <span class="o">(</span>PoC<span class="o">)</span>                                                                       <span class="p">|</span> linux/dos/31305.c
+Linux Kernel 4.10.5 / &lt; 4.14.3 <span class="o">(</span>Ubuntu<span class="o">)</span> - DCCP Socket Use-After-Free                                                        <span class="p">|</span> linux/dos/43234.c
+Linux Kernel 4.8.0 UDEV &lt; <span class="m">232</span> - Local Privilege Escalation                                                                  <span class="p">|</span> linux/local/41886.c
+Linux Kernel &lt; 3.16.1 - <span class="s1">&#39;Remount FUSE&#39;</span> Local Privilege Escalation                                                           <span class="p">|</span> linux/local/34923.c
+Linux Kernel &lt; 3.16.39 <span class="o">(</span>Debian <span class="m">8</span> x64<span class="o">)</span> - <span class="s1">&#39;inotfiy&#39;</span> Local Privilege Escalation                                                <span class="p">|</span> linux/local/44302.c
+Linux Kernel &lt; 4.10.13 - <span class="s1">&#39;keyctl_set_reqkey_keyring&#39;</span> Local Denial of Service                                                <span class="p">|</span> linux/dos/42136.c
+Linux kernel &lt; 4.10.15 - Race Condition Privilege Escalation                                                                <span class="p">|</span> linux/local/43345.c
+Linux Kernel &lt; 4.11.8 - <span class="s1">&#39;mq_notify: double sock_put()&#39;</span> Local Privilege Escalation                                           <span class="p">|</span> linux/local/45553.c
+Linux Kernel &lt; 4.13.1 - BlueTooth Buffer Overflow <span class="o">(</span>PoC<span class="o">)</span>                                                                     <span class="p">|</span> linux/dos/42762.txt
+Linux Kernel &lt; 4.13.9 <span class="o">(</span>Ubuntu 16.04 / Fedora 27<span class="o">)</span> - Local Privilege Escalation                                               <span class="p">|</span> linux/local/45010.c
+Linux Kernel &lt; 4.14.rc3 - Local Denial of Service                                                                           <span class="p">|</span> linux/dos/42932.c
+Linux Kernel &lt; 4.15.4 - <span class="s1">&#39;show_floppy&#39;</span> KASLR Address Leak                                                                    <span class="p">|</span> linux/local/44325.c
+Linux Kernel &lt; 4.16.11 - <span class="s1">&#39;ext4_read_inline_data()&#39;</span> Memory Corruption                                                        <span class="p">|</span> linux/dos/44832.txt
+Linux Kernel &lt; 4.17-rc1 - <span class="s1">&#39;AF_LLC&#39;</span> Double Free                                                                              <span class="p">|</span> linux/dos/44579.c
+Linux Kernel &lt; 4.4.0-116 <span class="o">(</span>Ubuntu 16.04.4<span class="o">)</span> - Local Privilege Escalation                                                      <span class="p">|</span> linux/local/44298.c
+Linux Kernel &lt; 4.4.0-21 <span class="o">(</span>Ubuntu 16.04 x64<span class="o">)</span> - <span class="s1">&#39;netfilter target_offset&#39;</span> Local Privilege Escalation                           <span class="p">|</span> linux/local/44300.c
+Linux Kernel &lt; 4.4.0-83 / &lt; 4.8.0-58 <span class="o">(</span>Ubuntu 14.04/16.04<span class="o">)</span> - Local Privilege Escalation <span class="o">(</span>KASLR / SMEP<span class="o">)</span>                       <span class="p">|</span> linux/local/43418.c
+Linux Kernel &lt; 4.4.0/ &lt; 4.8.0 <span class="o">(</span>Ubuntu 14.04/16.04 / Linux Mint 17/18 / Zorin<span class="o">)</span> - Local Privilege Escalation <span class="o">(</span>KASLR / SMEP<span class="o">)</span>   <span class="p">|</span> linux/local/47169.c
+Linux Kernel &lt; 4.5.1 - Off-By-One <span class="o">(</span>PoC<span class="o">)</span>                                                                                     <span class="p">|</span> linux/dos/44301.c
+---------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Shellcodes: No Results
+
+</code></pre></td></tr></table>
+</div>
+</div><p>这里我使用 <strong>overlayfs</strong>，将文件上传到靶机中，编译运行，直接获得 <strong>root</strong> 权限：</p>
+<p><img src="/images/2020-07-25/root.webp" alt="获得root"></p>
+<p>在 <strong>/root</strong> 目录下面有最终的 flag 文件 <strong>finalflag.txt</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">  ______ ____    ____ .______    _______ .______          _______..______    __        ______    __  .___________.
+ /      |\   \  /   / |   _  \  |   ____||   _  \        /       ||   _  \  |  |      /  __  \  |  | |           |
+|  ,----&#39; \   \/   /  |  |_)  | |  |__   |  |_)  |      |   (----`|  |_)  | |  |     |  |  |  | |  | `---|  |----`
+|  |       \_    _/   |   _  &lt;  |   __|  |      /        \   \    |   ___/  |  |     |  |  |  | |  |     |  |     
+|  `----.    |  |     |  |_)  | |  |____ |  |\  \----.----)   |   |  |      |  `----.|  `--&#39;  | |  |     |  |     
+ \______|    |__|     |______/  |_______|| _| `._____|_______/    | _|      |_______| \______/  |__|     |__|     
+                                                                                                                  
+
+   _   _   _   _   _   _   _   _   _   _   _   _   _   _   _  
+  / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ / \ 
+ ( c | o | n | g | r | a | t | u | l | a | t | i | o | n | s )
+  \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ \_/ 
+
+flag3: cybersploit{Z3X21CW42C4 many many congratulations !}
+
+if you like it share with me https://twitter.com/cybersploit1.
+
+Thanks !
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-07-25
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-07-28-virtualbox-cli-%E4%BD%BF%E7%94%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Virtualbox CLI 使用</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-06-06-hexo-nodejs/">
+            <span class="next-text nav-default">Hexo Nodejs 相关</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

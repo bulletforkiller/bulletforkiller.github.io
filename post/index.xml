@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/post/</link>
+    <description>Recent content in Posts on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 29 Oct 2020 10:09:06 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hackthebox-Doctor</title>
+      <link>https://bulletforkiller.github.io/post/2020-10-29-hackthebox-doctor/</link>
+      <pubDate>Thu, 29 Oct 2020 10:09:06 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-10-29-hackthebox-doctor/</guid>
+      <description>基本介绍 靶机介绍 难度为 easy, 操作系统为 Linux。 工具列表 User flag 端口扫描就服务发现 使用 Nmap 进行全 TCP 端口扫描 1 nmap -sS -p- 10.10.10.209 -T4 Not shown: 65532 filtered ports PORT STATE SERVICE 22/tcp open ssh 80/tcp open http 8089/tcp</description>
+    </item>
+    
+    <item>
+      <title>Hackthebox-Tabby</title>
+      <link>https://bulletforkiller.github.io/post/2020-10-11-hackthebox-tabby/</link>
+      <pubDate>Sun, 11 Oct 2020 13:58:50 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-10-11-hackthebox-tabby/</guid>
+      <description>前言 之前一段时间一直在做 Vulnhub，但是感觉自己的能力提升比较有限，于是打算换换口味做做好评如潮的 Hackthebox，毕竟注册都能给人</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub-Pwned: 1</title>
+      <link>https://bulletforkiller.github.io/post/2020-09-21-vulnhub-pwned-1/</link>
+      <pubDate>Mon, 21 Sep 2020 13:40:18 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-09-21-vulnhub-pwned-1/</guid>
+      <description>基本介绍 靶机地址 https://www.vulnhub.com/entry/pwned-1,507/ 目标 获取 3 个 flag。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.14 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 rustbuster 1.0.4 信息收集 获取 IP 地址 使用</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub-Photographer</title>
+      <link>https://bulletforkiller.github.io/post/2020-09-06-vulnhub-photographer/</link>
+      <pubDate>Sun, 06 Sep 2020 15:12:39 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-09-06-vulnhub-photographer/</guid>
+      <description>基本介绍 靶机地址 https://www.vulnhub.com/entry/photographer-1,519/ 目标 获取两个 flag：user.txt，proof.txt。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub-Overflow</title>
+      <link>https://bulletforkiller.github.io/post/2020-08-30-vulnhub-overflow/</link>
+      <pubDate>Sun, 30 Aug 2020 17:31:18 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-08-30-vulnhub-overflow/</guid>
+      <description>基本介绍 靶机地址 https://www.vulnhub.com/entry/overflow-1,300/ 目标 获取两个 flag，user / root。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 Ubuntu in docker 16.04.7 LTS 工具版本 名称 版本</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub-Unknowndevice64_2</title>
+      <link>https://bulletforkiller.github.io/post/2020-08-23-vulnhub-unknowndevice64-2/</link>
+      <pubDate>Sun, 23 Aug 2020 10:19:03 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-08-23-vulnhub-unknowndevice64-2/</guid>
+      <description>基本介绍 靶机地址 https://www.vulnhub.com/entry/unknowndevice64-2,297/ 目标 获得 root 权限，读取 flag.txt 文件，至少存在两种不同的方法。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具版本 名称 版本</description>
+    </item>
+    
+    <item>
+      <title>日常 Git 踩坑</title>
+      <link>https://bulletforkiller.github.io/post/2020-08-22-%E6%97%A5%E5%B8%B8-git-%E8%B8%A9%E5%9D%91/</link>
+      <pubDate>Sat, 22 Aug 2020 16:09:48 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-08-22-%E6%97%A5%E5%B8%B8-git-%E8%B8%A9%E5%9D%91/</guid>
+      <description>鄙人作为一个业余 Coder，Git 自然是用的不咋滴。于是在此做一些备忘，方便以后查询，本文将长期更新。 更新 gitignore 不起作用 gitignore 对于已经追踪的文件是不</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub-Unknowndevice64_1</title>
+      <link>https://bulletforkiller.github.io/post/2020-08-19-vulnhub-unknowndevice64-1/</link>
+      <pubDate>Wed, 19 Aug 2020 13:10:35 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-08-19-vulnhub-unknowndevice64-1/</guid>
+      <description>基本介绍 靶机地址 https://www.vulnhub.com/entry/unknowndevice64-1,293/ 目标 获得 root 权限并读取 /root/flag.txt 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 wfuzz 2.4.7 steghide 0.5.1 基本信息收集 获取 IP</description>
+    </item>
+    
+    <item>
+      <title>Linux 命令行弹出可移动磁盘</title>
+      <link>https://bulletforkiller.github.io/post/2020-08-16-linux-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%B9%E5%87%BA%E5%8F%AF%E7%A7%BB%E5%8A%A8%E7%A3%81%E7%9B%98/</link>
+      <pubDate>Sun, 16 Aug 2020 16:05:12 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-08-16-linux-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%B9%E5%87%BA%E5%8F%AF%E7%A7%BB%E5%8A%A8%E7%A3%81%E7%9B%98/</guid>
+      <description>Linux 用的越多，便越想使用命令行解决所有的事情（虽然很大程度上是不可能的）。笔者经常使用移动存储介质如 U盘、移动硬盘之类的，关于如何弹出一直存在</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub - Mr Robot</title>
+      <link>https://bulletforkiller.github.io/post/2020-08-10-vulnhub-mr-robot/</link>
+      <pubDate>Mon, 10 Aug 2020 09:24:54 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-08-10-vulnhub-mr-robot/</guid>
+      <description>靶机信息 下载地址 https://www.vulnhub.com/entry/mr-robot-1,151/ 目标 靶机内藏有 3 个 key，需要全部获得，而难度逐渐递增。 环境介绍 名称 介绍 主机 Manjaro 20.0.3 虚拟化软件 Virtualbox 6.1.10 网络类型 Host-Only (vboxnet0) 基本信息收集 靶机</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub-Kioptrix_level_4</title>
+      <link>https://bulletforkiller.github.io/post/2020-08-04-vulnhub-kioptrix-4/</link>
+      <pubDate>Tue, 04 Aug 2020 15:00:53 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-08-04-vulnhub-kioptrix-4/</guid>
+      <description>靶机地址 https://www.vulnhub.com/entry/kioptrix-level-13-4,25/ 信息收集 获得 IP {% blockquote %} nmap -sn 192.168.56.0/24 Starting Nmap 7.80 ( https://nmap.org ) at 2020-08-03 13:19 CST Nmap scan report for 192.168.56.1 Host is up (0.00095s latency). Nmap scan report for 192.168.56.114 Host is up (0.0011s latency). Nmap done: 256 IP addresses (2 hosts up) scanned in 2.42 seconds {% endblockquote %} 端口枚举及服务</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub-KioptrixVM3</title>
+      <link>https://bulletforkiller.github.io/post/2020-07-31-vulnhub-kioptrixvm3/</link>
+      <pubDate>Fri, 31 Jul 2020 10:39:56 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-07-31-vulnhub-kioptrixvm3/</guid>
+      <description>靶机介绍 靶机描述 It&amp;rsquo;s been a while since the last Kioptrix VM challenge. Life keeps getting the way of these things you know. After the seeing the number of downloads for the last two, and the numerous videos showing ways to beat these challenges. I felt that 1.2 (or just level 3) needed to come out. Thank you to all that downloaded and played the</description>
+    </item>
+    
+    <item>
+      <title>awk 学习</title>
+      <link>https://bulletforkiller.github.io/post/2020-07-30-awk/</link>
+      <pubDate>Thu, 30 Jul 2020 11:16:29 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-07-30-awk/</guid>
+      <description>awk 这个命令之前见过几次，但是就是不会用；上大学时 Linux 课程中老师同样讲过这个命令，可惜怎么用不记得了，梗还记着：awk —— Awkward。昨天做</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub - Kioptrix_1</title>
+      <link>https://bulletforkiller.github.io/post/2020-07-29-vulnhub-kioptrix-1/</link>
+      <pubDate>Wed, 29 Jul 2020 10:11:50 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-07-29-vulnhub-kioptrix-1/</guid>
+      <description>靶机介绍 靶机地址 Kioptrix_1 靶机描述 This Kioptrix VM Image are easy challenges. The object of the game is to acquire root access via any means possible (except actually hacking the VM server or player). The purpose of these games are to learn the basic tools and techniques in vulnerability assessment and exploitation. There are more ways then one to successfully complete the</description>
+    </item>
+    
+    <item>
+      <title>Virtualbox CLI 使用</title>
+      <link>https://bulletforkiller.github.io/post/2020-07-28-virtualbox-cli-%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 28 Jul 2020 09:47:44 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-07-28-virtualbox-cli-%E4%BD%BF%E7%94%A8/</guid>
+      <description>Virtualbox 是一款免费的优秀虚拟化软件，也是我使用最多的软件之一。当同时管理大量的虚拟机时，使用 GUI 进行操作有时便显得力不从心。比如在一堆虚拟机中找到某</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub 之 CyberSplot:1</title>
+      <link>https://bulletforkiller.github.io/post/2020-07-25-vuln/</link>
+      <pubDate>Sat, 25 Jul 2020 17:03:48 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-07-25-vuln/</guid>
+      <description>靶机介绍 THIS IS A MACHINE FOR COMPLETE BEGINNER , THERE ARE THREE FALGS AVAILABLE IN THIS VM. FROM THIS VMs YOU WILL LEARN ABOUT ENCODER-DECODER &amp;amp; EXPLOIT-DB. 环境介绍 该靶机是 OVA 格式的，使用虚拟机导入即可，此处我是用 Virtualbox，版</description>
+    </item>
+    
+    <item>
+      <title>Hexo Nodejs 相关</title>
+      <link>https://bulletforkiller.github.io/post/2020-06-06-hexo-nodejs/</link>
+      <pubDate>Sat, 06 Jun 2020 18:00:47 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-06-06-hexo-nodejs/</guid>
+      <description>最近对博客进行了一些调整和优化，使用的 Hexo 是基于 Nodejs 的框架，在此记录其中的一些心得和才过的坑。 依赖库的升级 虽说依赖库完全不更新也不会导致可用性的</description>
+    </item>
+    
+    <item>
+      <title>Radare2 常用命令备忘</title>
+      <link>https://bulletforkiller.github.io/post/2020-06-06-radare2/</link>
+      <pubDate>Sat, 06 Jun 2020 15:40:52 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-06-06-radare2/</guid>
+      <description>Radare2 是一款开源的二进制平台，功能强大。日常中的许多工作不知不觉已经依赖 Radare2 来进行，下面记录一些平时常用的功能和命令: 汇编 &amp;amp; 反汇编 该部分借助 rasm2 组件</description>
+    </item>
+    
+    <item>
+      <title>pwnable.kr alloca</title>
+      <link>https://bulletforkiller.github.io/post/2020-06-04-pwnable-kr-alloca/</link>
+      <pubDate>Thu, 04 Jun 2020 18:58:07 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-06-04-pwnable-kr-alloca/</guid>
+      <description>难得最近比较清闲，大好时间用来找虐最好不过了（误：刷题）。仅有兴趣还是搞不好二进制的，还是多练练基本功来得实在。于是继续 pwnable.kr 之旅，日后将逐渐补</description>
+    </item>
+    
+    <item>
+      <title>N卡 &#43; Gnome启用Wayland</title>
+      <link>https://bulletforkiller.github.io/post/2020-04-22-n/</link>
+      <pubDate>Wed, 22 Apr 2020 10:21:26 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-04-22-n/</guid>
+      <description>昨日给心爱的笔记本外接了家中老爷机的显示器，感觉总算是舒服些了，然而重启切换到 Manjaro 下灾难才刚刚开始。Win 下多块屏幕以不同的缩放率显示没有什么</description>
+    </item>
+    
+    <item>
+      <title>X64 调用约定</title>
+      <link>https://bulletforkiller.github.io/post/2020-04-08-x64/</link>
+      <pubDate>Wed, 08 Apr 2020 18:50:06 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-04-08-x64/</guid>
+      <description>孩子记性老不好，多半是废了。最近懒病爆发，实在没有办法，只能让自己多写点东西了（太堕落了，再这么下去真废了）。。。进入正题。 调用约定这个东西</description>
+    </item>
+    
+    <item>
+      <title>python 创建空生成器</title>
+      <link>https://bulletforkiller.github.io/post/2020-03-10-python/</link>
+      <pubDate>Tue, 10 Mar 2020 10:25:18 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-03-10-python/</guid>
+      <description>前两天写代码突然有一个很奇怪的想法————产生一个空的生成器。其实也不奇怪，就是为了代码风格的统一而已。假设有一个返回可迭代对象作为结果的函</description>
+    </item>
+    
+    <item>
+      <title>随机数漫谈</title>
+      <link>https://bulletforkiller.github.io/post/2020-03-04-%E9%9A%8F%E6%9C%BA%E6%95%B0%E6%BC%AB%E8%B0%88/</link>
+      <pubDate>Wed, 04 Mar 2020 13:16:42 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-03-04-%E9%9A%8F%E6%9C%BA%E6%95%B0%E6%BC%AB%E8%B0%88/</guid>
+      <description>略坑的 rand 下午在水群的时候无意看见一位学弟的提问，为什么自己写的C语言程序中前后两次使用rand获取的随机数是相同的。代码嘛具体记不全了，这里</description>
+    </item>
+    
+    <item>
+      <title>WinXP 符号表缺失解决</title>
+      <link>https://bulletforkiller.github.io/post/2020-03-03-winxp-%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%BC%BA%E5%A4%B1%E8%A7%A3%E5%86%B3/</link>
+      <pubDate>Tue, 03 Mar 2020 15:29:54 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-03-03-winxp-%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%BC%BA%E5%A4%B1%E8%A7%A3%E5%86%B3/</guid>
+      <description>最近自我感觉非常颓，简直懒到要命。为了不荒废这个博客还是拉点东西出来水水比较好，就当做是备忘和吐嘈吧。前一阵子算是吧WinDbg给搞起来了，</description>
+    </item>
+    
+    <item>
+      <title>Manjaro 更换镜像源</title>
+      <link>https://bulletforkiller.github.io/post/2020-02-26-manjaro-%E6%9B%B4%E6%8D%A2%E9%95%9C%E5%83%8F%E6%BA%90/</link>
+      <pubDate>Wed, 26 Feb 2020 11:17:09 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-02-26-manjaro-%E6%9B%B4%E6%8D%A2%E9%95%9C%E5%83%8F%E6%BA%90/</guid>
+      <description>话说Manjaro真是一个不错的发行版，虽说是Arch的衍生版本却比Arch稳定些，最重要的是安装起来简便不少，节约不少时间，于是我很快就真</description>
+    </item>
+    
+    <item>
+      <title>CVE-2010-3333 分析</title>
+      <link>https://bulletforkiller.github.io/post/2020-02-18-cve-2010-3333-%E5%88%86%E6%9E%90/</link>
+      <pubDate>Tue, 18 Feb 2020 16:48:35 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-02-18-cve-2010-3333-%E5%88%86%E6%9E%90/</guid>
+      <description>漏洞介绍 一个栈溢出漏洞，影响 Microsoft Office 系列的产品，包括 Microsot Office XP SP3, Office 2003 SP3, Office 2007 SP2, Office 2010 等多个系列。Word 在处理 RTF 格式文档的 pFragments 属性存在栈溢出，从而导致远程</description>
+    </item>
+    
+    <item>
+      <title>WinDbg 安装配置</title>
+      <link>https://bulletforkiller.github.io/post/2020-02-16-windbg-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sun, 16 Feb 2020 14:55:18 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-02-16-windbg-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</guid>
+      <description>最近开始研究 Windows 平台上的一些漏洞，研究就不免要去复现、调试，可是总感觉缺少顺手的工具。作为一个菜鸡加业余的二进制选手，题没做出来几个，工具玩着</description>
+    </item>
+    
+    <item>
+      <title>CVE-2010-2883 分析</title>
+      <link>https://bulletforkiller.github.io/post/2020-02-14-cve-2010-2883-%E5%88%86%E6%9E%90/</link>
+      <pubDate>Fri, 14 Feb 2020 22:53:05 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-02-14-cve-2010-2883-%E5%88%86%E6%9E%90/</guid>
+      <description>漏洞介绍 CVE-2010-2883 是 Adobe 公司 PDF 相关工具（Adobe Reader 和 Adobe Acrobat）的一个漏洞，针对所有 9.4 以前（9.x）、8.2.5 以前（8.x）的 Windows 和 Mac OS X。攻</description>
+    </item>
+    
+    <item>
+      <title>Hexo 博客搭建 (一)</title>
+      <link>https://bulletforkiller.github.io/post/2020-02-11-hexo-%E9%83%A8%E7%BD%B2-%E4%B8%80/</link>
+      <pubDate>Tue, 11 Feb 2020 12:57:29 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-02-11-hexo-%E9%83%A8%E7%BD%B2-%E4%B8%80/</guid>
+      <description>瞎扯 很久以来，小J并不知道为何要搭建博客。只是看别人都有，感觉很炫酷的样子，于是自己也不能没有。于是乎，借着自己会一点 Python，便兴冲冲</description>
+    </item>
+    
+  </channel>
+</rss>

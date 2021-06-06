@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>虚拟化 on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/categories/%E8%99%9A%E6%8B%9F%E5%8C%96/</link>
+    <description>Recent content in 虚拟化 on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 28 Jul 2020 09:47:44 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/categories/%E8%99%9A%E6%8B%9F%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Virtualbox CLI 使用</title>
+      <link>https://bulletforkiller.github.io/post/2020-07-28-virtualbox-cli-%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 28 Jul 2020 09:47:44 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-07-28-virtualbox-cli-%E4%BD%BF%E7%94%A8/</guid>
+      <description>Virtualbox 是一款免费的优秀虚拟化软件，也是我使用最多的软件之一。当同时管理大量的虚拟机时，使用 GUI 进行操作有时便显得力不从心。比如在一堆虚拟机中找到某</description>
+    </item>
+    
+  </channel>
+</rss>

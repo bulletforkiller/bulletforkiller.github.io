@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Manjaro on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/tags/manjaro/</link>
+    <description>Recent content in Manjaro on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 22 Apr 2020 10:21:26 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/tags/manjaro/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>N卡 &#43; Gnome启用Wayland</title>
+      <link>https://bulletforkiller.github.io/post/2020-04-22-n/</link>
+      <pubDate>Wed, 22 Apr 2020 10:21:26 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-04-22-n/</guid>
+      <description>昨日给心爱的笔记本外接了家中老爷机的显示器，感觉总算是舒服些了，然而重启切换到 Manjaro 下灾难才刚刚开始。Win 下多块屏幕以不同的缩放率显示没有什么</description>
+    </item>
+    
+    <item>
+      <title>Manjaro 更换镜像源</title>
+      <link>https://bulletforkiller.github.io/post/2020-02-26-manjaro-%E6%9B%B4%E6%8D%A2%E9%95%9C%E5%83%8F%E6%BA%90/</link>
+      <pubDate>Wed, 26 Feb 2020 11:17:09 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-02-26-manjaro-%E6%9B%B4%E6%8D%A2%E9%95%9C%E5%83%8F%E6%BA%90/</guid>
+      <description>话说Manjaro真是一个不错的发行版，虽说是Arch的衍生版本却比Arch稳定些，最重要的是安装起来简便不少，节约不少时间，于是我很快就真</description>
+    </item>
+    
+  </channel>
+</rss>

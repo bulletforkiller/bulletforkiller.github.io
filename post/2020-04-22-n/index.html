@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>N卡 &#43; Gnome启用Wayland - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="昨日给心爱的笔记本外接了家中老爷机的显示器，感觉总算是舒服些了，然而重启切换到 Manjaro 下灾难才刚刚开始。Win 下多块屏幕以不同的缩放率显示没有什么" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-04-22-n/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="N卡 &#43; Gnome启用Wayland" />
+<meta property="og:description" content="昨日给心爱的笔记本外接了家中老爷机的显示器，感觉总算是舒服些了，然而重启切换到 Manjaro 下灾难才刚刚开始。Win 下多块屏幕以不同的缩放率显示没有什么" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-04-22-n/" />
+<meta property="article:published_time" content="2020-04-22T10:21:26+00:00" />
+<meta property="article:modified_time" content="2020-04-22T10:21:26+00:00" />
+<meta itemprop="name" content="N卡 &#43; Gnome启用Wayland">
+<meta itemprop="description" content="昨日给心爱的笔记本外接了家中老爷机的显示器，感觉总算是舒服些了，然而重启切换到 Manjaro 下灾难才刚刚开始。Win 下多块屏幕以不同的缩放率显示没有什么">
+<meta itemprop="datePublished" content="2020-04-22T10:21:26+00:00" />
+<meta itemprop="dateModified" content="2020-04-22T10:21:26+00:00" />
+<meta itemprop="wordCount" content="1750">
+
+
+
+<meta itemprop="keywords" content="Manjaro," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="N卡 &#43; Gnome启用Wayland"/>
+<meta name="twitter:description" content="昨日给心爱的笔记本外接了家中老爷机的显示器，感觉总算是舒服些了，然而重启切换到 Manjaro 下灾难才刚刚开始。Win 下多块屏幕以不同的缩放率显示没有什么"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">N卡 &#43; Gnome启用Wayland</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-04-22 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>昨日给心爱的笔记本外接了家中老爷机的显示器，感觉总算是舒服些了，然而重启切换到 Manjaro 下灾难才刚刚开始。Win 下多块屏幕以不同的缩放率显示没有什么大的问题，绝大多数的应用程序都能完美显示，除了有些看起来有点糊；而 Linux 这边嘛，一直用的 Gnome 却只能全局缩放，要么大到爆炸，要么小到瞎眼，等于说还是只有一块正常显示的显示器。</p>
+<p>作为一个强迫症患者怎么能忍！随手 Baidu 下得知 Gnome 可以支持多个不同的缩放率，前提是得使用 Wayland 显示管理器。对于 Wayland 这个玩意可以说是没什么好感（PS: 之前有一次折腾到凌晨就为启用 Wayland，结果搞崩了系统，人生重在折腾。。。），虽说意在取代 X，但目前来看，你开心就好。</p>
+<p>还是不甘心，这么NB的 Wayland 我也应该用用才对，说不定能解决我显示器的问题。又想起来一件更加坑的事情，N卡的闭源驱动天生对 Wayland 免疫（至少 Baidu Google 得到的都是这个结果），而开源驱动 Nouveau 很残废，cuda 之类的都别想用了；还有更坑的是我的笔记本是屏蔽了牙膏的核显，N卡直连显示器的那种（对没错，GSYNC 的锅）。</p>
+<p>既然是用 Manjaro 的，就翻翻 Archlinux Wiki 吧，看看还有得救嘛。这一顿操作下来，倒是了解了一个有趣的故事。Wayland 由于在原理上和 X 完全不同，其开发人员便去找 A家、I家和 N家去谈，三家表示都很支持 Wayland，表示日后的驱动都会大力支持。关于设备的内存管理，Intel 和 AMD 的驱动 都使用了 <a href="https://en.wikipedia.org/wiki/Mesa_(computer_graphics)#Generic_Buffer_Management">GBM</a> API，而 Nvidia 却另起炉灶，推出了 EGLStream 并声明不会使用 GBM。所以对 Nvidia 竖中指的除了 Linus 估计还有 Wayland 的开发人员，其对于 N 卡的支持不佳便可以理解了。</p>
+<p>但是接着翻看到了一个好玩的东西，KMS（并非 Win 的那个 KMS）。全称为 Kernel mode setting，是一种从内核空间更改显示分辨率和深度等显示参数的方法，优点嘛，性能提升功耗降低巴拉巴拉一堆。最直观的可能就是从图形界面切换到 tty 的速度有明显的提升（个人感觉是快了些）。重点：<strong>Wayland 依赖于 KMS</strong>。接着看，Nvidia 的闭源驱动从 364.12 开始支持 KMS，但默认不开启。怎么开启呢，添加一个内核参数就可以。开启会怎样呢，默认会启用 Wayland。等等，这么神奇的嘛，马上就开。</p>
+<p>这个改内核参数嘛，直接在开机后的 Grub 界面改是完全可以的，只不过下次重启就会失效；改 <em>/boot/grub/grub.cfg</em> 是持久修改；而我改的是 <em>/etc/default/grub</em>，感觉这样更安全些。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">GRUB_CMDLINE_LINUX_DEFAULT=&#34;... nvidia-drm.modeset=1&#34;
+</code></pre></td></tr></table>
+</div>
+</div><p>在 <strong>GRUB_CMDLINE_LINUX_DEFAULT</strong> 选项的末尾添加 <strong>nvidia-drm.modeset=1</strong> 即可。然后重新生成 Grub 的配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre></td></tr></table>
+</div>
+</div><p>KMS 还有一个加载早晚的区分，即其相对于 <strong>initramfs</strong> 的加载时机，仅仅修改内核参数后将在 <strong>initramfs</strong> 阶段后加载。至于区别嘛，我暂时也没有搞清楚，实现在 <strong>initramfs</strong> 阶段加载也比较容易。修改 <em>/etc/mkinitcpio.conf</em> 即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">MODULES=(... nvidia nvidia_modeset nvidia_uvm nvidia_drm...)
+</code></pre></td></tr></table>
+</div>
+</div><p>修改 MODULES，添加显示卡所用的驱动即可，我这里是 N卡，就写这些；对于其它显卡可以参考 <a href="https://wiki.archlinux.org/index.php/Kernel_mode_setting#Early_KMS_start">这里</a>。修改完后重新生成 <strong>initramfs</strong> 即可，可以参考 <a href="https://wiki.archlinux.org/index.php/Mkinitcpio#Image_creation_and_activation">这篇文章</a>，麻烦的是每次升级完显卡驱动便要重新生成，而且有多个内核的话要注意 Present，我生成的命令如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">mkinitcpio -p linux55
+</code></pre></td></tr></table>
+</div>
+</div><p>对了，默认情况下 Gnome 的桌面管理器 GDM 可能是禁用 Wayland 的。注释掉 <em>/etc/gdm/custom.conf</em> 中的这行即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># Uncoment the line below to force the login screen to use Xorg
+# WaylandEnable=false
+</code></pre></td></tr></table>
+</div>
+</div><p>到此为之重启就好，假如还能成功登陆，在命令行中输入：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="nv">$XDG_SESSION_TYPE</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>结果是 <strong>Wayland</strong>，就代表你成功了。打开设置，双屏缩放再也不是问题。可是还没有兴奋几分钟，一盆凉水就浇了下来，打开了几个程序试了试还是翻车，难道我的 <strong>Wayland</strong> 是假的？？可是打开 Gnome 全家桶譬如 Terminal、Calc之类的，都很完美啊。继续看 Wiki，原来是大部分的程序暂时都不兼容 <strong>Wayland</strong> 导致的。而基于 GTK3 的程序是完美兼容的，然而哪来那么多的 GTK3 程序。</p>
+<p>最终统计了下，日常用的程序只有 Firefox (版本 75) 能正常显示，不过得稍稍设置一下，添加一个环境变量即可。对于 Wayland，可以在 <em>$HOME/.config/environment.d</em> 下放置用户的环境变量，创建以 <em>.conf</em> 文件即可，这种文件是不会被 X 系统读取的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># firefox.conf
+MOZ_ENABLE_WAYLAND=1
+</code></pre></td></tr></table>
+</div>
+</div><p>保存后重启下，除了被镶了个大黑边之外 firefox 还算正常(全屏无视)，问题从显示管理器不支持转嫁到了应用程序不支持。。。真是令人无语。如果仅仅如此就算了，Wayland 明显感觉比 Xorg 卡顿许多；3.36 版本的 Gnome 用 Xorg 日常感觉比较流畅，很少卡顿。而且 <strong>VDPAU</strong> 直接废掉了，原因不明，简单说就是 Linux 下的硬件加速，用于视频播放之类的。无论使用什么播放器看视频，CPU 直接起飞。</p>
+<p>最后，这篇文章我还是在 X 系统下水完的，<strong>xrandr</strong> 不就看起来有点糊嘛，又不是不能用，但愿 <strong>Wayland</strong> 能愈来愈好用。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-04-22
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/manjaro/">Manjaro</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-06-04-pwnable-kr-alloca/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">pwnable.kr alloca</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-04-08-x64/">
+            <span class="next-text nav-default">X64 调用约定</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

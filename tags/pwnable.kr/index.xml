@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pwnable.kr on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/tags/pwnable.kr/</link>
+    <description>Recent content in pwnable.kr on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 04 Jun 2020 18:58:07 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/tags/pwnable.kr/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pwnable.kr alloca</title>
+      <link>https://bulletforkiller.github.io/post/2020-06-04-pwnable-kr-alloca/</link>
+      <pubDate>Thu, 04 Jun 2020 18:58:07 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-06-04-pwnable-kr-alloca/</guid>
+      <description>难得最近比较清闲，大好时间用来找虐最好不过了（误：刷题）。仅有兴趣还是搞不好二进制的，还是多练练基本功来得实在。于是继续 pwnable.kr 之旅，日后将逐渐补</description>
+    </item>
+    
+  </channel>
+</rss>

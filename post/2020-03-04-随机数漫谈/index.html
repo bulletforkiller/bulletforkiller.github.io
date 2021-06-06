@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>随机数漫谈 - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="略坑的 rand 下午在水群的时候无意看见一位学弟的提问，为什么自己写的C语言程序中前后两次使用rand获取的随机数是相同的。代码嘛具体记不全了，这里" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-03-04-%E9%9A%8F%E6%9C%BA%E6%95%B0%E6%BC%AB%E8%B0%88/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="随机数漫谈" />
+<meta property="og:description" content="略坑的 rand 下午在水群的时候无意看见一位学弟的提问，为什么自己写的C语言程序中前后两次使用rand获取的随机数是相同的。代码嘛具体记不全了，这里" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-03-04-%E9%9A%8F%E6%9C%BA%E6%95%B0%E6%BC%AB%E8%B0%88/" />
+<meta property="article:published_time" content="2020-03-04T13:16:42+00:00" />
+<meta property="article:modified_time" content="2020-03-04T13:16:42+00:00" />
+<meta itemprop="name" content="随机数漫谈">
+<meta itemprop="description" content="略坑的 rand 下午在水群的时候无意看见一位学弟的提问，为什么自己写的C语言程序中前后两次使用rand获取的随机数是相同的。代码嘛具体记不全了，这里">
+<meta itemprop="datePublished" content="2020-03-04T13:16:42+00:00" />
+<meta itemprop="dateModified" content="2020-03-04T13:16:42+00:00" />
+<meta itemprop="wordCount" content="1561">
+
+
+
+<meta itemprop="keywords" content="C," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="随机数漫谈"/>
+<meta name="twitter:description" content="略坑的 rand 下午在水群的时候无意看见一位学弟的提问，为什么自己写的C语言程序中前后两次使用rand获取的随机数是相同的。代码嘛具体记不全了，这里"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">随机数漫谈</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-03-04 </span>
+        <div class="post-category">
+            <a href="/categories/%E9%9A%8F%E7%AC%94/"> 随笔 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#略坑的-rand">略坑的 rand</a></li>
+        <li><a href="#硬件随机数-rdrand">硬件随机数 RDRAND</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="略坑的-rand">略坑的 rand</h2>
+<p>下午在水群的时候无意看见一位学弟的提问，为什么自己写的C语言程序中前后两次使用rand获取的随机数是相同的。代码嘛具体记不全了，这里就贴一个简化版本吧（可能简化太多了）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">));</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">100</span><span class="p">;</span>
+
+    <span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">));</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">100</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;A is %d, B is %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行得到以下的结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">A is 46, B is 46
+</code></pre></td></tr></table>
+</div>
+</div><p>熟悉C语言的朋友应该知道，C的标准库中的rand函数生成随机数（准确讲是伪随机数）使用的是线性同余法，只要指定的种子一样，不管你运行多少次程序，rand得到的数列是一模一样的。通常为了方便获取系统的时间戳当作种子，而时间戳的精度是到秒，很明显运行这几条指令所需的时间远远不及一秒。两个相同的种子，两次rand，理所当然地得到两个相同的“随机数”。解决方案很简单，只初始化一次种子即可。也有群友提出了其它方案，在两个srand中间插入sleep函数，这样完全也可以。</p>
+<p>既然提到了随机数，我便开始想别的东西，让我产生随机数我会怎么整呢？由于我是忠实的Linux党，直接从 /dev/random 或 /dev/urandom 读出随机数不好嘛。可能使用的流程会稍稍变复杂一丢丢，打开文件，从中读取若干字节，但我觉得完全没有什么不妥。关于以上提到的两个伪设备，又有很多能扯的地方。有一篇文章很棒，至少讲清了两者的区别还有很多玄学问题：<a href="http://tinylab.org/myths-about-urandom/#%E8%AF%91%E4%B9%8B%E5%89%8D%E8%A8%80">/dev/urandom 不得不说的故事</a>。</p>
+<p>Windows 下自然有密码学专用的随机数产生函数，不过以 Win32 API 的尿性，没个一堆的参数你别想用它。这里就不提它了，因为还有更好玩的东西。</p>
+<h2 id="硬件随机数-rdrand">硬件随机数 RDRAND</h2>
+<p>之前无意中见到近些年的 CPU 支持硬件随机数指令，Intel 是第三代酷睿架构(IvyBridge)，而 AMD 是从2015年之后的产品。这条指令是 <strong>RDRAND</strong>。调用这个指令只会修改 rax/eax，从理论上讲比那些软件实现的不知道高到哪里去了。</p>
+<p>但是有一个很尴尬的问题，该如何调用该指令呢？直接写汇编再编译或者内联汇编都是可行的，该指令的内联汇编看起来是比较复杂的（其实是我比较菜）。后发较新的 GCC 现有现成的库可以使用，那为什么不调库呢？写了一个 demo 如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;immintrin.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Before rdrand</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;A is %d, B is %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+
+  <span class="n">_rdrand32_step</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
+  <span class="n">_rdrand32_step</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;After rdrand</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;A is %d, B is %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这样看起来十分简单是不是，根据产生的随机数的长度不同，共有三个不同的函数（省略了很多的 GCC 的特有标识，以便观察）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">_rdrand16_step</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*</span><span class="n">__p</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">_rdrand32_step</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="o">*</span><span class="n">__p</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">_rdrand64_step</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="o">*</span><span class="n">__p</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>但是编译却遇到一些问题：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">gen_rand.c: In function ‘main’:
+/usr/lib/gcc/x86_64-pc-linux-gnu/9.2.1/include/immintrin.h:168:1: error: inlining failed in call to always_inline ‘_rdrand32_step’: target specific option mismatch
+  168 | _rdrand32_step (unsigned int *__P)
+      | ^~~~~~~~~~~~~~
+gen_rand.c:11:3: note: called from here
+   11 |   _rdrand32_step(&amp;b);
+      |   ^~~~~~~~~~~~~~~~~~
+
+</code></pre></td></tr></table>
+</div>
+</div><p>看着有点懵，直接问 google，找到一个类似的，只要指定处理器架构就好了(当年天真的以为只有 SIMD 指令和架构相关，太 Native 了！！！)，我编译用的指令为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">gcc gen_rand.c -o gen_rand -march<span class="o">=</span>skylake
+</code></pre></td></tr></table>
+</div>
+</div><p>由于我的处理器是六代酷睿，就指定了 skylake，其实指定为 lvybridge 之后的版本都是可以滴。运行，结果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Before rdrand
+A is 0, B is 0
+After rdrand
+A is 1445042752, B is 1967589868
+</code></pre></td></tr></table>
+</div>
+</div><p>算成成功了。突然又有一个大胆的想法，把这个程序丢在不支持的处理器上运行会怎样呢，好奇ing。。。</p>
+<p>越看这个硬件随机数感觉越厉害，原理大致是利用电阻热噪声取得硬件真随机数。但为什么 C 的标准库还坚持用那么 Low 的实现呢。旧硬件不支持，算是吧。又 baidu 了一会，发现 AMD 一直在这个指令上翻车。先是老 APU A6-6310 只要从休眠或睡眠状态唤醒，产生的随机数就不那么随机了，不但如此还会导致无法再次进入休眠或睡眠状态；后有 Ryzen 3000 系列坚持 0xffffffff 是随机度最高的，质量最好的随机数。</p>
+<p>额，都是 AMD 的锅，我们天天 Yes 支持你也要抓紧修复 Bug 啊。可见硬件随机数发生器也是存在不少问题的，Linux 内核不从 RDRAND 获取看来也是大有原因。最后一个问题，世界上真的有真随机数吗（陷入沉思），你怎么看呢？</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://news.mydrivers.com/1/626/626148.htm">AMD五年前老APU被发现Bug：休眠恢复后随机数生成错误</a></p>
+<p><a href="https://new.qq.com/omn/20191105/20191105A03F4G00.html">血泪控诉：曝光数月的 AMD 微代码 bug 毁掉了我的周末</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-03-04
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/c/">C</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-03-10-python/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">python 创建空生成器</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-03-03-winxp-%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%BC%BA%E5%A4%B1%E8%A7%A3%E5%86%B3/">
+            <span class="next-text nav-default">WinXP 符号表缺失解决</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

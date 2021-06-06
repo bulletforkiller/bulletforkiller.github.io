@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工具 on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/tags/%E5%B7%A5%E5%85%B7/</link>
+    <description>Recent content in 工具 on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 06 Jun 2020 15:40:52 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/tags/%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Radare2 常用命令备忘</title>
+      <link>https://bulletforkiller.github.io/post/2020-06-06-radare2/</link>
+      <pubDate>Sat, 06 Jun 2020 15:40:52 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-06-06-radare2/</guid>
+      <description>Radare2 是一款开源的二进制平台，功能强大。日常中的许多工作不知不觉已经依赖 Radare2 来进行，下面记录一些平时常用的功能和命令: 汇编 &amp;amp; 反汇编 该部分借助 rasm2 组件</description>
+    </item>
+    
+  </channel>
+</rss>

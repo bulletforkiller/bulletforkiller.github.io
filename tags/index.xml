@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/tags/</link>
+    <description>Recent content in Tags on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 29 Oct 2020 10:09:06 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hackthebox</title>
+      <link>https://bulletforkiller.github.io/tags/hackthebox/</link>
+      <pubDate>Thu, 29 Oct 2020 10:09:06 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/hackthebox/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vulnhub</title>
+      <link>https://bulletforkiller.github.io/tags/vulnhub/</link>
+      <pubDate>Mon, 21 Sep 2020 13:40:18 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/vulnhub/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git</title>
+      <link>https://bulletforkiller.github.io/tags/git/</link>
+      <pubDate>Sat, 22 Aug 2020 16:09:48 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Virtualbox</title>
+      <link>https://bulletforkiller.github.io/tags/virtualbox/</link>
+      <pubDate>Tue, 28 Jul 2020 09:47:44 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/virtualbox/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hexo</title>
+      <link>https://bulletforkiller.github.io/tags/hexo/</link>
+      <pubDate>Sat, 06 Jun 2020 18:00:47 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/hexo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>工具</title>
+      <link>https://bulletforkiller.github.io/tags/%E5%B7%A5%E5%85%B7/</link>
+      <pubDate>Sat, 06 Jun 2020 15:40:52 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/%E5%B7%A5%E5%85%B7/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pwn</title>
+      <link>https://bulletforkiller.github.io/tags/pwn/</link>
+      <pubDate>Thu, 04 Jun 2020 18:58:07 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/pwn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pwnable.kr</title>
+      <link>https://bulletforkiller.github.io/tags/pwnable.kr/</link>
+      <pubDate>Thu, 04 Jun 2020 18:58:07 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/pwnable.kr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Manjaro</title>
+      <link>https://bulletforkiller.github.io/tags/manjaro/</link>
+      <pubDate>Wed, 22 Apr 2020 10:21:26 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/manjaro/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>x86</title>
+      <link>https://bulletforkiller.github.io/tags/x86/</link>
+      <pubDate>Wed, 08 Apr 2020 18:50:06 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/x86/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>汇编</title>
+      <link>https://bulletforkiller.github.io/tags/%E6%B1%87%E7%BC%96/</link>
+      <pubDate>Wed, 08 Apr 2020 18:50:06 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/%E6%B1%87%E7%BC%96/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://bulletforkiller.github.io/tags/python/</link>
+      <pubDate>Tue, 10 Mar 2020 10:25:18 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C</title>
+      <link>https://bulletforkiller.github.io/tags/c/</link>
+      <pubDate>Wed, 04 Mar 2020 13:16:42 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/c/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>WinDbg</title>
+      <link>https://bulletforkiller.github.io/tags/windbg/</link>
+      <pubDate>Tue, 03 Mar 2020 15:29:54 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/windbg/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CVE</title>
+      <link>https://bulletforkiller.github.io/tags/cve/</link>
+      <pubDate>Tue, 18 Feb 2020 16:48:35 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/cve/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

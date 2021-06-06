@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Josephine&#39;s Blog</title>
+    <link>https://bulletforkiller.github.io/categories/linux/</link>
+    <description>Recent content in Linux on Josephine&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 16 Aug 2020 16:05:12 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux 命令行弹出可移动磁盘</title>
+      <link>https://bulletforkiller.github.io/post/2020-08-16-linux-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%B9%E5%87%BA%E5%8F%AF%E7%A7%BB%E5%8A%A8%E7%A3%81%E7%9B%98/</link>
+      <pubDate>Sun, 16 Aug 2020 16:05:12 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-08-16-linux-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%B9%E5%87%BA%E5%8F%AF%E7%A7%BB%E5%8A%A8%E7%A3%81%E7%9B%98/</guid>
+      <description>Linux 用的越多，便越想使用命令行解决所有的事情（虽然很大程度上是不可能的）。笔者经常使用移动存储介质如 U盘、移动硬盘之类的，关于如何弹出一直存在</description>
+    </item>
+    
+    <item>
+      <title>awk 学习</title>
+      <link>https://bulletforkiller.github.io/post/2020-07-30-awk/</link>
+      <pubDate>Thu, 30 Jul 2020 11:16:29 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-07-30-awk/</guid>
+      <description>awk 这个命令之前见过几次，但是就是不会用；上大学时 Linux 课程中老师同样讲过这个命令，可惜怎么用不记得了，梗还记着：awk —— Awkward。昨天做</description>
+    </item>
+    
+    <item>
+      <title>N卡 &#43; Gnome启用Wayland</title>
+      <link>https://bulletforkiller.github.io/post/2020-04-22-n/</link>
+      <pubDate>Wed, 22 Apr 2020 10:21:26 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-04-22-n/</guid>
+      <description>昨日给心爱的笔记本外接了家中老爷机的显示器，感觉总算是舒服些了，然而重启切换到 Manjaro 下灾难才刚刚开始。Win 下多块屏幕以不同的缩放率显示没有什么</description>
+    </item>
+    
+    <item>
+      <title>Manjaro 更换镜像源</title>
+      <link>https://bulletforkiller.github.io/post/2020-02-26-manjaro-%E6%9B%B4%E6%8D%A2%E9%95%9C%E5%83%8F%E6%BA%90/</link>
+      <pubDate>Wed, 26 Feb 2020 11:17:09 +0000</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/2020-02-26-manjaro-%E6%9B%B4%E6%8D%A2%E9%95%9C%E5%83%8F%E6%BA%90/</guid>
+      <description>话说Manjaro真是一个不错的发行版，虽说是Arch的衍生版本却比Arch稳定些，最重要的是安装起来简便不少，节约不少时间，于是我很快就真</description>
+    </item>
+    
+  </channel>
+</rss>

