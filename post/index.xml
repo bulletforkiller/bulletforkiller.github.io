@@ -6,7 +6,34 @@
     <description>Recent content in Posts on Josephine&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Oct 2020 10:09:06 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Jun 2021 22:31:03 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FreeRDP 参数</title>
+      <link>https://bulletforkiller.github.io/post/xfreerdp-%E5%8F%82%E6%95%B0/</link>
+      <pubDate>Thu, 10 Jun 2021 22:31:03 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/xfreerdp-%E5%8F%82%E6%95%B0/</guid>
+      <description>个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨</description>
+    </item>
+    
+    <item>
+      <title>XP Samba</title>
+      <link>https://bulletforkiller.github.io/post/samba/</link>
+      <pubDate>Mon, 07 Jun 2021 07:18:38 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/samba/</guid>
+      <description>从samba 4.5开始，ntlm auth参数默认值由“yes”变为“no”。导致默认情况下使用NTLM级别LAN Manager身份验证的客户</description>
+    </item>
+    
+    <item>
+      <title>Hello Hugo</title>
+      <link>https://bulletforkiller.github.io/post/hello-hugo/</link>
+      <pubDate>Sun, 06 Jun 2021 16:25:28 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/hello-hugo/</guid>
+      <description>Hexo 用起来尚可，但环境着实恶心。光 npm 安装各种库就够人恶心了，装主题也是各种改改改。对于我写博客逐渐变成了花式环境配置，相当的本末倒置。因为一些</description>
+    </item>
+    
     <item>
       <title>Hackthebox-Doctor</title>
       <link>https://bulletforkiller.github.io/post/2020-10-29-hackthebox-doctor/</link>

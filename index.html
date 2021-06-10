@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Josephine" /><meta name="description" content="Hugo theme even example site." /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="Josephine" />
 
 
 
@@ -42,15 +42,15 @@
 
 
 <meta property="og:title" content="Josephine&#39;s Blog" />
-<meta property="og:description" content="Hugo theme even example site." />
+<meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://bulletforkiller.github.io/" />
-<meta property="og:updated_time" content="2020-10-29T10:09:06+00:00" />
+<meta property="og:updated_time" content="2021-06-10T22:31:03+08:00" />
 <meta itemprop="name" content="Josephine&#39;s Blog">
-<meta itemprop="description" content="Hugo theme even example site.">
+<meta itemprop="description" content="">
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Josephine&#39;s Blog"/>
-<meta name="twitter:description" content="Hugo theme even example site."/>
+<meta name="twitter:description" content=""/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -65,7 +65,7 @@
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/" class="logo">Even</a>
+    <a href="/" class="logo">Josephine&#39;s Blog</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -96,7 +96,7 @@
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/" class="logo">Even</a>
+  <a href="/" class="logo">Josephine&#39;s Blog</a>
 </div>
 
 
@@ -125,6 +125,65 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/xfreerdp-%E5%8F%82%E6%95%B0/">FreeRDP 参数</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2021-06-10 </span>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨
+    </div>
+    <div class="read-more">
+      <a href="/post/xfreerdp-%E5%8F%82%E6%95%B0/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/samba/">XP Samba</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2021-06-07 </span>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      从samba 4.5开始，ntlm auth参数默认值由“yes”变为“no”。导致默认情况下使用NTLM级别LAN Manager身份验证的客户
+    </div>
+    <div class="read-more">
+      <a href="/post/samba/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/hello-hugo/">Hello Hugo</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2021-06-06 </span>
+      <div class="post-category">
+          <a href="/categories/blog/"> blog </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Hexo 用起来尚可，但环境着实恶心。光 npm 安装各种库就够人恶心了，装主题也是各种改改改。对于我写博客逐渐变成了花式环境配置，相当的本末倒置。因为一些
+    </div>
+    <div class="read-more">
+      <a href="/post/hello-hugo/" class="read-more-link">阅读更多</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/2020-10-29-hackthebox-doctor/">Hackthebox-Doctor</a></h1>
@@ -167,69 +226,6 @@
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020-09-21-vulnhub-pwned-1/">Vulnhub-Pwned: 1</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-09-21 </span>
-      <div class="post-category">
-          <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      基本介绍 靶机地址 https://www.vulnhub.com/entry/pwned-1,507/ 目标 获取 3 个 flag。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.14 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称 版本 arp-scan 1.9.7 Nmap 7.80 rustbuster 1.0.4 信息收集 获取 IP 地址 使用
-    </div>
-    <div class="read-more">
-      <a href="/post/2020-09-21-vulnhub-pwned-1/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020-09-06-vulnhub-photographer/">Vulnhub-Photographer</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-09-06 </span>
-      <div class="post-category">
-          <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      基本介绍 靶机地址 https://www.vulnhub.com/entry/photographer-1,519/ 目标 获取两个 flag：user.txt，proof.txt。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 工具 名称
-    </div>
-    <div class="read-more">
-      <a href="/post/2020-09-06-vulnhub-photographer/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2020-08-30-vulnhub-overflow/">Vulnhub-Overflow</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2020-08-30 </span>
-      <div class="post-category">
-          <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      基本介绍 靶机地址 https://www.vulnhub.com/entry/overflow-1,300/ 目标 获取两个 flag，user / root。 环境 名称 介绍 主机 Manjaro 20.1 虚拟化软件 Virtualbox 6.1.12 靶机网络 Host-only (vboxnet0) kali in docker 2020.3 Ubuntu in docker 16.04.7 LTS 工具版本 名称 版本
-    </div>
-    <div class="read-more">
-      <a href="/post/2020-08-30-vulnhub-overflow/" class="read-more-link">阅读更多</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -264,7 +260,7 @@
 
   <span class="copyright-year">
     &copy; 
-    2019 - 
+    2020 - 
     2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
   </span>
 </div>

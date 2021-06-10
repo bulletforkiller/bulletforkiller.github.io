@@ -6,7 +6,16 @@
     <description>Recent content in blog on Josephine&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 06 Jun 2020 18:00:47 +0000</lastBuildDate><atom:link href="https://bulletforkiller.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 06 Jun 2021 16:25:28 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello Hugo</title>
+      <link>https://bulletforkiller.github.io/post/hello-hugo/</link>
+      <pubDate>Sun, 06 Jun 2021 16:25:28 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/hello-hugo/</guid>
+      <description>Hexo 用起来尚可，但环境着实恶心。光 npm 安装各种库就够人恶心了，装主题也是各种改改改。对于我写博客逐渐变成了花式环境配置，相当的本末倒置。因为一些</description>
+    </item>
+    
     <item>
       <title>Hexo Nodejs 相关</title>
       <link>https://bulletforkiller.github.io/post/2020-06-06-hexo-nodejs/</link>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>404 page not found - Josephine&#39;s Blog</title>
+  <title>FreeRDP 参数 - Josephine&#39;s Blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Josephine" />
+<meta name="author" content="Josephine" /><meta name="description" content="个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.80.0 with theme even" />
 
 
-<link rel="canonical" href="https://bulletforkiller.github.io/404.html" />
+<link rel="canonical" href="https://bulletforkiller.github.io/post/xfreerdp-%E5%8F%82%E6%95%B0/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -39,16 +39,24 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="404 Page not found" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://bulletforkiller.github.io/404.html" />
+<meta property="og:title" content="FreeRDP 参数" />
+<meta property="og:description" content="个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/xfreerdp-%E5%8F%82%E6%95%B0/" />
+<meta property="article:published_time" content="2021-06-10T22:31:03+08:00" />
+<meta property="article:modified_time" content="2021-06-10T22:31:03+08:00" />
+<meta itemprop="name" content="FreeRDP 参数">
+<meta itemprop="description" content="个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨">
+<meta itemprop="datePublished" content="2021-06-10T22:31:03+08:00" />
+<meta itemprop="dateModified" content="2021-06-10T22:31:03+08:00" />
+<meta itemprop="wordCount" content="237">
 
-<meta itemprop="name" content="404 Page not found">
-<meta itemprop="description" content="">
+
+
+<meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="404 Page not found"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="FreeRDP 参数"/>
+<meta name="twitter:description" content="个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -122,22 +130,92 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          <div class="not-found">
-  <h1 class="error-emoji"></h1>
-  <p class="error-text">/* 404 page not found. */</p>
-  <p class="error-link"><a href="/">↑ Back Home ↑</a></p>
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">FreeRDP 参数</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-06-10 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
 </div>
-<script>
-  var errorEmojiContainer = document.getElementsByClassName('error-emoji')[0];
-  var emojiArray = [
-    '\\(o_o)/', '(o^^)o', '(˚Δ˚)b', '(^-^*)', '(≥o≤)', '(^_^)b', '(·_·)',
-    '(=\'X\'=)', '(>_<)', '(;-;)', '\\(^Д^)/',
-  ];
-  var errorEmoji = emojiArray[Math.floor(Math.random() * emojiArray.length)];
-  errorEmojiContainer.appendChild(document.createTextNode(errorEmoji));
-</script>
+    <div class="post-content">
+      <p>个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点：</p>
+<ul>
+<li>
+<p>/dynamic-resolution 默认 xfreerdp 是固定分辨率的，加此参数随窗口变化改变分辨率</p>
+</li>
+<li>
+<p>/cert-ignore 忽略证书验证</p>
+</li>
+<li>
+<p>/clipboard 启用双向剪贴板</p>
+</li>
+<li>
+<p>/bpp:8/16 设定显示色彩数，8 为 256 色，16 为 65536 色，16 看起来与 24 区别不大，降低传输量</p>
+</li>
+<li>
+<p>/network:modem /compression 启用压缩来降低带宽(用 CPU 换带宽)</p>
+</li>
+<li>
+<p>/async-update /async-input 在等待屏幕刷新期间允许输入，改善输入体验，小心点错哦</p>
+</li>
+<li>
+<p>/scale:180 180% 等级缩放，HiDPI 真是一大痛点，不知为何在我电脑上无法设置 200</p>
+</li>
+<li>
+<p>/auto-reconnect 在出现错误时进行重连</p>
+</li>
+</ul>
+<p>参考:</p>
+<ul>
+<li><a href="https://www.scivision.dev/advanced-freerdp-options/">freeRDP limited bandwidth remote desktop</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-06-10
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/samba/">
+            <span class="next-text nav-default">XP Samba</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
         </div>
         
+
+  
+
+  
 
       </div>
     </main>
