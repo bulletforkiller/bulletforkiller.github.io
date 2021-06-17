@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Josephine&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 10 Jun 2021 22:31:03 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Jun 2021 09:11:01 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux 修改 MTU</title>
+      <link>https://bulletforkiller.github.io/post/linux-%E4%BF%AE%E6%94%B9-mtu/</link>
+      <pubDate>Thu, 17 Jun 2021 09:11:01 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/linux-%E4%BF%AE%E6%94%B9-mtu/</guid>
+      <description>最近将主要承载业务的网段升级至万兆，完工后顺手将 MTU 更改至 9000 来提升传输效率，在此进行简单的记录。路由部分我使用的是 OPNSENSE，只需去对应</description>
+    </item>
+    
     <item>
       <title>FreeRDP 参数</title>
       <link>https://bulletforkiller.github.io/post/xfreerdp-%E5%8F%82%E6%95%B0/</link>

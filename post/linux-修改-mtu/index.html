@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>FreeRDP 参数 - Josephine&#39;s Blog</title>
+  <title>Linux 修改 MTU - Josephine&#39;s Blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Josephine" /><meta name="description" content="个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨" />
+<meta name="author" content="Josephine" /><meta name="description" content="最近将主要承载业务的网段升级至万兆，完工后顺手将 MTU 更改至 9000 来提升传输效率，在此进行简单的记录。路由部分我使用的是 OPNSENSE，只需去对应" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.80.0 with theme even" />
 
 
-<link rel="canonical" href="https://bulletforkiller.github.io/post/xfreerdp-%E5%8F%82%E6%95%B0/" />
+<link rel="canonical" href="https://bulletforkiller.github.io/post/linux-%E4%BF%AE%E6%94%B9-mtu/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -39,24 +39,24 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="FreeRDP 参数" />
-<meta property="og:description" content="个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨" />
+<meta property="og:title" content="Linux 修改 MTU" />
+<meta property="og:description" content="最近将主要承载业务的网段升级至万兆，完工后顺手将 MTU 更改至 9000 来提升传输效率，在此进行简单的记录。路由部分我使用的是 OPNSENSE，只需去对应" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bulletforkiller.github.io/post/xfreerdp-%E5%8F%82%E6%95%B0/" />
-<meta property="article:published_time" content="2021-06-10T22:31:03+08:00" />
-<meta property="article:modified_time" content="2021-06-10T22:31:03+08:00" />
-<meta itemprop="name" content="FreeRDP 参数">
-<meta itemprop="description" content="个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨">
-<meta itemprop="datePublished" content="2021-06-10T22:31:03+08:00" />
-<meta itemprop="dateModified" content="2021-06-10T22:31:03+08:00" />
-<meta itemprop="wordCount" content="237">
+<meta property="og:url" content="https://bulletforkiller.github.io/post/linux-%E4%BF%AE%E6%94%B9-mtu/" />
+<meta property="article:published_time" content="2021-06-17T09:11:01+08:00" />
+<meta property="article:modified_time" content="2021-06-17T09:11:01+08:00" />
+<meta itemprop="name" content="Linux 修改 MTU">
+<meta itemprop="description" content="最近将主要承载业务的网段升级至万兆，完工后顺手将 MTU 更改至 9000 来提升传输效率，在此进行简单的记录。路由部分我使用的是 OPNSENSE，只需去对应">
+<meta itemprop="datePublished" content="2021-06-17T09:11:01+08:00" />
+<meta itemprop="dateModified" content="2021-06-17T09:11:01+08:00" />
+<meta itemprop="wordCount" content="346">
 
 
 
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="FreeRDP 参数"/>
-<meta name="twitter:description" content="个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点： /dynamic-resolution 默认 xfreerdp 是固定分辨"/>
+<meta name="twitter:title" content="Linux 修改 MTU"/>
+<meta name="twitter:description" content="最近将主要承载业务的网段升级至万兆，完工后顺手将 MTU 更改至 9000 来提升传输效率，在此进行简单的记录。路由部分我使用的是 OPNSENSE，只需去对应"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -133,10 +133,10 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">FreeRDP 参数</h1>
+      <h1 class="post-title">Linux 修改 MTU</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2021-06-10 </span>
+        <span class="post-time"> 2021-06-17 </span>
         
         
       </div>
@@ -149,37 +149,29 @@
   </div>
 </div>
     <div class="post-content">
-      <p>个人倾向于在 Linux 下使用 rdesktop，xfreerdp 这两款 RDP 客户端，经过一番研究发现 xfreerdp 一些有趣的参数，能够解决很多痛点：</p>
-<ul>
-<li>
-<p>/dynamic-resolution 默认 xfreerdp 是固定分辨率的，加此参数随窗口变化改变分辨率</p>
-</li>
-<li>
-<p>/cert-ignore 忽略证书验证</p>
-</li>
-<li>
-<p>/clipboard 启用双向剪贴板</p>
-</li>
-<li>
-<p>/bpp:8/16 设定显示色彩数，8 为 256 色，16 为 65536 色，16 看起来与 24 区别不大，降低传输量</p>
-</li>
-<li>
-<p>/network:modem /compression 启用压缩来降低带宽(用 CPU 换带宽)</p>
-</li>
-<li>
-<p>/async-update /async-input 在等待屏幕刷新期间允许输入，改善输入体验，小心点错哦</p>
-</li>
-<li>
-<p>/scale:180 180% 等级缩放，HiDPI 真是一大痛点，不知为何在我电脑上无法设置 200</p>
-</li>
-<li>
-<p>/auto-reconnect 在出现错误时进行重连</p>
-</li>
-</ul>
-<p>参考:</p>
-<ul>
-<li><a href="https://www.scivision.dev/advanced-freerdp-options/">freeRDP limited bandwidth remote desktop</a></li>
-</ul>
+      <p>最近将主要承载业务的网段升级至万兆，完工后顺手将 MTU 更改至 9000 来提升传输效率，在此进行简单的记录。路由部分我使用的是 OPNSENSE，只需去对应的接口设置菜单中在 MTU 选项处填入 9000，保存生效即可:</p>
+<p><img src="/images/2021-06-17/opnsense.webp" alt="opnsense"></p>
+<p>我部署的 Linux 机器全是清一色的 debian，使用 networking.service 管理网络，配置全在 /etc/network/interfaces 中。在此文件中配置好接口的 IP 地址，这里仅仅简单使用 DHCP 自动分配即可 (在 OPNSENSE 的 DHCP 服务中配置 DHCP 静态映射，方便统一管理)。</p>
+<p>在 /etc/network/if-up.d 中添加 mtu，编辑完添加执行权限，内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/sh
+</span><span class="cp"></span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$IFACE</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;enp1s0&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    ip link <span class="nb">set</span> dev enp1s0 mtu <span class="m">9000</span>
+<span class="k">fi</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>很容易看懂，这就是一个 shell 脚本，在接口 up 之后被调用。修改 MTU 之前判断了下接口名称，只有该接口 up 时才执行 <strong>ip</strong> 命令。我这里是 SR-IOV 的 VF 接口故是 <strong>enp1s0</strong>，注意替换即可。由于系统未安装 <strong>ifconfig</strong>，这里便使用 <strong>ip</strong> 命令进行更改。</p>
+<p>最后进行 <strong>ping</strong> 测试:</p>
+<p><img src="/images/2021-06-17/ping.webp" alt="ping"></p>
 
     </div>
 
@@ -191,7 +183,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2021-06-10
+        2021-06-17
         
     </span>
   </p>
@@ -201,13 +193,9 @@
 <footer class="post-footer">
       
       <nav class="post-nav">
-        <a class="prev" href="/post/linux-%E4%BF%AE%E6%94%B9-mtu/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Linux 修改 MTU</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/samba/">
-            <span class="next-text nav-default">XP Samba</span>
+        
+        <a class="next" href="/post/xfreerdp-%E5%8F%82%E6%95%B0/">
+            <span class="next-text nav-default">FreeRDP 参数</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

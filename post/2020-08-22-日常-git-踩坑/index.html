@@ -49,7 +49,7 @@
 <meta itemprop="description" content="鄙人作为一个业余 Coder，Git 自然是用的不咋滴。于是在此做一些备忘，方便以后查询，本文将长期更新。 更新 gitignore 不起作用 gitignore 对于已经追踪的文件是不">
 <meta itemprop="datePublished" content="2020-08-22T16:09:48+00:00" />
 <meta itemprop="dateModified" content="2020-08-22T16:09:48+00:00" />
-<meta itemprop="wordCount" content="802">
+<meta itemprop="wordCount" content="815">
 
 
 
@@ -172,6 +172,7 @@
           <ul>
             <li><a href="#删除远程分支">删除远程分支</a></li>
             <li><a href="#推送一个远程不存在的分支">推送一个远程不存在的分支</a></li>
+            <li><a href="#推送全部分支和-tag">推送全部分支和 tag</a></li>
           </ul>
         </li>
       </ul>
@@ -323,7 +324,16 @@ git commit -m <span class="s2">&#34;Update .gitignore&#34;</span>
 </code></pre></td></tr></table>
 </div>
 </div><!-- --allow-unrelated-histories -->
-
+<h3 id="推送全部分支和-tag">推送全部分支和 tag</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git push --all origin
+</code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <div class="post-copyright">
