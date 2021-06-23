@@ -6,7 +6,16 @@
     <description>Recent content in Tags on Josephine&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 06 Jun 2021 16:25:28 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Jun 2021 22:36:14 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vulnhub</title>
+      <link>https://bulletforkiller.github.io/tags/vulnhub/</link>
+      <pubDate>Tue, 22 Jun 2021 22:36:14 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/tags/vulnhub/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Hugo</title>
       <link>https://bulletforkiller.github.io/tags/hugo/</link>
@@ -22,15 +31,6 @@
       <pubDate>Thu, 29 Oct 2020 10:09:06 +0000</pubDate>
       
       <guid>https://bulletforkiller.github.io/tags/hackthebox/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Vulnhub</title>
-      <link>https://bulletforkiller.github.io/tags/vulnhub/</link>
-      <pubDate>Mon, 21 Sep 2020 13:40:18 +0000</pubDate>
-      
-      <guid>https://bulletforkiller.github.io/tags/vulnhub/</guid>
       <description></description>
     </item>
     

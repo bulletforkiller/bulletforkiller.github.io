@@ -6,7 +6,7 @@
     <description>Recent content on Josephine&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 21 Jun 2021 07:04:39 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Jun 2021 22:36:14 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About</title>
       <link>https://bulletforkiller.github.io/about/</link>
@@ -17,7 +17,25 @@
     </item>
     
     <item>
-      <title>Gdb 多插件并存</title>
+      <title>Vulnhub Devguru</title>
+      <link>https://bulletforkiller.github.io/post/vulnhub-devguru/</link>
+      <pubDate>Tue, 22 Jun 2021 22:36:14 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/vulnhub-devguru/</guid>
+      <description>枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.68 Host is up (0.0068s latency). 机器 IP 为 10.1.1.68： 可能机器出现了一些问题，后续过程全部以 IP 为 79 进行</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub Tr0ll2</title>
+      <link>https://bulletforkiller.github.io/post/vulnhub-tr0ll2/</link>
+      <pubDate>Mon, 21 Jun 2021 13:25:50 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/vulnhub-tr0ll2/</guid>
+      <description>信息收集 确定 IP 地址 我的环境特殊，攻击机和靶机并不在同一网段，故无法利用 arp 进行探活，此处利用 nmap 的 sn 选项进行探活: 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.53 Host is up</description>
+    </item>
+    
+    <item>
+      <title>GDB 多插件并存</title>
       <link>https://bulletforkiller.github.io/post/gdb-%E5%A4%9A%E6%8F%92%E4%BB%B6%E5%B9%B6%E5%AD%98/</link>
       <pubDate>Mon, 21 Jun 2021 07:04:39 +0800</pubDate>
       
