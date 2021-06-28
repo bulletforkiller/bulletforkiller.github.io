@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>迁移至 PVE 疑难杂症 - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="自从选用 Proxmox VE 作为虚拟化平台之后，折腾就没停下过。经常导入大量的各类虚拟机，遇到各种各样的问题，这里便记录一下遇到的一些问题。 导入镜像 导入 OVA /" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/pve-issue/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="迁移至 PVE 疑难杂症" />
+<meta property="og:description" content="自从选用 Proxmox VE 作为虚拟化平台之后，折腾就没停下过。经常导入大量的各类虚拟机，遇到各种各样的问题，这里便记录一下遇到的一些问题。 导入镜像 导入 OVA /" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/pve-issue/" />
+<meta property="article:published_time" content="2021-06-22T09:02:56+08:00" />
+<meta property="article:modified_time" content="2021-06-22T09:02:56+08:00" />
+<meta itemprop="name" content="迁移至 PVE 疑难杂症">
+<meta itemprop="description" content="自从选用 Proxmox VE 作为虚拟化平台之后，折腾就没停下过。经常导入大量的各类虚拟机，遇到各种各样的问题，这里便记录一下遇到的一些问题。 导入镜像 导入 OVA /">
+<meta itemprop="datePublished" content="2021-06-22T09:02:56+08:00" />
+<meta itemprop="dateModified" content="2021-06-22T09:02:56+08:00" />
+<meta itemprop="wordCount" content="1096">
+
+
+
+<meta itemprop="keywords" content="PVE," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="迁移至 PVE 疑难杂症"/>
+<meta name="twitter:description" content="自从选用 Proxmox VE 作为虚拟化平台之后，折腾就没停下过。经常导入大量的各类虚拟机，遇到各种各样的问题，这里便记录一下遇到的一些问题。 导入镜像 导入 OVA /"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Josephine&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Josephine&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">迁移至 PVE 疑难杂症</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-06-22 </span>
+        <div class="post-category">
+            <a href="/categories/%E8%99%9A%E6%8B%9F%E5%8C%96/"> 虚拟化 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#导入镜像">导入镜像</a>
+      <ul>
+        <li><a href="#导入-ova--ovf">导入 OVA / OVF</a></li>
+        <li><a href="#导入-vmware-虚拟机">导入 VMware 虚拟机</a></li>
+        <li><a href="#导入-vbox-虚拟机">导入 vbox 虚拟机</a></li>
+      </ul>
+    </li>
+    <li><a href="#兼容性问题">兼容性问题</a>
+      <ul>
+        <li><a href="#导入后没有网络">导入后没有网络</a></li>
+        <li><a href="#开机-gnome-崩溃">开机 gnome 崩溃</a></li>
+      </ul>
+    </li>
+    <li><a href="#虚拟机镜像修改">虚拟机镜像修改</a>
+      <ul>
+        <li><a href="#挂载-qcow2">挂载 QCOW2</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>自从选用 Proxmox VE 作为虚拟化平台之后，折腾就没停下过。经常导入大量的各类虚拟机，遇到各种各样的问题，这里便记录一下遇到的一些问题。</p>
+<h1 id="导入镜像">导入镜像</h1>
+<h2 id="导入-ova--ovf">导入 OVA / OVF</h2>
+<p>我见过的大部分虚拟机均为该类格式，PVE 支持直接导入 OVF，但不支持直接导入 OVA。OVA 和 OVF 的区别为：可以把 OVA 看做 OVF 和磁盘镜像打包后的结果。故导入 OVA 的处理方式比较简单，用 tar 命令将 OVA 解包即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">tar -xvf &lt;ova file&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>然后再导入解包出的 OVF 即可。</p>
+<p>在有些情况下导入 OVF 会失败，目前我见过导致失败的原因分为两类：</p>
+<ol>
+<li>虚拟机引用了不存在的 iso</li>
+<li>对磁盘文件报错</li>
+</ol>
+<p>对于 1 的处理方案，直接编辑 ovf 文件，找到 iso 那几行直接删掉重新导入，通常没什么影响（前提是虚拟机不用那个 iso 的情况下）；对于 2，这时虚拟机已经创建，但是只能说创建了一半，名称没有磁盘没有，接着使用 <strong>qm importdisk</strong> 命令手动导入磁盘文件，修改下虚拟机名称即可。</p>
+<h2 id="导入-vmware-虚拟机">导入 VMware 虚拟机</h2>
+<p>之前没什么好办法，只能手动建立一个虚拟机，然后再导入 <strong>vmdk</strong>。后来觉得这样太繁琐，找到单独的 ovftool 安装至 pve，每次只需利用 <strong>vmx</strong> 文件转换出一份 <strong>ovf</strong> 文件即可快速导入：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ovftool &lt;vmx file&gt; &lt;vmx file&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="导入-vbox-虚拟机">导入 vbox 虚拟机</h2>
+<p>如果虚拟机的磁盘格式是 <strong>vdi</strong>，那只能手动建立一个虚拟机，然后将 vdi 转换成 qcow2 / raw 再导入给虚拟机，转换命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Convert to qcow2</span>
+qemu-img convert -f vdi -O qcow2 &lt;vdi file&gt; &lt;qcow2 file&gt;
+
+<span class="c1"># Convert to raw</span>
+qemu-img convert -f vdi -O raw &lt;vdi file&gt; &lt;raw file&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="兼容性问题">兼容性问题</h1>
+<h2 id="导入后没有网络">导入后没有网络</h2>
+<p>许多机器是依赖一些配置文件定义网络的（有桌面环境如 Gnome，依靠 NetworkManager 管理网络连接的机器一般不会）如 /etc/network/interfaces（也可能在 interfaces.d 下），ubuntu 18 上常见的 /etc/netplan/xxx.yaml（xxx表示名称不确定）。原因是因为 Linux 对网络设备的命名方法，且并非常见的 eth 后面跟数字那种，而是基于固件、拓补、位置信息来分配名称，具体见参考1。</p>
+<p>从 VMware 迁移到 PVE，应该是虚拟设备的拓补发生了变化，导致配置文件失效，如来自 VMware 的 Ubuntu 18 的 ens33，迁移后就变成了 ens18。那么解决的方式就很清晰了，修改配置文件即可。</p>
+<h2 id="开机-gnome-崩溃">开机 gnome 崩溃</h2>
+<p>这种情况我只见过一次，一台 Ubuntu 20.04 的机器正常导入，开机一切正常，加载 gnome 后突然崩溃。最后发现修改 PVE 的 CPU 模型可解，于是从 kvm64 修改成了 host（难道是这个版本的 gnome 必须使用什么指令集嘛）。</p>
+<h1 id="虚拟机镜像修改">虚拟机镜像修改</h1>
+<p>经常碰见不知道虚拟机账户密码的情况，此时修改配置文件就需要挂载镜像来进行。</p>
+<h2 id="挂载-qcow2">挂载 QCOW2</h2>
+<p>首先使用 nbd 将 qcow2 文件映射到设备，前提需要加载 nbd 内核模块：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">modprobe nbd</code></pre></td></tr></table>
+</div>
+</div>
+<p>某些情况需要指定参数 <strong>max_part</strong>，例如等于 8。接着映射到设备：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">qemu-nbd -c /dev/nbd<span class="o">[</span>x<span class="o">]</span> &lt;qcow2 file&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>这里的 x 任选一个即可。然后是常规的 mount:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">mount /dev/nbd<span class="o">[</span>x<span class="o">]</span> &lt;mount path&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<p>使用完毕后卸载步骤与挂载相反，先 umount 就不在赘述，然后卸载 nbd 设备：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">qemu-nbd -d /dev/nbd<span class="o">[</span>x<span class="o">]</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="参考">参考</h1>
+<ol>
+<li><a href="https://m.linuxidc.com/Linux/2017-08/146348.htm">CentOS7 网卡命名规则</a></li>
+<li><a href="https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-18-04-bionic-beaver-linux">How to configure static IP address on Ubuntu 18.04</a></li>
+</ol>
+<!--
+强力移除异常的 lvm
+
+dmsetup remove my--volumes-volume--number
+lvchange -an -v /dev/my-volumes/volume-1
+lvremove -vf /dev/my-volumes/volume-1
+
+https://faun.pub/linux-quick-tip-how-to-delete-or-remove-lvm-volumes-7df4447102af
+--><blockquote>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-06-22
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/pve/">PVE</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/vulnhub-devguru/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vulnhub Devguru</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/vulnhub-tr0ll2/">
+            <span class="next-text nav-default">Vulnhub Tr0ll2</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

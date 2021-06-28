@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Josephine&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 22 Jun 2021 22:36:14 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Jun 2021 06:51:36 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vulnhub Tomato</title>
+      <link>https://bulletforkiller.github.io/post/vulnhub-tomato/</link>
+      <pubDate>Thu, 24 Jun 2021 06:51:36 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/vulnhub-tomato/</guid>
+      <description>枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.69 Host is up (0.00089s latency). 机器 IP 为 10.1.1.69。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务</description>
+    </item>
+    
     <item>
       <title>Vulnhub Devguru</title>
       <link>https://bulletforkiller.github.io/post/vulnhub-devguru/</link>
@@ -14,6 +23,15 @@
       
       <guid>https://bulletforkiller.github.io/post/vulnhub-devguru/</guid>
       <description>枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.68 Host is up (0.0068s latency). 机器 IP 为 10.1.1.68： 可能机器出现了一些问题，后续过程全部以 IP 为 79 进行</description>
+    </item>
+    
+    <item>
+      <title>迁移至 PVE 疑难杂症</title>
+      <link>https://bulletforkiller.github.io/post/pve-issue/</link>
+      <pubDate>Tue, 22 Jun 2021 09:02:56 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/pve-issue/</guid>
+      <description>自从选用 Proxmox VE 作为虚拟化平台之后，折腾就没停下过。经常导入大量的各类虚拟机，遇到各种各样的问题，这里便记录一下遇到的一些问题。 导入镜像 导入 OVA /</description>
     </item>
     
     <item>

