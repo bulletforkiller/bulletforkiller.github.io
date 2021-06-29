@@ -216,7 +216,7 @@ Host is up <span class="o">(</span>0.00089s latency<span class="o">)</span>.</co
 </span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -vv --reason -Pn -A --osscan-guess --version-all -p- -oN 10.1.1.69
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.1.1.69
 
 PORT     STATE SERVICE REASON         VERSION
 21/tcp   open  ftp     syn-ack ttl <span class="m">63</span> vsftpd 3.0.3
@@ -274,7 +274,7 @@ OS details: Linux 3.11 - 4.1</code></pre></td></tr></table>
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -vv --reason -Pn -sU -A --top-ports<span class="o">=</span><span class="m">20</span> --version-all
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -vv --reason -Pn -sU -A --top-ports<span class="o">=</span><span class="m">20</span> --version-all 10.1.1.69
 
 PORT      STATE         SERVICE      REASON              VERSION
 53/udp    closed        domain       port-unreach ttl <span class="m">63</span>
@@ -555,7 +555,11 @@ Codename:       xenial
           <a href="/tags/vulnhub/">Vulnhub</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/vulnhub-bellatrix/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vulnhub Bellatrix</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
         <a class="next" href="/post/vulnhub-devguru/">
             <span class="next-text nav-default">Vulnhub Devguru</span>
             <span class="next-text nav-mobile">下一篇</span>
