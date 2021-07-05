@@ -6,7 +6,34 @@
     <description>Recent content in Posts on Josephine&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 28 Jun 2021 12:34:48 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Jul 2021 18:14:00 +0800</lastBuildDate><atom:link href="https://bulletforkiller.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vulnhub Relevant</title>
+      <link>https://bulletforkiller.github.io/post/vulnhub-relevant/</link>
+      <pubDate>Thu, 01 Jul 2021 18:14:00 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/vulnhub-relevant/</guid>
+      <description>枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.83 Host is up (0.00093s latency). 机器 IP 为 10.1.1.83。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub Maskcrafter</title>
+      <link>https://bulletforkiller.github.io/post/vulnhub-maskcrafter/</link>
+      <pubDate>Thu, 01 Jul 2021 18:13:30 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/vulnhub-maskcrafter/</guid>
+      <description>枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.82 Host is up (0.00088s latency). 机器 IP 为 10.1.1.82。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务</description>
+    </item>
+    
+    <item>
+      <title>Vulnhub Cybox</title>
+      <link>https://bulletforkiller.github.io/post/vulnhub-cybox/</link>
+      <pubDate>Tue, 29 Jun 2021 11:05:09 +0800</pubDate>
+      
+      <guid>https://bulletforkiller.github.io/post/vulnhub-cybox/</guid>
+      <description>枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.69 Host is up (0.00087s latency). 机器 IP 为 10.1.1.69。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务</description>
+    </item>
+    
     <item>
       <title>Vulnhub Bellatrix</title>
       <link>https://bulletforkiller.github.io/post/vulnhub-bellatrix/</link>

